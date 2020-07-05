@@ -7,7 +7,7 @@
 |name|string|null: false|
 |email|string|null: false, unique: true|
 |password|string|null: false|
-|imge|string||
+|image|string||
 |body|text||
 
 ### Association
@@ -39,7 +39,7 @@
 ## pictures_table
 |Column|Type|Options|
 |------|----|-------|
-|imge|string||
+|image|string||
 |body|text||
 |category_id|integer|null: false, foreign_key: true|
 
