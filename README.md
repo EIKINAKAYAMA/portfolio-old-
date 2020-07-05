@@ -8,12 +8,11 @@
 |email|string|null: false, unique: true|
 |password|string|null: false|
 |imge|string||
-|body|text|null: false|
+|body|text||
 
 ### Association
 - has_many :genres
 - has_many :customers
-- has_many :
 
 ## genres_table
 |Column|Type|Options|
@@ -47,7 +46,7 @@
 ### Association
 - belongs_to :category
 
-## customer_table
+## customers_table
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
