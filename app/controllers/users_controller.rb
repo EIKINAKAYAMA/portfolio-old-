@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+before_action :authenticate_user!, except: [:show_front]
+
   def edit
   end
 
@@ -10,9 +12,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def index
+  end
+
+  def show_admin
+    @user = User.find(params[:id])
+  end
+
+  def show_front
+    @user = User.find(params[:id])
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :body, :image)
   end
 end
