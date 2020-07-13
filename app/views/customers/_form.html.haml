@@ -1,0 +1,6 @@
+=form_for ([@user,@customer]) do |f|
+  = f.text_field :name, class: "customer-name__input", placeholder: "name"
+  = f.text_field :email, class: "customer-email__input", placeholder: "email"
+  = f.text_field :body, class: "customer-body__input", placeholder: "message"
+  = f.text_field :user_id, type: "hidden", value: "#{@customer.user_id}"
+  = f.submit "Save", class: "chat-group-form__action-btn"
