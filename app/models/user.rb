@@ -6,8 +6,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  # has_many :genres
-  # has_many :customers
+  has_many :genres
+  has_many :customers
 
   mount_uploader :image, ImageUploader
 end

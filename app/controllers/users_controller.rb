@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 before_action :authenticate_user!, except: [:show_front]
+before_action :set_tweet, only: [:show_admin, :show_front]
 
   def edit
   end
@@ -16,14 +17,16 @@ before_action :authenticate_user!, except: [:show_front]
   end
 
   def show_admin
-    @user = User.find(params[:id])
   end
 
   def show_front
-    @user = User.find(params[:id])
   end
 
   private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:name, :email, :body, :image)
