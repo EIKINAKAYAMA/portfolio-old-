@@ -1,0 +1,6 @@
+design_admin_new
+= render partial: 'form', locals: { user: @user, design: @design}
+
+- @designs.each do |design|
+  .div
+    = image_tag design.image.url, class: 'message__text__image' if design.image.present?

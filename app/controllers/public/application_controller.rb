@@ -1,4 +1,5 @@
-class ApplicationController < ActionController::Base
+# class ApplicationController < ActionController::Base
+class Public::ApplicationController < ApplicationController
   
   # # if you want to require image when users sign up, use below codes
   # def configure_permitted_parameters
@@ -10,7 +11,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, profile_attributes: [:image, :body]])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
   end
 
 end

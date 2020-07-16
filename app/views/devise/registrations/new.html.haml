@@ -28,5 +28,14 @@
             = f.label :password_confirmation
           .field-input
             = f.password_field :password_confirmation, autocomplete: "off"
+
+
+        = f.fields_for :profile do |f|
+          = f.text_field :body, class: "customer-body__input", placeholder: "one prase"
+          
+          = f.label :image, class: 'input-box__image' do
+            %i.fa.fa-image
+            = f.file_field :image, class: 'input-box__image__file'
+
         .actions
           = f.submit "Create Account", class: 'btn'

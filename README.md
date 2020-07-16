@@ -7,12 +7,21 @@
 |name|string|null: false|
 |email|string|null: false, unique: true|
 |password|string|null: false|
-|image|string||
-|body|text||
 
 ### Association
 - has_many :genres
 - has_many :customers
+- has_many :profiles
+
+## profiles_table(profile_page)
+|Column|Type|Options|
+|------|----|-------|
+|image|string|null: false|
+|body|text||
+|user_id|integer|null: false, foreign_key: true|
+
+### Association
+- belongs_to :user
 
 ## genres_table
 |Column|Type|Options|
@@ -46,7 +55,7 @@
 ### Association
 - belongs_to :category
 
-## customers_table
+## customers_table(contact_page)
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
@@ -57,6 +66,14 @@
 ### Association
 - belongs_to :user
 
+## design_table(top_page)
+|Column|Type|Options|
+|------|----|-------|
+|image|string|null: false|
+|user_id|integer|null: false, foreign_key: true|
+
+### Association
+- belongs_to :user
 
 This README would normally document whatever steps are necessary to get the
 application up and running.
