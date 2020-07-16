@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   has_many :genres
   has_many :customers
-
-  mount_uploader :image, ImageUploader
+  has_many :designs
+  has_one :profile
+  accepts_nested_attributes_for :profile
 end

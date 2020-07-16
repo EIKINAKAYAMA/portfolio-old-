@@ -1,6 +1,4 @@
-class CustomersController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
-
+class Public::CustomersController < Public::ApplicationController
   def new
     @user = User.find(params[:user_id])
     @customer = Customer.new
@@ -16,10 +14,6 @@ class CustomersController < ApplicationController
       # render new_user_customer_path(params[:user_id])
       render :new
     end
-  end
-
-  def show
-    @customers = Customer.where(user_id: params[:user_id])
   end
 
   private

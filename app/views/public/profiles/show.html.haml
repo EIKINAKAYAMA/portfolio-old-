@@ -1,0 +1,5 @@
+progile_front
+
+- @profiles.each do |profile|
+  .div
+    = image_tag profile.image.url, class: 'message__text__image' if profile.image.present?

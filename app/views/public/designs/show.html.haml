@@ -1,0 +1,5 @@
+design_public_new_front
+
+- @designs.each do |design|
+  .div
+    = image_tag design.image.url, class: 'message__text__image' if design.image.present?

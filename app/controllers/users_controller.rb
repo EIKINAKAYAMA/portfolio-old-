@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-before_action :authenticate_user!, except: [:show_front]
-before_action :set_tweet, only: [:show_admin, :show_front]
+before_action :authenticate_user!
 
   def edit
   end
@@ -16,12 +15,6 @@ before_action :set_tweet, only: [:show_admin, :show_front]
   def index
   end
 
-  def show_admin
-  end
-
-  def show_front
-  end
-
   private
 
   def set_user
@@ -29,6 +22,6 @@ before_action :set_tweet, only: [:show_admin, :show_front]
   end
 
   def user_params
-    params.require(:user).permit(:name, :email, :body, :image)
+    params.require(:user).permit(:name, :email)
   end
 end
