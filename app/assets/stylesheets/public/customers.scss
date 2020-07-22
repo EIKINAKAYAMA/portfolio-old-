@@ -1,0 +1,69 @@
+
+* {
+  box-sizing: border-box;
+}
+
+.header_fake{
+  width: 100%;
+  height: 65px;
+  // background:red;
+  top: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.backgroud-image{
+  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 0;
+ }
+
+//main (except header and footer)
+main{
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+
+//trancparent design where the background of contanct_form
+.main_container{
+  width: 600px;
+  height: calc(100% - 65px);
+  margin: 0 auto;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0.5;
+}
+
+//place of contact_form 
+.sab_container{
+  color: white;
+  width: 400px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 50px;
+  //the title div("CONTACT")
+  .title{
+    h1{
+      font-size: 50px;
+    }
+  }
+
+  .user_information{
+    padding: 20px 0;
+    h2{
+      font-size: 25px;
+    }
+  }
+  
+  .contact_form{
+    .detail{
+      width: 100%;
+      margin: 10px 0;   
+    }
+  }
+}
+

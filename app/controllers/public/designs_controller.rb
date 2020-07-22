@@ -1,6 +1,7 @@
 class Public::DesignsController < Public::ApplicationController
 
-  def show
+  def index
+    @user = User.find(params[:user_id])
     @designs = Design.where(user_id: params[:user_id])
   end
 

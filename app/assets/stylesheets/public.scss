@@ -1,0 +1,75 @@
+@import "reset";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+@import "public/customers";
+@import "public/designs";
+@import "public/profiles";
+
+header{
+  width: 100%;
+  height: 65px;
+  background:rgba(34,49,52,0.9);
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+
+body{
+  font-family: Helvetica, sans-serif;
+  margin: 0px;
+}
+
+.container{
+  width: 100%;
+  padding: 0 15px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo{
+  width: 124px;
+  margin-top: 20px;
+}
+
+
+.header-left{
+}
+
+.header-middle{
+}
+
+.header-middle a{
+  cursor: pointer;
+  line-height: 65px;
+  color: white;
+  padding: 0 25px;
+  transition: 0.5s;
+  float: left;
+}
+
+.header-middle a:hover{
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.header-right a i{
+  line-height: 65px;
+}
+//icon design
+
+.fab{
+  font-size:30px;
+  color: white;
+}
+
+footer p{
+  text-align: center;
+  font-size: 12px;
+}
+
+footer{
+  width: 100vw;
+  padding: 0 15px;
+  margin: 0 auto;
+  padding:30px 0 20px 0;
+}

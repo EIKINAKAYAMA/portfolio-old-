@@ -1,8 +1,0 @@
-.form
-  -# = form_for [@user,@design], url:admin_user_designs_path do |f|
-  = form_for [:admin, @user, @design] do |f|
-    .input-box
-      = f.label :image, class: 'input-box__image' do
-        %i.fa.fa-image
-        = f.file_field :image, class: 'input-box__image__file'
-    = f.submit 'Send', class: 'submit-btn'
