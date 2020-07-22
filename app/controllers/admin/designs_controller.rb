@@ -7,6 +7,10 @@ class Admin::DesignsController < Admin::ApplicationController
     @designs = Design.where(user_id: params[:user_id])
   end
 
+  def new
+    
+  end
+
   def create
     @design = Design.new(design_params)
 
@@ -15,6 +19,14 @@ class Admin::DesignsController < Admin::ApplicationController
     else
       render :index
     end
+  end
+
+  def edit
+
+  end
+
+  def update
+
   end
 
   private

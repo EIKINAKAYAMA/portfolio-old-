@@ -1,0 +1,5 @@
+<%= render "public/public"%>
+
+<% @designs.each do |design| %>
+  <%= image_tag  "#{design.image.url}",class: "backgroud-image" %>
+<% end %>

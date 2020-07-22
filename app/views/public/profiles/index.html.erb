@@ -1,0 +1,14 @@
+<%= render "public/public"%>
+
+<div class="wrapper">
+  <% @profiles.each do |profile| %>
+    <%= image_tag  "#{profile.image.url}", class: "backgroud-image" %>
+  <% end %>
+</div>
+
+<footer>
+    <div>
+      <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
+      <p>portfolio_created by eiki.</p>
+    </div>
+</footer>

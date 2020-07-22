@@ -1,0 +1,15 @@
+<%= render "admin/admin"%>
+
+progile_front
+
+<div>
+  <%= image_tag  "#{@profile.image.url}" %>
+</div>
+
+<%= form_with model:[:admin, @user, @profile] do |form| %>
+
+  <%= form.text_field :body, placeholder: "one prase" %>
+  <%= form.label :image, class: "fa.fa-image"%>
+  <%= form.file_field :image %>
+  <%= form.submit "SEND" %>
+<% end %>

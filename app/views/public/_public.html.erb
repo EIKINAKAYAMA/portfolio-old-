@@ -1,0 +1,35 @@
+<%= stylesheet_link_tag    'public', media: 'all', 'data-turbolinks-track': 'reload' %>
+<%= javascript_include_tag 'public', 'data-turbolinks-track': 'reload' %>
+
+<header>
+    <div class="container">
+      <div class="header-left">
+        <img class="logo" src="img/main_logo.png">
+      </div>
+      
+      <div class="header-middle">
+        <%= link_to "admin_setting", root_path%>
+        <%= link_to "top", user_designs_path%>
+        <a href="#">gallery</a>
+        <a href="#">movies</a>
+        <%= link_to "contact", new_user_customer_path%>
+        <%= link_to "profile", user_profiles_path%>
+      </div>
+
+      <div class="header-right">
+        <a href="#" class="insta_btn">
+          <span class="insta">
+            <i class="fab fa-instagram"></i>
+          </span> 
+        </a>
+
+        <%# <a href="#" class="faceb_btn">
+          <i class="fab fa-facebook-square fa-4x fb-blue"></i>
+        </a> %>
+
+      </div>
+    </div>
+  </header>
+  <body>
+    <%= yield%>
+  </body>
