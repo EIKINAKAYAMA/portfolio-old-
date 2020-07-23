@@ -1,4 +1,8 @@
-window.onload = function(){
-  $(".main_container").css({opacity:0});
-  $(".main_container").animate({opacity:1},1000);
-}
+$(document).ready(function(){
+  function Roop_opacity(){
+    var baloon = $(".main_container");
+    baloon.animate({opacity:'1'}, 5000);
+    baloon.animate({opacity:'0.5'}, 5000, Roop_opacity);
+  }
+  Roop_opacity();
+});
