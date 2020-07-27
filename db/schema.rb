@@ -16,24 +16,27 @@ ActiveRecord::Schema.define(version: 2020_07_15_160825) do
     t.string "name", null: false
     t.string "email", null: false
     t.text "body", null: false
-    t.bigint "user_id"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_customers_on_user_id"
   end
 
   create_table "designs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "image", null: false
-    t.bigint "user_id"
+    t.string "top_back_image"
+    t.string "gallery_back_image"
+    t.string "contact_back_image"
+    t.string "profile_back_image"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_designs_on_user_id"
   end
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "image", null: false
-    t.text "body"
-    t.bigint "user_id"
+    t.string "user_image", null: false
+    t.text "user_comment"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"

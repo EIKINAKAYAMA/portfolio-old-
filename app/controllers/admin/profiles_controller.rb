@@ -12,6 +12,6 @@ class Admin::ProfilesController < ApplicationController
 
   private
   def profile_params
-    params.require(:profile).permit(:image,:body).merge(user_id: params[:user_id])
+    params.require(:profile).permit(:user_image,:user_comment).merge(user_id: params[:user_id])
   end
 end

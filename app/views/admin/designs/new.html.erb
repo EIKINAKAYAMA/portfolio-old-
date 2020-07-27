@@ -1,7 +1,4 @@
 <%= render "admin/admin"%>
-<% @designs.each do |design| %>
-  <%= image_tag  "#{design.image.url}" %>
-<% end %>
 
 design_admin_new
 <div class="contents row">
@@ -10,6 +7,7 @@ design_admin_new
       <h3>
         投稿する
       </h3>
+      
       <%= render partial: "form", locals: {form: form} %>
     <% end %>
   </div>

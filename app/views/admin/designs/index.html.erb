@@ -1,6 +1,6 @@
 <%= render "admin/admin"%>
 <% @designs.each do |design| %>
-  <%= image_tag  "#{design.image.url}" %>
+  <%= image_tag  "#{design.top_back_image.url}" %>
 <% end %>
 
 design_admin_new

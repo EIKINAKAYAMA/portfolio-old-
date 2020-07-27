@@ -3,7 +3,7 @@
 progile_front
 
 <div>
-  <%= image_tag  "#{@profile.image.url}" %>
+  <%= image_tag  "#{@profile.user_image.url}" %>
 </div>
 
 <%= form_with model:[:admin, @user, @profile] do |form| %>
