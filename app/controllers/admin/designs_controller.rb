@@ -31,6 +31,6 @@ class Admin::DesignsController < Admin::ApplicationController
 
   private
   def design_params
-    params.require(:design).permit(:image).merge(user_id: params[:user_id])
+    params.require(:design).permit(:top_back_image, :gallery_back_image, :contact_back_image, :profile_back_image).merge(user_id: params[:user_id])
   end
 end

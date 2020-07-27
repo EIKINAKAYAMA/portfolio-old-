@@ -9,25 +9,49 @@
 |password|string|null: false|
 
 ### Association
-- has_many :genres
-- has_many :customers
-- has_many :profiles
+- has_many :genres, dependent: :destroy_all
+- has_many :customers, dependent: :destroy_all
+- has_one :profiles, dependent: :destroy
 
-## profiles_table(profile_page)
+## profiles_table(user_profile)
 |Column|Type|Options|
 |------|----|-------|
-|image|string|null: false|
-|body|text||
-|user_id|integer|null: false, foreign_key: true|
+|user_image|string|null: false|
+|user_comment|text||
+|user|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
+
+## customers_table(contact_page)
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null: false|
+|email|string|null: false|
+|body|text|null: false|
+|user|references|null: false, foreign_key: true|
+
+### Association
+- belongs_to :user
+
+## design_table(public_all_page_design)
+|Column|Type|Options|
+|------|----|-------|
+|top_back_image|string||
+|gallery_back_image|string||
+|contact_back_image|string||
+|profile_back_image|string||
+|user|references|null: false, foreign_key: true|
+
+### Association
+- belongs_to :user
+
 
 ## genres_table
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
-|user_id|integer|null: false, foreign_key: true|
+|user|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
@@ -37,63 +61,19 @@
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
-|hover_imge|string||
-|no_hover_imge|string||
-|genre_id|integer|null: false, foreign_key: true|
+|imge|string||
+|genre|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :genre
-- has_many :pictures
+- has_many :pictures, dependent: :destroy_all
 
-## pictures_table
+## pictures_table(for_gallery)
 |Column|Type|Options|
 |------|----|-------|
 |image|string||
 |body|text||
-|category_id|integer|null: false, foreign_key: true|
+|category|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :category
-
-## customers_table(contact_page)
-|Column|Type|Options|
-|------|----|-------|
-|name|string|null: false|
-|email|string|null: false|
-|body|text|null: false|
-|user_id|integer|null: false, foreign_key: true|
-
-### Association
-- belongs_to :user
-
-## design_table(top_page)
-|Column|Type|Options|
-|------|----|-------|
-|image|string|null: false|
-|user_id|integer|null: false, foreign_key: true|
-
-### Association
-- belongs_to :user
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...

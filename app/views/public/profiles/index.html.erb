@@ -1,10 +1,20 @@
 <%= render "public/public"%>
 
+<% @designs.each do |design| %>
+  <%= image_tag  "#{design.profile_back_image.url}",class: "backgroud-image" %>
+<% end %>
+
 <div class="wrapper">
   <% @profiles.each do |profile| %>
-    <%= image_tag  "#{profile.image.url}", class: "backgroud-image" %>
+    <%= image_tag  "#{profile.user_image.url}", class: "backgroud-image" %>
   <% end %>
 </div>
+
+<main>
+  <div class="header_fake">
+  </div>
+</main>
+
 
 <footer>
     <div>
@@ -12,3 +22,5 @@
       <p>portfolio_created by eiki.</p>
     </div>
 </footer>
+
+<%= javascript_include_tag 'public/profiles.js', 'data-turbolinks-track': 'reload' %>

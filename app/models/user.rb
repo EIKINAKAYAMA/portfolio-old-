@@ -6,9 +6,9 @@ class User < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  has_many :genres
-  has_many :customers
-  has_many :designs
-  has_one :profile
+  has_many :genres, dependent: :delete_all
+  has_many :customers, dependent: :delete_all
+  has_many :designs, dependent: :delete_all
+  has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
 end

@@ -31,11 +31,11 @@
 
 
         = f.fields_for :profile do |f|
-          = f.text_field :body, class: "customer-body__input", placeholder: "one prase"
+          = f.text_field :user_comment, class: "customer-body__input", placeholder: "one prase"
           
-          = f.label :image, class: 'input-box__image' do
+          = f.label :user_image, class: 'input-box__image' do
             %i.fa.fa-image
-            = f.file_field :image, class: 'input-box__image__file'
+            = f.file_field :user_image, class: 'input-box__image__file'
 
         .actions
           = f.submit "Create Account", class: 'btn'

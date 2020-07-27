@@ -1,7 +1,7 @@
 <%= render "public/public"%>
 
-<% @profiles.each do |profile| %>
-<%= image_tag  "#{profile.image.url}",class: "backgroud-image" %>
+<% @designs.each do |design| %>
+<%= image_tag  "#{design.contact_back_image.url}",class: "backgroud-image" %>
 <% end %>
 
 <main>
@@ -35,3 +35,5 @@
       <p>portfolio_created by eiki.</p>
     </div>
 </footer>
+
+<%= javascript_include_tag 'public/customers.js', 'data-turbolinks-track': 'reload' %>

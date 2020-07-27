@@ -1,5 +1,16 @@
 <%= render "public/public"%>
 
-<% @designs.each do |design| %>
-  <%= image_tag  "#{design.image.url}",class: "backgroud-image" %>
-<% end %>
+<main>
+  <%= image_tag  src = "", class: "top-backgroud-image", id: "main" %>
+    <nav>
+      <ul>
+        <li id="play">Play</li>
+        <li id="prev">&lt;</li>
+        <li id="next">&gt;</li>
+      </ul>
+    </nav>
+        <ul class="thumbnails">
+        </ul> 
+  </main>
+
+<%= javascript_include_tag 'public/designs.js', 'data-turbolinks-track': 'reload' %>
