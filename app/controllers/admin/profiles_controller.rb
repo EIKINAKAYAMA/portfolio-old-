@@ -7,7 +7,6 @@ class Admin::ProfilesController < ApplicationController
   def update
     profile = Profile.find(params[:user_id])
     profile.update(profile_params)
-
   end
 
   private

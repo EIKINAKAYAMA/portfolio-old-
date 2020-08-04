@@ -1,26 +1,36 @@
 <%= render "public/public"%>
-
-<% @designs.each do |design| %>
-  <%= image_tag  "#{design.profile_back_image.url}",class: "backgroud-image" %>
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'public/profiles', media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
-
-<div class="wrapper">
-  <% @profiles.each do |profile| %>
-    <%= image_tag  "#{profile.user_image.url}", class: "backgroud-image" %>
-  <% end %>
-</div>
 
 <main>
   <div class="header_fake">
   </div>
+  <div class="main_container">
+    <div class="sab_container">
+      <div class="title">
+        <h1>Profile</h1>
+      </div>
+      <div class="user_information">
+      </div>
+      <div class="contact_form">
+      </div>
+    </div>
+  </div>
+
 </main>
 
-
 <footer>
-    <div>
-      <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
-      <p>portfolio_created by eiki.</p>
-    </div>
-</footer>
+      <div>
+        <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
+        <p>portfolio_created by eiki.</p>
+      </div>
+  </footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+<%= javascript_include_tag 'public/profiles/jquery.ripple-min.js', 'data-turbolinks-track': 'reload' %>
 
 <%= javascript_include_tag 'public/profiles.js', 'data-turbolinks-track': 'reload' %>
+

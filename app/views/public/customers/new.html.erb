@@ -1,5 +1,9 @@
 <%= render "public/public"%>
 
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'public/customers', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
 <% @designs.each do |design| %>
 <%= image_tag  "#{design.contact_back_image.url}",class: "backgroud-image" %>
 <% end %>
@@ -30,10 +34,10 @@
 </main>
 
 <footer>
-    <div>
-      <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
-      <p>portfolio_created by eiki.</p>
-    </div>
-</footer>
+      <div>
+        <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
+        <p>portfolio_created by eiki.</p>
+      </div>
+  </footer>
 
 <%= javascript_include_tag 'public/customers.js', 'data-turbolinks-track': 'reload' %>
