@@ -48,10 +48,14 @@ Rails.application.configure do
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
   config.assets.debug = true
+  config.assets.js_compressor = Uglifier.new(harmony: true)
+  config.assets.css_compressor = :sass
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
   config.assets.compile = true
+  # config.assets.digest = true
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
