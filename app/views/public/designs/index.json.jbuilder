@@ -1,3 +1,3 @@
-json.array! @designs do |design|
-  json.image design.top_back_image.url
+json.array! @top_back_images do |top_back_image|
+  json.image top_back_image.image.url
 end

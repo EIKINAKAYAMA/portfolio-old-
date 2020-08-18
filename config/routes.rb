@@ -9,7 +9,8 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users do
-      resources :designs, only: [:index, :new, :create, :edit, :upload, :destroy]
+      # resources :designs, only: :index, defaults: { format: 'json'}
+      resources :designs, only: [:index, :new, :create, :edit, :update, :destroy]
       resources :customers, only: [:index]
       resources :profiles, only:[:edit, :update]
     end

@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_15_160825) do
+ActiveRecord::Schema.define(version: 2020_08_16_062911) do
+
+  create_table "contact_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image", null: false
+    t.bigint "design_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["design_id"], name: "index_contact_back_images_on_design_id"
+  end
 
   create_table "customers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -23,14 +31,26 @@ ActiveRecord::Schema.define(version: 2020_07_15_160825) do
   end
 
   create_table "designs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "top_back_image"
-    t.string "gallery_back_image"
-    t.string "contact_back_image"
-    t.string "profile_back_image"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_designs_on_user_id"
+  end
+
+  create_table "gallery_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image", null: false
+    t.bigint "design_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["design_id"], name: "index_gallery_back_images_on_design_id"
+  end
+
+  create_table "profile_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image", null: false
+    t.bigint "design_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["design_id"], name: "index_profile_back_images_on_design_id"
   end
 
   create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -40,6 +60,14 @@ ActiveRecord::Schema.define(version: 2020_07_15_160825) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
+  create_table "top_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image", null: false
+    t.bigint "design_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["design_id"], name: "index_top_back_images_on_design_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -56,7 +84,11 @@ ActiveRecord::Schema.define(version: 2020_07_15_160825) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "contact_back_images", "designs"
   add_foreign_key "customers", "users"
   add_foreign_key "designs", "users"
+  add_foreign_key "gallery_back_images", "designs"
+  add_foreign_key "profile_back_images", "designs"
   add_foreign_key "profiles", "users"
+  add_foreign_key "top_back_images", "designs"
 end

@@ -1,11 +1,28 @@
-<%= form.label :image, class: "fa.fa-image" do%>
 <h1>top_back_image</h1>
-<%= form.file_field :top_back_image, placeholder: "top_back_image", id: "top_back_image" %>
+<h1>top_back_image</h1>
+<h1>top_back_image</h1>
+
+<div class = "upload-container">
+  <div id = "image-box" >
+    <div class="js-file_group">
+      <label data-index="0" class="image-upload">
+      <input type="file" class="js-file" multiple="multiple" style="visibility: hidden">
+      </label>
+    </div>
+  </div>
+</div>
+
 <h1>gallery_back_imge</h1>
-<%= form.file_field :gallery_back_imge, placeholder: "gallery_back_imge", id: "gallery_back_imge" %>
+<%= form.fields_for :gallery_back_image, @design.build_gallery_back_image do |image| %>
+  <%= image.file_field :image, placeholder: "gallery_back_imge", id: "gallery_back_imge" %>
+<% end %>
+
 <h1>contact_back_image</h1>
-<%= form.file_field :contact_back_image, placeholder: "contact_back_image", id: "contact_back_image" %>
+<%= form.fields_for :contact_back_image, @design.build_contact_back_image do |image| %>
+  <%= image.file_field :image, placeholder: "contact_back_image", id: "contact_back_image" %>
+<% end %>
+
 <h1>profile_back_image</h1>
-<%= form.file_field :profile_back_image, placeholder: "profile_back_image", id: "profile_back_image" %>
-<%= form.submit "SEND" %>
+<%= form.fields_for :profile_back_image, @design.build_profile_back_image do |image| %>
+  <%= image.file_field :image, placeholder: "profile_back_image", id: "profile_back_image" %>
 <% end %>
