@@ -12,6 +12,7 @@
 - has_many :genres, dependent: :destroy_all
 - has_many :customers, dependent: :destroy_all
 - has_one :profiles, dependent: :destroy
+- has_one :designs, dependent: :destroy
 
 ## profiles_table(user_profile)
 |Column|Type|Options|
@@ -34,20 +35,38 @@
 ### Association
 - belongs_to :user
 
-## design_table(public_all_page_design)
+## design_table(public_all_page_design for_changing effect color etc)
 |Column|Type|Options|
 |------|----|-------|
-|top_back_image|string||
-|gallery_back_image|string||
-|contact_back_image|string||
-|profile_back_image|string||
 |user|references|null: false, foreign_key: true|
 
 ### Association
 - belongs_to :user
+- has_many: top_back_images
+- has_many: gallery_back_images
+- has_many: contact_back_images
+- has_many: profile_back_images
+
+## top_back_images_table(top_page_design)
+|Column|Type|Options|
+|------|----|-------|
+|image|string||
+|designs|references|null: false, foreign_key: true|
+
+### Association
+- belongs_to :design
+
+## gallery_back_images_table(top_page_design)
+|Column|Type|Options|
+|------|----|-------|
+|image|string||
+|designs|references|null: false, foreign_key: true|
+
+### Association
+- belongs_to :design
 
 
-## genres_table
+## gallery_table
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
@@ -55,20 +74,19 @@
 
 ### Association
 - belongs_to :user
-- has_many :categories
+- has_many :categories, dependent: :destroy
 
-## categories_table
+## category_table
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
-|imge|string||
-|genre|references|null: false, foreign_key: true|
+|gallery|references|null: false, foreign_key: true|
 
 ### Association
-- belongs_to :genre
-- has_many :pictures, dependent: :destroy_all
+- belongs_to :gallery
+- has_many :category_images, dependent: :destroy
 
-## pictures_table(for_gallery)
+## category_images_table(for_gallery)
 |Column|Type|Options|
 |------|----|-------|
 |image|string||
@@ -77,3 +95,4 @@
 
 ### Association
 - belongs_to :category
+

@@ -1,11 +1,12 @@
 <%= render "public/public"%>
 
+
 <% content_for :css do %>
   <%= stylesheet_link_tag 'public/customers', media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
 
-<% @designs.each do |design| %>
-<%= image_tag  "#{design.contact_back_image.url}",class: "backgroud-image" %>
+<% @contact_back_image.each do |image| %>
+<%= image_tag  "#{image.image.url}",class: "backgroud-image" %>
 <% end %>
 
 <main>

@@ -1,3 +1,4 @@
+
 'use strinct';
 {
   // setting animation of bgSwitcher

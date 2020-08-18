@@ -1,0 +1,20 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'admin/designs' %>
+<% end %>
+<%= render "admin/admin"%>
+
+design_admin_new
+<div class="contents row">
+  <div class="container">
+    <%= form_with model:[:admin, @user, @design], html: { multipart: true, class: "edit_item", remote: true}, local:true do |form| %>
+      <h3>
+        投稿する
+      </h3>
+      
+      <%= render partial: "form", locals: {form: form} %>
+      <%= form.submit "SEND"%>
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_include_tag 'admin/designs.js'%>

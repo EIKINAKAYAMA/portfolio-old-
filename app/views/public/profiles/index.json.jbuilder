@@ -1,3 +1,3 @@
-json.array! @designs do |design|
-  json.image design.profile_back_image.url
+json.array! @profile_back_image do |image|
+  json.image image.image.url
 end
