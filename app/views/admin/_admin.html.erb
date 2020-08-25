@@ -1,19 +1,17 @@
 <%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
 
-<header>
-    <div class="container">
-      <div class="header-left">
-        <img class="logo" src="img/main_logo.png">
-      </div>
-      <span class="fa fa-bars menu-icon"></span>
-      <div class="header-right">
-        <%= link_to "admin_setting", root_path%>
-        <%= link_to "admin_top(all_back_ground_setting)", admin_user_designs_path%>
-        <a href="#">admin_gallery</a>
-        <a href="#">admin_movies</a>
-        <%= link_to "admin_contact", admin_user_customers_path%>
-        <%= link_to "admin_profile", edit_admin_user_profile_path(current_user, current_user)%>
-        <%= link_to "public", user_designs_path%>
-      </div>
-    </div>
-  </header>
+<div class = "admin_side">
+  <div class = "side_header">
+  </div>
+
+  <div class = "pages">
+    <%= link_to "admin_setting", root_path%>
+    <%= link_to "admin_top(all_back_ground_setting)", admin_user_designs_path%>
+    <%= link_to "admin_gallery", admin_user_gallery_categories_path%>
+    <a href="#">admin_movies</a>
+    <%= link_to "admin_contact", admin_user_customers_path%>
+    <%= link_to "admin_profile", edit_admin_user_profile_path(current_user, current_user)%>
+    <%= link_to "public", user_designs_path%>
+  </div>
+
+</div>

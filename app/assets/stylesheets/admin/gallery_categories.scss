@@ -1,0 +1,25 @@
+.js-file_group {
+  width: 600px;
+  height: 150px;
+  display: flex;
+  justify-content: left;
+  .preview{
+    &__change {
+      display: flex;
+      justify-content: space-between;
+      &__upload{
+        width: 50px;
+        height: auto;
+        background-color: blue;
+      }
+      &__delete{
+        width: 50px;
+        height: auto;
+        background-color: red; 
+      }
+    }
+  }
+  .image-upload{
+    background-color: green;
+  }
+}
