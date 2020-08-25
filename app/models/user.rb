@@ -5,8 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   validates :name, presence: true, uniqueness: true
-
-  has_many :genres, dependent: :destroy
+  
+  has_many :gallery_categories, dependent: :destroy
+  has_many :movie_categories, dependent: :destroy
   has_many :customers, dependent: :destroy
   has_one :designs, dependent: :destroy
   has_one :profile, dependent: :destroy

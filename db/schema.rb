@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_062911) do
+ActiveRecord::Schema.define(version: 2020_08_18_133919) do
+
+  create_table "category_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "image", null: false
+    t.bigint "gallery_category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["gallery_category_id"], name: "index_category_images_on_gallery_category_id"
+  end
 
   create_table "contact_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "image", null: false
@@ -43,6 +51,22 @@ ActiveRecord::Schema.define(version: 2020_08_16_062911) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["design_id"], name: "index_gallery_back_images_on_design_id"
+  end
+
+  create_table "gallery_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_gallery_categories_on_user_id"
+  end
+
+  create_table "movie_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_movie_categories_on_user_id"
   end
 
   create_table "profile_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -84,10 +108,13 @@ ActiveRecord::Schema.define(version: 2020_08_16_062911) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "category_images", "gallery_categories"
   add_foreign_key "contact_back_images", "designs"
   add_foreign_key "customers", "users"
   add_foreign_key "designs", "users"
   add_foreign_key "gallery_back_images", "designs"
+  add_foreign_key "gallery_categories", "users"
+  add_foreign_key "movie_categories", "users"
   add_foreign_key "profile_back_images", "designs"
   add_foreign_key "profiles", "users"
   add_foreign_key "top_back_images", "designs"

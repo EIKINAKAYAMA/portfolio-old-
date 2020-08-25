@@ -13,16 +13,34 @@
 </div>
 
 <h1>gallery_back_imge</h1>
-<%= form.fields_for :gallery_back_image, @design.build_gallery_back_image do |image| %>
+  <div id="previews">
+    <% if @gallery_back_image.persisted? %>
+      <%= image_tag @gallery_back_image.image.url, width: "100", height: '100' %>
+    <% end %>
+  </div>
+    
+<%= form.fields_for :gallery_back_image, @design.gallery_back_image || GalleryBackImage.new do |image| %>
   <%= image.file_field :image, placeholder: "gallery_back_imge", id: "gallery_back_imge" %>
 <% end %>
 
 <h1>contact_back_image</h1>
-<%= form.fields_for :contact_back_image, @design.build_contact_back_image do |image| %>
+  <div id="previews">
+    <% if @contact_back_image.persisted? %>
+      <%= image_tag @contact_back_image.image.url, width: "100", height: '100' %>
+    <% end %>
+  </div>
+
+<%= form.fields_for :contact_back_image, @design.contact_back_image || ContactBackImage.new do |image| %>
   <%= image.file_field :image, placeholder: "contact_back_image", id: "contact_back_image" %>
 <% end %>
 
 <h1>profile_back_image</h1>
-<%= form.fields_for :profile_back_image, @design.build_profile_back_image do |image| %>
+  <div id="previews">
+    <% if @profile_back_image.persisted? %>
+      <%= image_tag @profile_back_image.image.url, width: "100", height: '100' %>
+    <% end %>
+  </div>
+
+<%= form.fields_for :profile_back_image, @design.profile_back_image || ProfileBackImage.new do|image| %>
   <%= image.file_field :image, placeholder: "profile_back_image", id: "profile_back_image" %>
 <% end %>
