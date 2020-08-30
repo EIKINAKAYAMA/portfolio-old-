@@ -1,6 +1,6 @@
 <%= render "public/public"%>
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'public/designs' %>
+  <%= stylesheet_link_tag 'public/gallery_categories' %>
 <% end %>
 
 <main>
@@ -8,20 +8,26 @@
   <nav>
     <ul>
       <li id="play">Play</li>
-      <li id="prev">&lt;</li>
+      <li id="prev" >&lt;</li>
       <li id="next">&gt;</li>
       <%# just for slideshow_next deleted by css from front %>
       <li id="slidenext">&gt;</li>
     </ul>
   </nav>
-  <ul class="thumbnails">
-  </ul> 
-</main>
-<footer>
-      <div>
-        <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
-        <p>portfolio_created by eiki.</p>
-      </div>
-  </footer>
+  <ul id ="thumbnails">
+  </ul>
 
-<%= javascript_include_tag 'public/designs.js', 'data-turbolinks-track': 'reload' %>
+  <div id ="gallery_categories">
+    <ul id ="categories" >
+    </ul>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <p class="copyright">© <%= @user.name %>Photographer Co., Ltd. -Prohibited using all pictures without pemittion</p>
+    <p>portfolio_created by eiki.</p>
+  </div>
+</footer>
+
+<%= javascript_include_tag 'public/gallery_categories.js', 'data-turbolinks-track': 'reload' %>
