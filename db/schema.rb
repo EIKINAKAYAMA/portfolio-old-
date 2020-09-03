@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_133919) do
+ActiveRecord::Schema.define(version: 2020_08_30_050432) do
 
   create_table "category_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "image", null: false
@@ -18,6 +18,14 @@ ActiveRecord::Schema.define(version: 2020_08_18_133919) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["gallery_category_id"], name: "index_category_images_on_gallery_category_id"
+  end
+
+  create_table "category_movies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "video", null: false
+    t.bigint "movie_category_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_category_id"], name: "index_category_movies_on_movie_category_id"
   end
 
   create_table "contact_back_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -109,6 +117,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_133919) do
   end
 
   add_foreign_key "category_images", "gallery_categories"
+  add_foreign_key "category_movies", "movie_categories"
   add_foreign_key "contact_back_images", "designs"
   add_foreign_key "customers", "users"
   add_foreign_key "designs", "users"
