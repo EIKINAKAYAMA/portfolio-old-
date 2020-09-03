@@ -1,4 +1,6 @@
 class CategoryMovie < ApplicationRecord
-  belongs_to :gallery_category
-  mount_uploader :image, ImageUploader
+  belongs_to :gallery_movie
+  mount_uploader :video, VideoUploader
+
+  validates :video, presence: true
 end

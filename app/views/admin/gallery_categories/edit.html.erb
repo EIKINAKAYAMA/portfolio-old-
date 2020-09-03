@@ -1,12 +1,14 @@
 <% content_for :css do %>
+  <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
   <%= stylesheet_link_tag 'admin/gallery_categories' %>
+  <%= stylesheet_link_tag 'admin/croppie' %>
 <% end %>
 
 <div class = "wrapper">
   <%= render partial: "admin/admin"%>
   <div class="main">
     <div class="container">
-      <%= form_with url: admin_user_gallery_category_path , local: true, html: { multipart: true, class: "edit_item"} do |form| %>
+      <%= form_with url: admin_user_gallery_category_path, local: true, html: { multipart: true, class: "edit_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
         <%= form.submit "SEND", class: "submit"%>
       <% end %>
@@ -14,4 +16,18 @@
   </div>
 </div>
 
+<div class="popup" id="js-popup">
+  <div class="popup-inner">
+    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+    <div id="edit-field">
+      <div id="Rotate-Left" class="popup-edit-button" data-deg="-90">Rotate-Left</div>
+      <div id="Rotate-Right" class="popup-edit-button" data-deg="90">Rotate-Right</div>
+      <div id="Save" class="popup-edit-button">Save</div>
+    </div>
+    <img id="popup-image" class= "popup-image" width="500px" height="500px">
+  </div>
+  <div class="black-background" id="js-black-bg"></div>
+</div>
+
 <%= javascript_include_tag 'admin/gallery_categories.js'%>
+<%= javascript_include_tag 'admin/croppie.js'%>
