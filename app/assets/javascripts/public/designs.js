@@ -44,20 +44,20 @@
     vid.style.mixBlendMode = "difference";
     $('#filter').css("mix-blend-mode", "difference")
     $('#filter').css("opacity", "1")
-    // $('.bg-slider').css("mix-blend-mode", "multiply")
   }
 
-  $('.button').click(function () {
-    $(this).fadeOut(4000);
+  $('.button').click(function (e) {
+    e.preventDefault();
+    url = "gallery_categories"
+    $(this).fadeOut(3000); //ボタンのフェードアウトを3秒間掛けて実施
+    $('p').css('opacity', '1');//CSSでセットしたopacity変更を４秒間かけて実施
+    playVid(); //設定したビデオを実施
 
+    //上記と並行してフェードアウト４秒+２秒間の画面固定＝6秒後に画面遷移を実施
     setTimeout(function () {
-      playVid();
-    }, 800);
-
-    // setTimeout(function () {
-    //   $('h1,.container_inner img,a').css('opacity','1');
-    //   $('p').css('opacity','.6');
-    // }, 1700);
+      window.location = url;
+    }, 6000);
+    
   });
 
   $(function(){

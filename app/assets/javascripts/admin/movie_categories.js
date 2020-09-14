@@ -30,12 +30,15 @@ $(function () {
   }
 
   const buildMovie = (index, url) => {
-    const html = `<div class="preview" data-index="${index}">
-                    <video data-index="${index}" src="${url}" width="200px" height="200px" controls muted playsinline>
+    const html = `<div class="video">
+                    <div class="preview" data-index="${index}">
+                      <video data-index="${index}" src="${url}" width="200px" height="200px" controls muted playsinline>
+                    </div>
                     <div data-index="${index}" class = "preview__change">
                       <label data-index="${index}" class="preview__change__upload">変更
                         <input type="file" class="js-file" style="visibility: hidden">
                       </label>
+                      <div class="preview__change__edit">回転</div>
                       <div class="preview__change__delete">削除</div>
                     </div>
                   </div>`;
@@ -70,8 +73,8 @@ $(function () {
         var categoryIndex = 0
         datas.forEach(function (data) {
           $(`.category[data-index="${categoryIndex}"]`).find('.category__name__text').val(`${data.name}`)
-          for (targetIndex = 0; targetIndex < data.category_images.length; targetIndex++) {
-            let blobUrl = data.category_images[targetIndex].image.url
+          for (targetIndex = 0; targetIndex < data.category_movies.length; targetIndex++) {
+            let blobUrl = data.category_movies[targetIndex].video.url
             categories_array[categoryIndex][targetIndex] = "exist"
             new_upload(categoryIndex, targetIndex, blobUrl)
           }
@@ -108,6 +111,22 @@ $(function () {
     console.log(categories_array)
   });
 
+  // 動画回転アクション
+  $(document).on('click', '.preview__change__edit', function () {
+    const categoryIndex = $(this).parents(".category").data('index');
+    const targetIndex = $(this).parent().data('index');
+    console.log(categoryIndex +"-" +targetIndex)
+    video = $(`.category[data-index="${categoryIndex}"]`).find(`video[data-index="${targetIndex}"]`)
+    console.log(video.attr("src"))
+    function rotate_video(video, degree) {
+      //スタイルを適用する関数を定義
+      video.addClass("Rotate" + degree);
+    }
+
+    rotate_video(video, 90)
+
+   })
+
   //画像削除アクション
   $(document).on('click', '.preview__change__delete', function () {
     const categoryIndex = $(this).parents(".category").data('index');
@@ -123,13 +142,14 @@ $(function () {
     var formData = new FormData(this);
     var url = $(this).attr('action')
 
+
     // 配列の中の空白を削除した綺麗な配列を新規に作成
     // files_tidy_array = $.grep(files_array, function (e) {
     //   return e !== "";
     // });
     for (var i = 0; i < categories_array.length; i++) {
       categories_array[i].forEach(function (file) {
-        formData.append("category_images[" + i + "][images][]", file)
+        formData.append("category_movies[" + i + "][videos][]", file)
       });
     }
 
@@ -150,7 +170,7 @@ $(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
-          $(".form_submit").removeAtter("disabled")
+          $(".submit").removeAttr("disabled")
         })
     } else if ($(this).attr('class') == "edit_item") {
       console.log("edit")

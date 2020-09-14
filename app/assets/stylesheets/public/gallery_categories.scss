@@ -3,92 +3,66 @@
 }
 
 main{
-  width: 300px;
-  margin: 0 auto;
-}
-
-img{
-  vertical-align: bottom;
-}
-
-ul{
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-#main{
-  width: 300px;
-  height: 200px;
-  margin-bottom: 8px;
-}
-
-nav{
-  margin-bottom: 8px;
-}
-nav ul{
-  display: flex;
-  justify-content: space-between;
-}
-
-nav li{
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 12px;
-  padding: 4px;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-}
-
-nav li:hover{
-  background: #f8f8f8;
-}
-#play{
-  width: 140px;
-}
-
-#prev, #next{
-  width: 60px;
-}
-
-#slidenext{
-  display: none;
-}
-
-#thumbnails{
-  width: 100%;
-  overflow: auto;
-  display: grid;
-  grid-template-columns: repeat(5,56px);
-  grid-auto-flow: column;;
-  gap:5px;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-#thumbnails li{
-  cursor: pointer;
-  opacity: 0.4;
-}
-
-#thumbnails li:hover,
-#thumbnails li#current{
-  opacity: 1.0;
-}
-
-#thumbnails img{
-  width: 56px;
-}
-
-#categories{
-  display: flex;
-  justify-content: space-between;
-  li{
-    padding: 10px 10px;
-    cursor: pointer;
+  width: 100vw;
+  margin: 65px auto 88px;
+  #gallery{
+    width: 100%;
+    height: 100vh;
+    .mainSwiper{
+      height: 70%;
+      padding-bottom: 50px;
+      .swiper-slide {
+        height: 100%;
+        width: auto;
+        // トリミングの比率によって要計算 (画像の高さ / 画像の横幅) × 100
+        background-repeat: no-repeat;
+        background-position: center;
+        // containは全体表示対応、coverはトリミング対応
+        background-size: contain;
+        -webkit-filter: brightness(1);
+        filter: brightness(1);
+        opacity: 1;
+      }
+      .swiper-slide-active {
+        -webkit-filter: brightness(1);
+        filter: brightness(1);
+        opacity: 1;
+      }
+    }
+    .thumbnail {
+      width: 50vw;
+      height: 20%;
+      align-content: center;
+      .swiper-slide {
+        background-position: center;
+        width: 100px;
+        height: 100px;
+        background-size: cover;
+        -webkit-filter: brightness(0.7);
+        filter: brightness(0.7);
+        opacity: 0.7;
+      }
+      .swiper-slide-active {
+        background-position: center;
+        width: 100px;
+        height: 100px;
+        background-size: cover;
+        -webkit-filter: brightness(1);
+        filter: brightness(1);
+        opacity: 1;
+      }
+    }
   }
-  li:hover{
-    background-color: greenyellow;
+  #categories{
+    display: flex;
+    justify-content: space-between;
+    height: 65px;
+    li{
+      padding: 10px 10px;
+      cursor: pointer;
+    }
+    li:hover{
+      background-color: greenyellow;
+    }
   }
 }

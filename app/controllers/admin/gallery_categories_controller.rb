@@ -10,7 +10,7 @@ end
 def new
   @user = User.find(params[:user_id])
   @gallery_category_check = GalleryCategory.find_by(user_id: params[:user_id])
-    if @design_check.present?
+    if @gallery_category_check.present?
       redirect_to action: "edit", id: params[:user_id]
     else
       @gallery_category = GalleryCategory.new

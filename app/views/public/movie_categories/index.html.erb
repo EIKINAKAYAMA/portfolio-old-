@@ -1,27 +1,18 @@
 <%= render "public/public"%>
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'public/gallery_categories', media: "all", "data-turbolinks-track": "reload"%>
+  <%= stylesheet_link_tag 'public/movie_categories', media: "all", "data-turbolinks-track": "reload"%>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.3.7/css/swiper.min.css">
 <% end %>
 
 <main>
-  <div id="gallery">
+  <div id="movie">
     <div class="swiper-container mainSwiper">
       <div class="swiper-wrapper">
       </div>
       <div class="swiper-pagination"></div>
     </div>
 
-    <div class="swiper-container thumbnail">
-
-      <div class="swiper-wrapper">
-      </div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
-    </div>
-  </div>
-
-  <div id ="gallery_categories">
+  <div id ="movie_categories">
     <ul id ="categories" >
     </ul>
   </div>
@@ -35,5 +26,4 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/5.3.7/js/swiper.min.js"></script>
-<%= javascript_include_tag 'public/gallery_categories.js', 'data-turbolinks-track': 'reload' %>
-</body>
+<%= javascript_include_tag 'public/movie_categories.js', 'data-turbolinks-track': 'reload' %>

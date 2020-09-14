@@ -1,21 +1,19 @@
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'public/designs' %>
+  <%= stylesheet_link_tag 'public/designs', media: "all", "data-turbolinks-track": "reload" %>
 <% end %>
 
 <main>
   <div class="container">
-
     <img id = "filter" src ="https://photo-studio9.com/wp-content/uploads/2012/06/white.png">
       <video id="myVideo" data-depth="50">
         <source src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/217233/ink4.mp4" type="video/mp4">
       </video>
 
      <div class="bg-slider">
-      <%= link_to "Enter",  new_user_customer_path, class: "bg-slider__title"%>
-      <button class="button">enter2</button> 
-
+      <%= link_to "",  new_user_customer_path, class: "bg-slider__title"%>
+        <p>Wellcome</p>
+      <button class="button">ENTER</button> 
     </div>
-
   </div>
 </main>
 
