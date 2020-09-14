@@ -8,7 +8,7 @@
     <div class="container">
       <%= form_with model:[:admin, @user, @gallery_category], local: true, html: { multipart: true, class: "new_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
-        <%= form.submit "SEND"%>
+        <%= form.submit "SEND", class: "submit"%>
       <% end %>
     </div>
   </div>

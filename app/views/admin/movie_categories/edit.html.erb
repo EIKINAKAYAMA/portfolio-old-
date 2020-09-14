@@ -1,0 +1,17 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'admin/movie_categories', media: "all", "data-turbolinks-track": "reload" %>
+<% end %>
+
+<div class = "wrapper">
+  <%= render partial: "admin/admin"%>
+  <div class="main">
+    <div class="container">
+      <%= form_with url: admin_user_movie_category_path, local: true, html: { multipart: true, class: "edit_item"} do |form| %>
+        <%= render partial: "form", locals: {form: form} %>
+        <%= form.submit "SEND", class: "submit"%>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'admin/movie_categories.js'%>

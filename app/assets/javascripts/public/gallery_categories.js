@@ -1,9 +1,60 @@
 'use strinct';
-{
-  const mainimage = document.getElementById('main');
-  var currentCategoryIndex = 0;
-  var currentImageIndex = 0;
-  const gallery_categories = []
+{ 
+  const carouselModule = (() => {
+    return {
+      configure: () => {
+        const mySwiper1 = new Swiper('.mainSwiper', {
+          effect: 'coverflow',
+          direction: 'horizontal', // スライダーの方向を指定（'horizontal' or 'vertical'）
+          slidesPerView: 1, //同時に表示するスライド枚数
+          loop: true,
+          mousewheel: {
+            invert: false,
+          },
+          pagination: {
+            el: '.swiper-pagination',
+            type: 'bullets',
+          },
+          //非同期通信・リロード時再読み込み
+          observer: true,
+          observeParents: true
+        });
+        
+        const mySwiper2 = new Swiper('.thumbnail', {
+          mousewheel: {
+            invert: false,
+          },
+          freeMode: true, //手で自由に動かせる
+          effect: 'coverflow', //coverflowデザイン
+          slidesPerView: 5, //一つの画面で何枚表示するか
+          centeredSlides: true,//選んだ画像が真ん中にくる
+          // autoplay: {
+          //   delay: 3000, //play速度
+          //   stopOnLastSlide: false, //loopさせるかどうか
+          //   disableOnInteraction: true, //途中で動かしたらplaystop
+          //   reverseDirection: false
+          // },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          },
+          slideToClickedSlide: true,
+          controller: {
+            control: mySwiper1,
+            inverse: false,
+            by: 'slide'
+          },
+          spaceBetween: 100,
+          //非同期通信・リロード時再読み込み
+          observer: true,
+          observeParents: true
+        });
+        mySwiper1.controller.control = mySwiper2;
+      }
+    }
+  })()
+
+  carouselModule.configure()
 
   // ajax通信時のカテゴリーリストの作成
   const buildCategory = (category, CategoryIndex) => {
@@ -11,127 +62,39 @@
     return html;
   }
 
+  function buildSwiper(){
+    const html = `<div class="swiper-container mainSwiper">
+                    <div class="swiper-wrapper">
+                    </div>
+                    <div class="swiper-pagination"></div>
+                  </div>
+
+                  <div class="swiper-container thumbnail">
+                    <div class="swiper-wrapper">
+                    </div>
+                    <div class="swiper-button-prev"></div>
+	                  <div class="swiper-button-next"></div>
+                  </div>`
+    return html;
+  }
+  
+  const buildSwiperslide = (image) => {
+    const html = `<div class="swiper-slide" style="background-image:url(${image})"></div>`;
+    return html;
+  }
+
   //表示選択対象となるデータ（カテゴリーの一種）に対してHTMLを作成
   function animation(data) {
-    var currentImageIndex = 0;
-    mainimage.src = data.category_images[currentImageIndex].image.url;
-
     // thumbanilsの画像を配置
     let category_images = data.category_images
-    category_images.forEach((image, index) => {
-      const img = document.createElement('img');
-      img.src = image.image.url;
-      const li = document.createElement('li');
-      if (index == currentImageIndex) {
-        li.setAttribute('id', 'current');
-      }
-      li.appendChild(img);
-      document.querySelector('#thumbnails').appendChild(li);
+    category_images.forEach((img) => {
+      const html = buildSwiperslide(img.image.url)
+      $(".swiper-wrapper").append(html)
     })
   }
-  
-  // thumbnails内の画像をダイレクトにクリックした時の挙動
-  $('#thumbnails').on('click', 'li', function () {
-    var thumbnails = document.querySelectorAll('#thumbnails > li')
-    var targetIndex = $('#thumbnails li').index(this);
-    thumbnails[currentImageIndex].removeAttribute("id");
-    currentImageIndex = targetIndex;
-    thumbnails[currentImageIndex].setAttribute('id', 'current');
-    mainimage.src = thumbnails[currentImageIndex].firstChild.getAttribute("src");
-  });
 
-  //手動の進むを押した時の挙動
-  function operation_next() {
-    var thumbnails = document.querySelectorAll('#thumbnails > li')
-    var currentthumbnail = document.getElementById("current");
-    currentImageIndex = [].slice.call(thumbnails).indexOf(currentthumbnail);
-    var target = currentImageIndex + 1;
-    if (target == gallery_categories[currentCategoryIndex].category_images.length) {
-      target = 0;
-    }
-    // thumbnails内の次の画像をダイレクトにクリックした時の挙動として扱う
-    document.querySelectorAll('#thumbnails > li')[target].click();
-  }
-
-  // nextを押された時に、スライドショーを止める動きと、手動の進むを押した時の挙動を実行
-  const next = document.getElementById('next')
-  next.onclick = function next() {
-    operation_next();
-    stopSlideshow();
-  };
-
-  //  スライドショー実行中の挙動として、手動の進むを押した時の挙動を実行
-  const slidenext = document.getElementById('slidenext');
-  slidenext.onclick = function sildenext(){
-    operation_next();
-  };
-
-  //nextを押された時に、スライドショーを止める動きと、前に戻るの挙動を実行
-  const prev = document.getElementById('prev');
-  prev.onclick = function prev() {
-    var thumbnails = document.querySelectorAll('#thumbnails > li')
-    var currentthumbnail = document.getElementById("current");
-    currentImageIndex = [].slice.call(thumbnails).indexOf(currentthumbnail);
-    let target = currentImageIndex - 1;
-    if (target < 0) {
-      target = gallery_categories[currentCategoryIndex].category_images.length - 1;
-    }
-    document.querySelectorAll('#thumbnails > li')[target].click();
-    stopSlideshow();
-  };
-  
-  let timeoutId;
-  let isPlaying = false;
-  
-  function ScrollWindow() {
-    var thumbnails = document.getElementById("thumbnails");
-    var currentthumbnail = document.getElementById("current");
-    // currentImageIndex = [].slice.call(thumbnails).indexOf(currentthumbnail);
-    // var AllScrollWidth = $("#thumbnails li")[0].scrollWidth + 5
-    // if (currentImageIndex == 4) {
-    //   thumbnails.scrollRight
-    // } else {
-    //   thumbnails.scrollLeft += AllScrollWidth
-    // }
-    var rect = currentthumbnail.getBoundingClientRect();
-    var elemleft = rect.left + thumbnails.pageXOffset;
-    thumbnails.scrollLeft = elemleft;
-  }
-
-  // スライドショーの実行処理
-  function playSlideshow() {
-    ScrollWindow()
-    slidenext.click();
-    timeoutId = setTimeout(() => {
-      playSlideshow();
-    }, 1000);
-  };
-
-
-  // スライドショーの停止処理
-  function stopSlideshow() {
-    if (isPlaying == true) {
-      clearTimeout(timeoutId);
-      play.textContent = 'Play';
-      isPlaying = !isPlaying;
-    } else {
-      return;
-    }
-  }
-
-
-  // スライドショーのボタンがクリックされた時の表示と処理の分岐
-  const play = document.getElementById('play');
-  play.onclick = function plya(){
-    if (isPlaying == false) {
-      playSlideshow();
-      play.textContent = 'Pause';
-      isPlaying = !isPlaying;
-    } else {
-      stopSlideshow();
-    }
-  };
-  
+  var gallery_categories = []
+  var currentCategoryIndex = 0
 
   // データのJSON取得
   $(function () {
@@ -151,25 +114,12 @@
 
   $(document).on('click', '.category_name', function () {
     const targetIndex = $(this).data('index');
-    var li = document.getElementById('thumbnails')
-    // もしスライドショー実行中なら処理を止める
-    if (isPlaying == true) {
-      play.click()
-    }
-    while (li.firstChild) {
-      li.removeChild(li.firstChild);
-    }
+    const html = buildSwiper();
     currentCategoryIndex = targetIndex;
+    $(".swiper-container").remove();
+    $("#gallery").prepend(html);
+    carouselModule.configure()
     animation(gallery_categories[targetIndex])
     });
   }
   
-// $(function(){
-//   $('.single-item').slick({
-  //     accessibility: true,
-  //     autoplay: true,
-//     autoplaySpeed: 1000,
-//     dots: true,
-//     fade: true,
-//   });
-// });
