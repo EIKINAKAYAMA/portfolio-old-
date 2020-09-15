@@ -1,30 +1,100 @@
-.js-file_group {
-  width: 600px;
-  height: 300px;
-  display: flex;
-  justify-content: left;
-  .video{
-    .preview{
-      .Rotate90{
-        transform: rotate(90deg);
-      }
-      &__change {
+* {
+  box-sizing: border-box;
+}
+
+.category{
+  width: 100%;
+  border: solid 5px #333;
+  padding: 20px 30px;
+  margin-bottom: 20px;
+  //category name
+  &__name{
+    display: flex;
+    justify-content: left;
+    border-bottom: solid 3px black;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    p{
+      margin-right: 5px;
+    }
+  }
+  //picture
+  .upload-container{
+    .movie-box{  
+      .js-file_group {
+        flex-wrap: wrap;
+        width: 100%;
+        // height: 150px;
         display: flex;
-        justify-content: space-between;
-        &__upload{
-          width: 50px;
-          height: auto;
-          background-color: blue;
+        justify-content: left;
+        .video{
+          margin-right: 15px;
+          margin-bottom: 15px;
+          .preview{
+            width: 300px;
+            &__change {
+              height: 51px; //includig border 1px
+              line-height: 40px;
+              border-top: #cccccc 1px solid;
+              text-align: center;
+              display: flex;
+              font-size: 12px;
+              padding-top: 10px;
+              &__upload{
+                width: calc(100% / 3);
+                background-color: blue;
+              }
+              &__edit{
+                width: calc(100% / 3);
+                background-color: white; 
+              }
+              &__delete{
+                width: calc(100% / 3);
+                background-color: red; 
+              }
+            }
+          }
         }
-        &__delete{
-          width: 50px;
-          height: auto;
-          background-color: red; 
+        .movie-upload{
+          width: 300px;
+          height: 255px; //same as video
+          background-color: #cccccc;
+          cursor: pointer;
+          .icon{
+            margin-top: 73.5px;
+          }
+          p{
+            text-align: center;
+          }
         }
       }
     }
   }
-  .movie-upload{
-    background-color: green;
-  }
+}
+
+#category_plus{
+  height: 50px;
+  background-color: #cccccc;
+  border: solid 5px #333;
+  text-align: center;
+  line-height: 40px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.submit{
+  display: inline-block;
+  padding: 5px 10px;
+  text-decoration: none;
+  background: #cccccc;/*ボタン色*/
+  color: #333;
+  border-bottom: solid 2px #333;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.submit:active{
+  -webkit-transform: translateY(4px);
+  transform: translateY(4px);/*下に動く*/
+  box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);/*影を小さく*/
+  border-bottom: none;
 }

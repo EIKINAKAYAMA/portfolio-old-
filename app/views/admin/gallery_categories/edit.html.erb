@@ -2,18 +2,20 @@
   <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
   <%= stylesheet_link_tag 'admin/gallery_categories' %>
   <%= stylesheet_link_tag 'admin/croppie' %>
+  <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
 
 <div class = "wrapper">
-  <%= render partial: "admin/admin"%>
   <div class="main">
     <div class="container">
+      <h1>Gallery setting</h1> 
       <%= form_with url: admin_user_gallery_category_path, local: true, html: { multipart: true, class: "edit_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
-        <%= form.submit "SEND", class: "submit"%>
+        <%= form.submit "COMMIT", class: "submit"%>
       <% end %>
     </div>
   </div>
+  <%= render partial: "admin/admin"%>
 </div>
 
 <div class="popup" id="js-popup">

@@ -3,7 +3,7 @@ $(function () {
   function popupImage() {
     var popup = document.getElementById('js-popup');
     if (!popup) return;
-  
+
     var blackBg = document.getElementById('js-black-bg');
     var closeBtn = document.getElementById('js-close-btn');
   
@@ -35,6 +35,7 @@ $(function () {
   const buildCategory = (categoryIndex, index) => {
     const html = `<div class="category" data-index="${categoryIndex}">
                     <div class = "category__name" data-index="${categoryIndex}">
+                      <p>Name of Category :</p>
                       <label> 
                         <input type="text" class="category__name__text" name="gallery_categories[name][]">
                       </label>
@@ -45,7 +46,9 @@ $(function () {
                         <div class="js-file_group">
                           <label data-index="${index}" class="image-upload">
                             <input type="file" class="js-file" multiple="multiple" style="visibility: hidden">
-                          </label>
+                            <p><i class="fas fa-camera fa-3x"></i></p>
+                            <p>Drag and Drop<br>or click</p>
+                            </label>
                         </div>
                       </div>
                     </div>
@@ -58,6 +61,8 @@ $(function () {
   const buildFileField = (index) => {
     const html = `<label data-index="${index}" class="image-upload">
                     <input type="file" class="js-file" multiple="multiple" style="visibility: hidden">
+                    <p><i class="fas fa-camera fa-3x"></i></p>
+                    <p>Drag and Drop<br>or click</p>
                   </label>`;
     return html;
   }
@@ -84,6 +89,7 @@ $(function () {
     const categoryIndex = $(".category").last().data('index');
     $('.category').last().after(buildCategory(categoryIndex + 1, 0));
     categories_array.push([])
+    $('.main').animate({ scrollTop: $("#gallery").height() }, 'slow')
   });
 
   //新規アップロード時の実行内容（files_arrayはajax取得とform選択で取り方が違う為、統一化しない）

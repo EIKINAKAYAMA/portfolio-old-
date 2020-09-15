@@ -1,17 +1,18 @@
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'admin/gallery_categories' %>
+  <%= stylesheet_link_tag 'admin/gallery_categories', media: "all", "data-turbolinks-track": "reload"%>
+  <%= stylesheet_link_tag 'admin', media: 'all','data-turbolinks-track': 'reload' %>
 <% end %>
 
 <div class = "wrapper">
-  <%= render partial: "admin/admin"%>
   <div class="main">
     <div class="container">
       <%= form_with model:[:admin, @user, @gallery_category], local: true, html: { multipart: true, class: "new_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
-        <%= form.submit "SEND", class: "submit"%>
+        <%= form.submit "COMMIT", class: "submit"%>
       <% end %>
     </div>
   </div>
+  <%= render partial: "admin/admin"%>
 </div>
 
 <%= javascript_include_tag 'admin/gallery_categories.js'%>
