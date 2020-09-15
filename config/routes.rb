@@ -10,8 +10,8 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users do
       resources :designs, only: [:index, :new, :create, :edit, :update, :destroy]
-      resources :gallery_categories, only:[:index, :new, :create, :edit, :update]
-      resources :movie_categories, only:[:index, :new, :create, :edit, :update]
+      resources :gallery_categories, only:[:new, :create, :edit, :update]
+      resources :movie_categories, only:[:new, :create, :edit, :update]
       resources :customers, only: [:index]
       resources :profiles, only:[:edit, :update]
     end

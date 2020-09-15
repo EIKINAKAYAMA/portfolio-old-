@@ -1,12 +1,6 @@
 class Admin::GalleryCategoriesController < Admin::ApplicationController
 before_action :authenticate_user!
 
-def index
-  @user = User.find(params[:user_id])
-  @gallery_category = GalleryCategory.new
-  # @gallery_categories = GalleryCategory.where(id: params[:user_id])
-end
-
 def new
   @user = User.find(params[:user_id])
   @gallery_category_check = GalleryCategory.find_by(user_id: params[:user_id])

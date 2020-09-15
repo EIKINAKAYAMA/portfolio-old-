@@ -1,17 +1,30 @@
-<%= stylesheet_link_tag    'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
-
 <div class = "admin_side">
-  <div class = "side_header">
+  <h1>ADS</h1>
+  <div class = "menu">
+    <div class="title">MENU</div>
+    <ul class="nav">
+      <li>
+        <%= link_to "admin_setting", root_path%>
+      </li>
+      <li>
+        <%= link_to "design_setting", admin_user_designs_path%>
+      </li>
+      <li>
+        <%= link_to "gallery_setting", new_admin_user_gallery_category_path%>
+      </li>
+      <li>
+        <%= link_to "movie_setting", new_admin_user_movie_category_path%>
+      </li>
+      <li>
+        <%= link_to "contact setting", admin_user_customers_path%>
+      </li>
+      <li>
+        <%= link_to "profile setting", edit_admin_user_profile_path(current_user, current_user)%>
+      </li>
+      <li>
+        <%= link_to "public", user_designs_path%>
+      </li>
+    </ul>
   </div>
-
-  <div class = "pages">
-    <%= link_to "admin_setting", root_path%>
-    <%= link_to "admin_top(all_back_ground_setting)", admin_user_designs_path%>
-    <%= link_to "admin_gallery", admin_user_gallery_categories_path%>
-    <%= link_to "admin_movies", new_admin_user_movie_category_path%>
-    <%= link_to "admin_contact", admin_user_customers_path%>
-    <%= link_to "admin_profile", edit_admin_user_profile_path(current_user, current_user)%>
-    <%= link_to "public", user_designs_path%>
-  </div>
-
+  
 </div>
