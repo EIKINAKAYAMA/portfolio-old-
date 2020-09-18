@@ -7,13 +7,13 @@
         <%= link_to "admin_setting", root_path%>
       </li>
       <li>
-        <%= link_to "design_setting", admin_user_designs_path%>
+        <%= link_to "design_setting", new_admin_user_design_path%>
       </li>
       <li>
-        <%= link_to "gallery_setting", new_admin_user_gallery_category_path%>
+        <%= link_to "gallery_setting",new_admin_user_gallery_category_path(current_user)%>
       </li>
       <li>
-        <%= link_to "movie_setting", new_admin_user_movie_category_path%>
+        <%= link_to "movie_setting",new_admin_user_movie_category_path(current_user)%>
       </li>
       <li>
         <%= link_to "contact setting", admin_user_customers_path%>

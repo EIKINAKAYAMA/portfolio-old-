@@ -1,5 +1,6 @@
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'admin/designs' %>
+  <%= stylesheet_link_tag 'admin/designs', media: 'all', 'data-turbolinks-track': 'reload'%>
+  <%= stylesheet_link_tag 'admin', media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
 <%= render "admin/admin"%>
 
