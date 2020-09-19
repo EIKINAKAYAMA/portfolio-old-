@@ -1,7 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.14.1"
 
-set :application, "LIFE"
+set :application, "portfolio"
 set :repo_url, "git@github.com:EIKINAKAYAMA/portfolio.git"
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
@@ -14,7 +14,7 @@ set :ssh_options, auth_methods: ['publickey'],
 
 set :unicorn_pid, -> { "#{shared_path}/tmp/pids/unicorn.pid" }
 set :unicorn_config_path, -> { "#{current_path}/config/unicorn.rb" }
-set :keep_releases, 5
+set :keep_releases, 3
 
 set :linked_files, %w{ config/master.key }
 
