@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # before_action :basic_auth
+  before_action :basic_auth
   
   # # if you want to require image when users sign up, use below codes
   # def configure_permitted_parameters
