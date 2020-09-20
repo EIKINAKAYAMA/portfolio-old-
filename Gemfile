@@ -76,6 +76,7 @@ gem 'font-awesome-sass'
 gem 'pry-rails'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
+gem 'fog-aws'
 
 group :production do
   gem 'unicorn'

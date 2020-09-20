@@ -61,3 +61,7 @@
 #   }
 
 server '54.178.65.106', user: 'ec2-user', roles: %w{app db web}
+
+# basic認証用
+set :rails_env, "production"
+set :unicorn_rack_env, "production"
