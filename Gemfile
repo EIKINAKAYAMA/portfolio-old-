@@ -73,10 +73,14 @@ gem 'devise'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'font-awesome-sass'
-gem 'pry-rails'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'fog-aws'
+
+gem 'omniauth-facebook'
+gem 'omniauth-instagram'
+# gem 'instagram'
+gem "omniauth-rails_csrf_protection"
 
 group :production do
   gem 'unicorn'
