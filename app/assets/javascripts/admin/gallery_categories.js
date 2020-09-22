@@ -1,4 +1,6 @@
 $(function () {
+
+
   // 画像のポップアップの挙動制御
   function popupImage() {
     var popup = document.getElementById('js-popup');
@@ -127,6 +129,9 @@ $(function () {
       })
   })
 
+
+
+
   //ドラックアンドドロップ
   $(document).on("dragenter dragover", function (e) {
     e.stopPropagation();
@@ -162,6 +167,7 @@ $(function () {
   });
 
 
+
   //ファイルアップロード
   $(document).on('change', '.js-file', function (e) {
     const categoryIndex = $(this).parents(".category").data('index');
@@ -181,15 +187,7 @@ $(function () {
     console.log(categories_array)
   });
 
-  //画像削除アクション
-  $(document).on('click', '.preview__change__delete', function () {
-    const categoryIndex = $(this).parents(".category").data('index');
-    const targetIndex = $(this).parent().data('index');
-    $(`.category[data-index="${categoryIndex}"]`).find(`label[data-index="${targetIndex}"]`).remove();
-    $(`.category[data-index="${categoryIndex}"]`).find(`.preview[data-index="${targetIndex}"]`).remove();
-    categories_array[categoryIndex][targetIndex] = "";
-  });
-
+  
   //画像編集アクション
   $(document).on('click', '.preview__change__edit', function () {
     // 対象の画像をポップアップに挿入
@@ -207,8 +205,8 @@ $(function () {
     
     $(".popup-image").croppie('destroy').removeAttr('src');
     // Crop = $("#" + categoryIndex + "-" + targetIndex).croppie({
-    vanilla = $(".popup-image").croppie({
-      viewport: { width: 100, height: 100 },
+      vanilla = $(".popup-image").croppie({
+        viewport: { width: 100, height: 100 },
       boundary: { width: 300, height: 300 },
       showZoomer: false,
       enableOrientation: true,
@@ -218,12 +216,12 @@ $(function () {
     $('#Rotate-Left').on('click', function () {
       vanilla.croppie('rotate', parseInt($(this).data('deg')));
     })
-
+    
     $("#Rotate-Right").click(function () {
       vanilla.croppie('rotate', parseInt($(this).data('deg')));
     });
-
-
+    
+    
     $('#Save').on('click', function () {
       vanilla.croppie('result', 'blob').then(function (blob) {
         //同一名ファイルは上書きされない、トリミング後の画像名をユニーク化する為、タイムスタンプを付与
@@ -242,31 +240,62 @@ $(function () {
           now.getMinutes() +
           now.getSeconds() +
           ".jpeg", { type: "image/jpeg" })
-        var blobUrl = window.URL.createObjectURL(blob);
-        //ファイルの名前、型を指定
-        categories_array[categoryIndex][targetIndex] = file
-        img.attr('src', blobUrl)
+          var blobUrl = window.URL.createObjectURL(blob);
+          //ファイルの名前、型を指定
+          categories_array[categoryIndex][targetIndex] = file
+          img.attr('src', blobUrl)
+        });
+        $('.croppie-container').remove();
+        $('#edit-field').remove();
+        popup.classList.toggle('is-show');
+        $('.popup-inner').append(buildPopupImg())
       });
-      $('.croppie-container').remove();
-      $('#edit-field').remove();
-      popup.classList.toggle('is-show');
-      $('.popup-inner').append(buildPopupImg())
     });
-  });
+    //画像削除アクション
+    $(document).on('click', '.preview__change__delete', function () {
+      const categoryIndex = $(this).parents(".category").data('index');
+      const targetIndex = $(this).parent().data('index');
+      $(`.category[data-index="${categoryIndex}"]`).find(`label[data-index="${targetIndex}"]`).remove();
+      $(`.category[data-index="${categoryIndex}"]`).find(`.preview[data-index="${targetIndex}"]`).remove();
+      categories_array[categoryIndex][targetIndex] = "";
+    });
+        
+    
+    
+    //Loading アクション
+    function dispLoading(msg) {
+      // 引数なしの場合、メッセージは非表示。
+      if (msg === undefined) msg = "";
+      var innerMsg = "<span>" + msg + "</span>";
+      if ($(".spinner").length == 0) {
+        // メニュー以外の画面操作をロック
+        $("body").append("<div id='nowLoading'></div>");
+        // スピナー表示を追加
+        $("body").append("<div class='spinner type1'>" + innerMsg + "</div>");
+      }
+    }
+    //Lodingストップアクション
+    function removeLoading() {
+    $("#nowLoading").remove();
+    $(".spinner").remove();
+  }
+  
+
 
   //ページのform送信アクション
   $('.new_item, .edit_item').on('submit', function (e) {
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
+
+    //Loadingアクション
+    dispLoading("prosessing...");
+
     for (var i = 0; i < categories_array.length; i++) {
       categories_array[i].forEach(function (file) {
         formData.append("category_images["+ i +"][images][]", file)
       });
     }
-
-    console.log(categories_array)
-
     if ($(this).attr('class') == "new_item") {
       console.log("new")
       $.ajax({
@@ -284,6 +313,7 @@ $(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
+          removeLoading();
           $(".form_submit").removeAtter("disabled")
         }) 
     } else if ($(this).attr('class') == "edit_item") {
@@ -303,6 +333,7 @@ $(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
+          removeLoading();
           $(".submit").removeAttr("disabled")
         }) 
     }

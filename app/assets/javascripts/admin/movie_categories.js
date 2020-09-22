@@ -142,12 +142,34 @@ $(function () {
     categories_array[categoryIndex][targetIndex] = "";
   });
 
+  //Loading アクション
+  function dispLoading(msg) {
+    // 引数なしの場合、メッセージは非表示。
+    if (msg === undefined) msg = "";
+    var innerMsg = "<span>" + msg + "</span>";
+    if ($(".spinner").length == 0) {
+      // メニュー以外の画面操作をロック
+      $("body").append("<div id='nowLoading'></div>");
+      // スピナー表示を追加
+      $("body").append("<div class='spinner type1'>" + innerMsg + "</div>");
+    }
+  }
+  //Lodingストップアクション
+  function removeLoading() {
+    $("#nowLoading").remove();
+    $(".spinner").remove();
+  } 
+
+
+  
   //ページのform送信アクション
   $('.new_item, .edit_item').on('submit', function (e) {
     e.preventDefault();
     var formData = new FormData(this);
-    var url = $(this).attr('action')
+    var url = $(this).attr('action');
 
+    //Loadingアクション
+    dispLoading("prosessing...");
 
     // 配列の中の空白を削除した綺麗な配列を新規に作成
     // files_tidy_array = $.grep(files_array, function (e) {
@@ -176,6 +198,7 @@ $(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
+          removeLoading();
           $(".submit").removeAttr("disabled")
         })
     } else if ($(this).attr('class') == "edit_item") {
@@ -195,6 +218,7 @@ $(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
+          removeLoading();
           $(".submit").removeAttr("disabled")
         })
     }
