@@ -19,3 +19,5 @@
               = f.password_field :password, autocomplete: "off"
           .actions
             = f.submit "Log in", class: 'btn'
+        = link_to 'Facebookでログイン', user_facebook_omniauth_authorize_path, method: :post
+        = link_to 'Instagramで登録', user_instagram_omniauth_authorize_path, method: :post
