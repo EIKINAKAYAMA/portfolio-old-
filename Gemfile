@@ -77,6 +77,7 @@ gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'fog-aws'
 
+gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-instagram'
 # gem 'instagram'
