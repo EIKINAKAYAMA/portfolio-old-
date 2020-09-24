@@ -17,19 +17,16 @@ $(window).load(function () {
     }
   })
   .done(function(data) {
-    console.log(data)
-    // var fields = 'media{caption,media_url,permalink,timestamp,username}';
-    // $.ajax({
-    //   url: url,
-    //   type: "POST",
-    // })
-    //   .done(function (res) {
-    //     console.log("OK")
-    //     $('#instagram-list').html(text);
-    //   })
-    //   .fail(function (jqXHR, status) {
-    //     $('#instagram-list').html('<li>読み込みに失敗しました。</li>');
-    //   })
+    console.log(data.access_token)
+    var userUrl = "https://graph.instagram.com/me?fields=id,username&access_token=" + data.access_token
+
+    $.ajax(url{
+      type: 'GET',
+      url: userUrl
+    })
+      .done(function(data2){
+      console.log(data2)
+    })    
   })
   .fail(function (jqXHR, status) {
     // console.log("NG")
