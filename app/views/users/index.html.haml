@@ -14,3 +14,8 @@ index
       %li.list
         = link_to new_admin_user_design_path(current_user) do
           = icon('fas', 'cog', class: 'icon')
+  %div#instagram
+    InstagramをJavaScriptのみで取得する!
+    %h2 instagram投稿
+    = link_to "instagram", "https://api.instagram.com/oauth/authorize?client_id=1055133514921533&redirect_uri=https%3A%2F%2Fmylifefolio.com%2F&scope=user_profile,user_media&response_type=code"
+= javascript_include_tag "admin/main.js"
