@@ -1,7 +1,7 @@
 $(window).load(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
-  var url = "https://api.instagram.com/oauth/access_token"
+  const url = "https://api.instagram.com/oauth/access_token"
 
   $.ajax({
     url: url,
@@ -17,13 +17,30 @@ $(window).load(function () {
   })
   .done(function(data) {
     console.log(data.access_token)
-    var userUrl = "https://graph.instagram.com/me?fields=id,username&access_token=" + data.access_token
+    var field = "caption,media_url,permalink,timestamp,username"
+    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
     })
-      .done(function(data2){
-      console.log(data2)
+      .done(function (res) {
+        console.log(res)
+        var text = '';
+        var limit = 9;
+        var count = 0;
+        var data = res.media;
+        $.each(data, function (index, val) {
+          $.each(val, function (i, elem) {
+            if (elem.media_url && count < limit) {
+              text1 = '<li><a href="' + elem.permalink + '" target="_blank">';
+              text2 = '<img src="' + elem.media_url + '">';
+              text3 = '</a></li>';
+              count++;
+              text = text + text1 + text2 + text3;
+            }
+          });
+        });
+        $('#instagram-list').html(text);
       })    
       .fail(function () {
         console.log("NG")
