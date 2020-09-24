@@ -25,23 +25,9 @@ $(window).load(function () {
     })
       .done(function (res) {
         console.log(res)
-        var text = '';
-        var limit = 9;
-        var count = 0;
-        var data = res.media;
-        $.each(data, function (index, val) {
-          $.each(val, function (i, elem) {
-            if (elem.media_url && count < limit) {
-              text1 = '<li><a href="' + elem.permalink + '" target="_blank">';
-              text2 = '<img src="' + elem.media_url + '">';
-              text3 = '</a></li>';
-              count++;
-              text = text + text1 + text2 + text3;
-            }
-          });
-        });
-        $('#instagram-list').html(text);
-      })    
+        const html = `<li><img src="${res[0].media_url}" width="100px" height="100px"></li>`
+        $('#instagram-list').append(html);
+      }) 
       .fail(function () {
         console.log("NG")
       })
@@ -49,7 +35,6 @@ $(window).load(function () {
   .fail(function (jqXHR, status) {
     console.log("NG")
   })
-  
 });
 
 
