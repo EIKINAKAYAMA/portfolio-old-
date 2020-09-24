@@ -12,7 +12,7 @@ $(window).load(function () {
       client_id: "1055133514921533",
       client_secret: "ab50aad83d0786954edc2d198ec40ccb",
       grant_type: "authorization_code",
-      redirect_uri: "https://socialsizzle.herokuapp.com/auth",
+      redirect_uri: "https://mylifefolio.com/",
       code: code
     }
   })
