@@ -2,16 +2,19 @@ $(window).load(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   console.log(code)
-
-  const client_id = '1055133514921533'
-  const client_secret = 'ab50aad83d0786954edc2d198ec40ccb'
-  const redirect_url = 'https://mylifefolio.com/'
-
-  var url = "https://api.instagram.com/oauth/access_token \ -F client_id=" + client_id + "\ -F client_secret=" + client_secret + "\ -F grant_type=authorization_code \ -F redirect_uri=" + redirect_url + "\ -F code=" + code
+  var url = "https://api.instagram.com/oauth/access_token"
 
   $.ajax({
     url: url,
-    type: "POST"
+    type: "POST",
+    dataType: 'json',
+    data: {
+      client_id: "1055133514921533",
+      client_secret: "ab50aad83d0786954edc2d198ec40ccb",
+      grant_type: "authorization_code",
+      redirect_uri: "https://socialsizzle.herokuapp.com/auth",
+      code: code
+    }
   })
   .done(function(data) {
     console.log(data)
