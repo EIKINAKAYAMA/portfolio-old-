@@ -1,7 +1,6 @@
 $(window).load(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
-  console.log(code)
   var url = "https://api.instagram.com/oauth/access_token"
 
   $.ajax({
@@ -19,17 +18,19 @@ $(window).load(function () {
   .done(function(data) {
     console.log(data.access_token)
     var userUrl = "https://graph.instagram.com/me?fields=id,username&access_token=" + data.access_token
-
-    $.ajax(url{
+    $.ajax({
       type: 'GET',
       url: userUrl
     })
       .done(function(data2){
       console.log(data2)
-    })    
+      })    
+      .fail(function () {
+        console.log("NG")
+      })
   })
   .fail(function (jqXHR, status) {
-    // console.log("NG")
+    console.log("NG")
   })
   
 });
