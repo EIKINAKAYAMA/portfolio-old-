@@ -24,8 +24,8 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
-        console.log(res)
-        const html = `<li><img src="${res[0].media_url}" width="100px" height="100px"></li>`
+        console.log(res.data[0])
+        const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
         $('#instagram-list').append(html);
       }) 
       .fail(function () {
