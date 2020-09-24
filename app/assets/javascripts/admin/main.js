@@ -4,7 +4,7 @@ $(window).load(function () {
   console.log(code)
 
   const client_id = '1055133514921533'
-  const client_secret = ''
+  const client_secret = 'ab50aad83d0786954edc2d198ec40ccb'
   const redirect_url = 'https://mylifefolio.com/'
 
   var url = "https://api.instagram.com/oauth/access_token \ -F client_id=" + client_id + "\ -F client_secret=" + client_secret + "\ -F grant_type=authorization_code \ -F redirect_uri=" + redirect_url + "\ -F code=" + code
