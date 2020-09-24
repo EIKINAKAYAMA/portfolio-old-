@@ -17,8 +17,9 @@ $(window).load(function () {
   })
   .done(function(data) {
     console.log(data.access_token)
-    var field = "caption,media_url,permalink,timestamp,username"
-    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
+    console.log(data.user_id)
+    var field = "caption,media_url,permalink"
+    var userUrl = "https://graph.instagram.com/" + data.uer_id +"?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
