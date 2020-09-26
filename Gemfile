@@ -79,7 +79,9 @@ gem 'fog-aws'
 
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'instagram_basic_display'
 gem 'omniauth-instagram'
+gem 'omniauth-instagram-graph'
 # gem 'instagram'
 gem "omniauth-rails_csrf_protection"
 
