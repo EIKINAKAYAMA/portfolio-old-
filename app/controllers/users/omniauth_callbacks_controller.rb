@@ -49,7 +49,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
     else
       @sns_id = sns_info[:sns].id
-      render template: root_path
+      render template: 'devise/registrations/new'
     end
   end
 end

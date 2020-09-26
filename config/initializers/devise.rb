@@ -312,5 +312,3 @@ Devise.setup do |config|
   config.omniauth :instagram,ENV['INSTAGRAM_CLIENT_ID'],ENV['INSTAGRAM_CLIENT_SECRET'],
   scope: 'user_profile,user_media'
 end
-
-"https://api.instagram.com/oauth/authorize?client_id=1055133514921533&redirect_uri=https://mylifefolio.com/&scope=user_profile,user_media&response_type=code"
