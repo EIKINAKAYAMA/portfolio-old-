@@ -310,5 +310,5 @@ Devise.setup do |config|
   # config.sign_in_after_change_password = true
   config.omniauth :facebook,ENV['FACEBOOK_CLIENT_ID'],ENV['FACEBOOK_CLIENT_SECRET']
   config.omniauth :instagram,ENV['INSTAGRAM_CLIENT_ID'],ENV['INSTAGRAM_CLIENT_SECRET'],
-  scope: 'user_profile,user_media',
+  scope: 'user_profile,user_media'
 end
