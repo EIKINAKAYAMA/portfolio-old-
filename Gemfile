@@ -83,6 +83,8 @@ gem 'instagram_basic_display'
 gem 'omniauth-instagram'
 # gem 'instagram'
 gem "omniauth-rails_csrf_protection"
+gem 'gon'
+gem 'dotenv-rails'
 
 group :production do
   gem 'unicorn'

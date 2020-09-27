@@ -13,6 +13,8 @@ before_action :authenticate_user!
   end
 
   def index
+    gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
+    gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
 
   private

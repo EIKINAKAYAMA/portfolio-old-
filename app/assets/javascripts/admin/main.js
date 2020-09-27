@@ -1,4 +1,5 @@
 $(window).load(function () {
+  console.log(gon.instagram_client_id)
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
@@ -8,15 +9,14 @@ $(window).load(function () {
     type: "POST",
     dataType: 'json',
     data: {
-      client_id: "1055133514921533",
-      client_secret: "ab50aad83d0786954edc2d198ec40ccb",
+      client_id: gon.instagram_client_id,
+      client_secret: gon.instagram_client_secret,
       grant_type: "authorization_code",
       redirect_uri: "https://mylifefolio.com/",
       code: code
     }
   })
   .done(function(data) {
-    console.log(data.access_token)
     var field = "caption,media_url,permalink,timestamp,username"
     var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
