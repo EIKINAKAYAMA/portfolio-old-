@@ -74,26 +74,28 @@ $(function () {
 
   //newアクション時には実行させないようにする必要あり
   $(function () {
-    $.getJSON('edit')
-      .done(function (datas) {
-        var categoryIndex = 0
-        datas.forEach(function (data) {
-          $(`.category[data-index="${categoryIndex}"]`).find('.category__name__text').val(`${data.name}`)
-          for (targetIndex = 0; targetIndex < data.category_movies.length; targetIndex++) {
-            let blobUrl = data.category_movies[targetIndex].video.url
-            categories_array[categoryIndex][targetIndex] = "exist"
-            new_upload(categoryIndex, targetIndex, blobUrl)
-          }
-          categoryIndex++
-          if (categoryIndex != datas.length) {
-            $('.category').last().after(buildCategory(categoryIndex, 0));
-            categories_array.push([])
-          }
+    if (document.URL.match(/edit/)) {
+      $.getJSON('edit')
+        .done(function (datas) {
+          var categoryIndex = 0
+          datas.forEach(function (data) {
+            $(`.category[data-index="${categoryIndex}"]`).find('.category__name__text').val(`${data.name}`)
+            for (targetIndex = 0; targetIndex < data.category_movies.length; targetIndex++) {
+              let blobUrl = data.category_movies[targetIndex].video.url
+              categories_array[categoryIndex][targetIndex] = "exist"
+              new_upload(categoryIndex, targetIndex, blobUrl)
+            }
+            categoryIndex++
+            if (categoryIndex != datas.length) {
+              $('.category').last().after(buildCategory(categoryIndex, 0));
+              categories_array.push([])
+            }
+          })
         })
-      })
-      .fail(function () {
-        console.log("NG")
-      })
+        .fail(function () {
+          alert('データが正しく取得出来ません。お手数ですが、管理者に問い合わせください。')
+        })
+    }
   })
 
 

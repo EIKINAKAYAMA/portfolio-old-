@@ -1,20 +1,6 @@
 class Admin::DesignsController < Admin::ApplicationController
   before_action :authenticate_user!
 
-  def index
-    @user = User.find(params[:user_id])
-    @design_check = Design.find_by(id: params[:user_id])
-    if @design_check.present?
-      @design = Design.find(params[:user_id])
-      respond_to do |format|
-        format.html
-        format.json
-      end
-    else
-      redirect_to action: "new"
-    end
-  end
-
   def new
     @user = User.find(params[:user_id])
     @design_check = Design.find_by(user_id: params[:user_id])

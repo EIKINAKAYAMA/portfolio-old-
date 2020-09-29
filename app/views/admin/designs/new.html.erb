@@ -1,20 +1,18 @@
 <% content_for :css do %>
-  <%= stylesheet_link_tag 'admin/designs' %>
+  <%= stylesheet_link_tag 'admin/designs' , media: "all", "data-turbolinks-track": "reload"%>
+  <%= stylesheet_link_tag 'admin', media: 'all','data-turbolinks-track': 'reload' %>
 <% end %>
-<%= render "admin/admin"%>
 
-design_admin_new
-<div class="contents row">
-  <div class="container">
-    <%= form_with model:[:admin, @user, @design], html: { multipart: true, class: "new_item"} do |form| %>
-      <h3>
-        投稿する
-      </h3>
-      
-      <%= render partial: "form", locals: {form: form} %>
-      <%= form.submit "SEND"%>
-    <% end %>
+<div class = "wrapper">
+  <div class="main">
+    <div class="container">
+      <%= form_with model:[:admin, @user, @design], html: { multipart: true, class: "new_item"} do |form| %>
+        <%= render partial: "form", locals: {form: form} %>
+        <%= form.submit "COMMIT", class: "submit"%>
+      <% end %>
+    </div>
   </div>
+  <%= render partial: "admin/admin"%>
 </div>
 
 <%= javascript_include_tag 'admin/designs.js'%>

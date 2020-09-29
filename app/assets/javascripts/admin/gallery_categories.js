@@ -1,6 +1,4 @@
 $(function () {
-
-
   // 画像のポップアップの挙動制御
   function popupImage() {
     var popup = document.getElementById('js-popup');
@@ -102,35 +100,34 @@ $(function () {
     // $('.js-file_group').append(buildImg(targetIndex, blobUrl));
     targetIndex++;
     $(`.category[data-index="${categoryIndex}"]`).find('.js-file_group').append(buildFileField(targetIndex));
-    return targetIndex
+    return targetIndex;
   }
 
   //newアクション時には実行させないようにする必要あり
   $(function () {
-    $.getJSON('edit')
-      .done(function (datas) {
-        var categoryIndex = 0
-        datas.forEach(function (data) {
-          $(`.category[data-index="${categoryIndex}"]`).find('.category__name__text').val(`${data.name}`)
-          for (targetIndex = 0; targetIndex < data.category_images.length; targetIndex++){
-            let blobUrl = data.category_images[targetIndex].image.url
-            categories_array[categoryIndex][targetIndex] = "exist"
-            new_upload(categoryIndex, targetIndex, blobUrl)
-          }
-          categoryIndex++
-          if (categoryIndex != datas.length) {
-            $('.category').last().after(buildCategory(categoryIndex, 0));
-            categories_array.push([])
-          }
+    if (document.URL.match(/edit/)) {
+      $.getJSON('edit')
+        .done(function (datas) {
+          var categoryIndex = 0
+          datas.forEach(function (data) {
+            $(`.category[data-index="${categoryIndex}"]`).find('.category__name__text').val(`${data.name}`)
+            for (targetIndex = 0; targetIndex < data.category_images.length; targetIndex++) {
+              let blobUrl = data.category_images[targetIndex].image.url
+              categories_array[categoryIndex][targetIndex] = "exist"
+              new_upload(categoryIndex, targetIndex, blobUrl)
+            }
+            categoryIndex++
+            if (categoryIndex != datas.length) {
+              $('.category').last().after(buildCategory(categoryIndex, 0));
+              categories_array.push([])
+            }
+          })
         })
-      })
-      .fail(function () {
-        console.log("NG")
-      })
+        .fail(function () {
+          alert('データが正しく取得出来ません。お手数ですが、管理者に問い合わせください。')
+        })
+    }
   })
-
-
-
 
   //ドラックアンドドロップ
   $(document).on("dragenter dragover", function (e) {
@@ -166,8 +163,6 @@ $(function () {
     }
   });
 
-
-
   //ファイルアップロード
   $(document).on('change', '.js-file', function (e) {
     const categoryIndex = $(this).parents(".category").data('index');
@@ -184,7 +179,6 @@ $(function () {
         targetIndex = new_upload(categoryIndex, targetIndex, blobUrl)
       }
     }
-    console.log(categories_array)
   });
 
   
@@ -207,10 +201,10 @@ $(function () {
     // Crop = $("#" + categoryIndex + "-" + targetIndex).croppie({
       vanilla = $(".popup-image").croppie({
         viewport: { width: 100, height: 100 },
-      boundary: { width: 300, height: 300 },
-      showZoomer: false,
-      enableOrientation: true,
-      url: img.attr("src")
+        boundary: { width: 300, height: 300 },
+        showZoomer: false,
+        enableOrientation: true,
+        url: img.attr("src")
     })
 
     $('#Rotate-Left').on('click', function () {
@@ -220,7 +214,6 @@ $(function () {
     $("#Rotate-Right").click(function () {
       vanilla.croppie('rotate', parseInt($(this).data('deg')));
     });
-    
     
     $('#Save').on('click', function () {
       vanilla.croppie('result', 'blob').then(function (blob) {
@@ -251,6 +244,7 @@ $(function () {
         $('.popup-inner').append(buildPopupImg())
       });
     });
+ 
     //画像削除アクション
     $(document).on('click', '.preview__change__delete', function () {
       const categoryIndex = $(this).parents(".category").data('index');
@@ -258,9 +252,7 @@ $(function () {
       $(`.category[data-index="${categoryIndex}"]`).find(`label[data-index="${targetIndex}"]`).remove();
       $(`.category[data-index="${categoryIndex}"]`).find(`.preview[data-index="${targetIndex}"]`).remove();
       categories_array[categoryIndex][targetIndex] = "";
-    });
-        
-    
+    }); 
     
     //Loading アクション
     function dispLoading(msg) {
@@ -279,8 +271,6 @@ $(function () {
     $("#nowLoading").remove();
     $(".spinner").remove();
   }
-  
-
 
   //ページのform送信アクション
   $('.new_item, .edit_item').on('submit', function (e) {
@@ -297,7 +287,6 @@ $(function () {
       });
     }
     if ($(this).attr('class') == "new_item") {
-      console.log("new")
       $.ajax({
         url: url,
         type: "POST",
@@ -306,10 +295,10 @@ $(function () {
         contentType: false,
         processData: false
       })
-        .done(function (data) {
+        .done(function () {
           alert('出品に成功しました！');
         })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        .fail(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
@@ -317,7 +306,6 @@ $(function () {
           $(".form_submit").removeAtter("disabled")
         }) 
     } else if ($(this).attr('class') == "edit_item") {
-      console.log("edit")
       $.ajax({
         url: url,
         type: "PATCH",
@@ -326,10 +314,10 @@ $(function () {
         contentType: false,
         processData: false
       })
-        .done(function (data) {
+        .done(function () {
           alert('出品に成功しました！');
         })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        .fail(function () {
           alert('出品に失敗しました！');
         })
         .always(function () {
