@@ -7,7 +7,7 @@
 <div class = "wrapper">
   <div class="main">
     <div class="container">
-      <h1>Movie setting</h1> 
+      <%= render partial: "limitation"%>
       <%= form_with url: admin_user_movie_category_path, local: true, html: { multipart: true, class: "edit_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
         <%= form.submit "COMMIT", class: "submit"%>
@@ -17,4 +17,7 @@
   <%= render partial: "admin/admin"%>
 </div>
 
+<%=render partial: "admin/popup"%>
+
+<%= javascript_include_tag 'admin/popup.js'%>
 <%= javascript_include_tag 'admin/movie_categories.js'%>
