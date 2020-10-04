@@ -12,12 +12,16 @@ class Admin::MovieCategoriesController < Admin::ApplicationController
   def create
     create_movie_params[:name].each_with_index do |name, i|
       @movie_category = MovieCategory.new(name: name, user_id: params[:user_id])
-      if @movie_category.save
-        category_movie_params(i)[:videos].each do |video|
-          if video !=""
-            @movie_category.category_movies.create(video: video)
-          else
-            next
+      if name == ""
+        next
+      else
+        if @movie_category.save
+          category_movie_params(i)[:videos].each do |video|
+            if video !=""
+              @movie_category.category_movies.create(video: video)
+            else
+              next
+            end
           end
         end
       end
@@ -44,23 +48,28 @@ def update
   create_movie_params[:name].each_with_index do |name, i|
     # カテゴリーが追加されてない場合の挙動
     if i < name_length
-      @movie_categories[i].update(name: name)
-      if @movie_categories[i].save
-        video_length = @movie_categories[i].category_movies.length 
-        category_movie_params(i)[:videos].each_with_index do |video, j|
-          if j < video_length
-            if video == ""
-              @movie_categories[i].category_movies[j].destroy
-            elsif video == "exist"
-              next
+      if name == ""
+        @movie_categories[i].destroy
+      else
+        @movie_categories[i].update(name: name)
+        video_length = @movie_categories[i].category_movies.length
+
+        if @movie_categories[i].save
+          category_movie_params(i)[:videos].each_with_index do |video, j|
+            if j < video_length
+              if video == ""
+                @movie_categories[i].category_movies[j].destroy
+              elsif video == "exist"
+                next
+              else
+                @movie_categories[i].category_movies[j].update(video: video)
+              end
             else
-              @movie_categories[i].category_movies[j].update(video: video)
-            end
-          else
-            if video !=""
-              @movie_categories[i].category_movies.create(video: video)
-            else
-              next
+              if video !=""
+                @movie_categories[i].category_movies.create(video: video)
+              else
+                next
+              end
             end
           end
         end
@@ -68,18 +77,20 @@ def update
     # カテゴリーが追加された場合の挙動
     else
       @movie_category = MovieCategory.new(name: name, user_id: params[:user_id])
-
-      if movie_category.save
-        category_movie_params(i)[:videos].each do |video|
-          if video !=""
-            @movie_category.category_movies.create(video: video)
-          else
-            next
+      if name == ""
+        next
+      else
+        if @movie_category.save
+          category_movie_params(i)[:videos].each do |video|
+            if video !=""
+              @movie_category.category_movies.create(video: video)
+            else
+              next
+            end
           end
         end
       end
     end
-
   end
   
   respond_to do |format|

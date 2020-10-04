@@ -1,0 +1,33 @@
+
+<%# 画像編集用のポップアップ %>
+
+<div class="popup" id="image-edit-popup">
+  <div class="popup-inner">
+    <div class="close-btn" id="js-close-btn"><i class="fas fa-times"></i></div>
+    <div id="edit-field">
+      <div id="Rotate-Left" class="popup-edit-button" data-deg="-90">Rotate-Left</div>
+      <div id="Rotate-Right" class="popup-edit-button" data-deg="90">Rotate-Right</div>
+      <div id="Save" class="popup-edit-button">Save</div>
+    </div>
+    <img id="popup-image" class= "popup-image" width="500px" height="500px">
+  </div>
+  <div class="black-background" id="js-black-bg"></div>
+</div>
+
+
+<%# カテゴリー削除確認のポップアップ %>
+
+<div class="popup" id="confirm-delete-popup">
+  <div class="confirm-delete-popup-inner">
+    <div class="close-btn" id="js-confirm-close-btn"><i class="fas fa-times"></i></div>
+    <div class='popup-content'>
+      <p>本当にカテゴリを削除してもよろしいでしょうか？</p>
+      <p>＊注意： "commit"を押下しない限り、該当の操作は反映されません。</p>
+    </div>
+    <div class="submit" id="confirm-delete-Yes">Yes</div>
+    <div class="submit" id="confirm-delete-No">No</div>
+  </div>
+  <div class="black-background" id="js-confirm-black-bg"></div>
+</div>
+
+<%# 送信時のポップアップ %>

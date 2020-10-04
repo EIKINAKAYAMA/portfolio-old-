@@ -1,10 +1,16 @@
 $(function () {
+
+  //popup.jsで定義した関数の読み込み
+  var buildConfirmDaleteCategory = window.hogeLib.buildConfirmDaleteCategory();
+
+  // 新規カテゴリーの作成
   const buildCategory = (categoryIndex, index) => {
     const html = `<div class="category" data-index="${categoryIndex}">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
                     <div class = "category__name" data-index="${categoryIndex}">
                       <p>Name of Category :</p>
                       <label> 
-                        <input type="text" class="category__name__text" name="movie_categories[name][]">
+                        <input type="text" class="category__name__text">
                       </label>
                     </div>
 
@@ -12,7 +18,7 @@ $(function () {
                       <div class = "movie-box" >
                         <div class="js-file_group">
                           <label data-index="${index}" class="movie-upload">
-                            <input type="file" class="js-file" multiple="multiple" style="visibility: hidden">
+                            <input type="file" class="js-file" style="visibility: hidden" accept="video/*">
                             <p class="icon"><i class="fas fa-camera fa-3x"></i></p>
                             <p>Drag and Drop<br>or click</p>
                           </label>
@@ -27,7 +33,7 @@ $(function () {
   // 画像用のinputを生成する関数
   const buildFileField = (index) => {
     const html = `<label data-index="${index}" class="movie-upload">
-                    <input type="file" class="js-file" style="visibility: hidden">
+                    <input type="file" class="js-file" style="visibility: hidden" accept="video/*">
                     <p class="icon"><i class="fas fa-camera fa-3x"></i></p>
                     <p>Drag and Drop<br>or click</p>
                   </label>`;
@@ -41,7 +47,7 @@ $(function () {
                     </div>
                     <div data-index="${index}" class = "preview__change">
                       <label data-index="${index}" class="preview__change__upload">変更
-                        <input type="file" class="js-file" style="visibility: hidden">
+                        <input type="file" class="js-file" style="visibility: hidden" accept="video/*">
                       </label>
                       <div class="preview__change__edit">編集</div>
                       <div class="preview__change__delete">削除</div>
@@ -72,7 +78,7 @@ $(function () {
     return targetIndex
   }
 
-  //newアクション時には実行させないようにする必要あり
+  //編集時のデータ取得
   $(function () {
     if (document.URL.match(/edit/)) {
       $.getJSON('edit')
@@ -108,8 +114,14 @@ $(function () {
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
       const blobUrl = window.URL.createObjectURL(file);
-      categories_array[categoryIndex][targetIndex] = files[i]
 
+      // ファイルサイズが50Mを越えた場合、許容しない
+      if (50000000 < file.size) {
+        alert("ファイルサイズが50Mを超えている為、対象の動画はアップロードができません。許容可能ファイルサイズの拡大については、”お知らせ”より対応状況を随時お知らせいたします。ご協力をお願いいたします。")
+        return false;
+      }
+      categories_array[categoryIndex][targetIndex] = files[i]
+      
       if (video = $(`.category[data-index="${categoryIndex}"]`).find(`video[data-index="${targetIndex}"]`)[0]) {
         video.setAttribute('src', blobUrl);
       } else {
@@ -121,28 +133,53 @@ $(function () {
 
   // 動画回転アクション
   $(document).on('click', '.preview__change__edit', function () {
-    const categoryIndex = $(this).parents(".category").data('index');
-    const targetIndex = $(this).parent().data('index');
-    console.log(categoryIndex +"-" +targetIndex)
-    video = $(`.category[data-index="${categoryIndex}"]`).find(`video[data-index="${targetIndex}"]`)
-    console.log(video.attr("src"))
-    function rotate_video(video, degree) {
-      //スタイルを適用する関数を定義
-      video.addClass("Rotate" + degree);
-    }
-
-    rotate_video(video, 90)
-
+    alert("動画をアプリ上でも編集可能な機能を対応中です。リリースまで今しばらくお待ちください。")
+    // const categoryIndex = $(this).parents(".category").data('index');
+    // const targetIndex = $(this).parent().data('index');
+    // console.log(categoryIndex +"-" +targetIndex)
+    // video = $(`.category[data-index="${categoryIndex}"]`).find(`video[data-index="${targetIndex}"]`)
+    // function rotate_video(video, degree) {
+    //   //スタイルを適用する関数を定義
+    //   video.addClass("Rotate" + degree);
+    // }
+    // rotate_video(video, 90)
    })
 
-  //画像削除アクション
+  //動画削除アクション
   $(document).on('click', '.preview__change__delete', function () {
     const categoryIndex = $(this).parents(".category").data('index');
     const targetIndex = $(this).parent().data('index');
-    $(`.category[data-index="${categoryIndex}"]`).find(`label[data-index="${targetIndex}"]`).remove();
-    $(`.category[data-index="${categoryIndex}"]`).find(`.preview[data-index="${targetIndex}"]`).remove();
+    $(`.category[data-index="${categoryIndex}"]`).find(`.preview[data-index="${targetIndex}"]`).parents(".video").remove();
     categories_array[categoryIndex][targetIndex] = "";
   });
+
+  //カテゴリー削除アクション
+  $(document).on('click', '.fa-trash', function () {
+    // ポップアップの発生
+    let categoryIndex = $(this).parents(".category").data('index');
+    var popup = document.getElementById('confirm-delete-popup');
+    if (!popup) return;
+    popup.classList.add('is-show');
+
+    $("#confirm-delete-Yes").on('click', function () {
+      for (i = 0; i < categories_array[categoryIndex].length; i++) {
+        categories_array[categoryIndex].splice(i, 1, "");
+      }
+      categories_array[categoryIndex].push("deleted_category");
+      //子要素を全て削除
+      $(`.category[data-index="${categoryIndex}"]`).empty();
+      // 親要素はユーザーの後続操作対応に残しておくが、画面上からは隠す
+      $(`.category[data-index="${categoryIndex}"]`).hide();
+      popup.classList.remove('is-show');
+    });
+    $("#confirm-delete-No").click(function () {
+      $("#confirm-delete-Yes, #confirm-delete-No").remove()
+      popup.classList.remove('is-show');
+      $('.confirm-delete-popup-inner').append(buildConfirmDaleteCategory)
+      // delete categoryIndex;
+    });
+    console.log(categories_array)
+  })
 
   //Loading アクション
   function dispLoading(msg) {
@@ -160,69 +197,104 @@ $(function () {
   function removeLoading() {
     $("#nowLoading").remove();
     $(".spinner").remove();
-  } 
-
-
+  }
   
   //ページのform送信アクション
-  $('.new_item, .edit_item').on('submit', function (e) {
+  $(".new_item,.edit_item").on('submit', function (e) {
     e.preventDefault();
     var formData = new FormData(this);
     var url = $(this).attr('action');
+    var status = ""
 
-    //Loadingアクション
-    dispLoading("prosessing...");
-
-    // 配列の中の空白を削除した綺麗な配列を新規に作成
-    // files_tidy_array = $.grep(files_array, function (e) {
-    //   return e !== "";
-    // });
+    // 写真が存在しないカテゴリーをチェック
     for (var i = 0; i < categories_array.length; i++) {
-      categories_array[i].forEach(function (file) {
-        formData.append("category_movies[" + i + "][videos][]", file)
+      files_tidy_array = $.grep(categories_array[i], function (e) {
+        return e !== "";
       });
+      if (files_tidy_array == "") {
+        alert("動画のないカテゴリーがあります。")
+        status = "NG"
+        return false;
+      }
     }
 
-    if ($(this).attr('class') == "new_item") {
-      console.log("new")
-      $.ajax({
-        url: url,
-        type: "POST",
-        data: formData,
-        dataType: 'json',
-        contentType: false,
-        processData: false
-      })
-        .done(function (data) {
-          alert('出品に成功しました！');
+    //名前が空欄のカテゴリーをチェック
+    var Input = document.getElementsByClassName
+      ("category__name__text");
+    // 写真が存在しないカテゴリーをチェック
+    Array.prototype.forEach.call(Input, function (el) {
+      if (el.value == "") {
+        alert("名前がないカテゴリーがあります。")
+        status = "NG"
+        return false;
+      }
+    })
+
+    console.log(status)
+    //Loadingアクション
+    if (status == "NG") {
+      //意図しない値がないことをチェック済みなので、Loadingアクションを実行する
+      return false;
+    } else {
+      dispLoading("prosessing...");
+      for (var i = 0; i < categories_array.length; i++) {
+        if ($(`.category__name[data-index="${i}"]`).length) {
+          inputvalue = $(`.category[data-index="${i}"]`).find(`.category__name__text`).val();
+          formData.append("movie_categories[name][]", inputvalue)
+        } else {
+          formData.append("movie_categories[name][]", "")
+        }
+
+        categories_array[i].forEach(function (file) {
+          if (file != "deleted_category") {
+            formData.append("category_movies[" + i + "][videos][]", file)
+          }
+        });
+      }
+
+      if ($(this).attr('class') == "new_item") {
+        $.ajax({
+          url: url,
+          type: "POST",
+          data: formData,
+          dataType: 'json',
+          contentType: false,
+          processData: false
         })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-          alert('出品に失敗しました！');
+          .done(function (data) {
+            alert('保存に成功しました！');
+            location.reload();
+          })
+          .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
+            location.reload();
+          })
+          .always(function () {
+            removeLoading();
+            $(".submit").removeAttr("disabled")
+          })
+      } else if ($(this).attr('class') == "edit_item") {
+        $.ajax({
+          url: url,
+          type: "PATCH",
+          data: formData,
+          dataType: 'json',
+          contentType: false,
+          processData: false
         })
-        .always(function () {
-          removeLoading();
-          $(".submit").removeAttr("disabled")
-        })
-    } else if ($(this).attr('class') == "edit_item") {
-      console.log("edit")
-      $.ajax({
-        url: url,
-        type: "PATCH",
-        data: formData,
-        dataType: 'json',
-        contentType: false,
-        processData: false
-      })
-        .done(function (data) {
-          alert('出品に成功しました！');
-        })
-        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
-          alert('出品に失敗しました！');
-        })
-        .always(function () {
-          removeLoading();
-          $(".submit").removeAttr("disabled")
-        })
+          .done(function (data) {
+            alert('編集に成功しました！');
+            location.reload();
+          })
+          .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
+            location.reload();
+          })
+          .always(function () {
+            removeLoading();
+            $(".submit").removeAttr("disabled")
+          })
+      }
     }
   });
 });

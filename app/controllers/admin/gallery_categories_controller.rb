@@ -14,12 +14,16 @@ end
 def create
   create_gallery_params[:name].each_with_index do |name, i|
     @gallery_category = GalleryCategory.new(name: name, user_id: params[:user_id])
-    if @gallery_category.save
-      category_image_params(i)[:images].each do |image|
-        if image !=""
-          @gallery_category.category_images.create(image: image)
-        else
-          next
+    if name == ""
+      next
+    else 
+      if @gallery_category.save
+        category_image_params(i)[:images].each do |image|
+          if image !=""
+            @gallery_category.category_images.create(image: image)
+          else
+            next
+          end
         end
       end
     end
@@ -44,25 +48,32 @@ def update
   @gallery_categories = GalleryCategory.where(user_id: params[:user_id])
   name_length = @gallery_categories.length
   create_gallery_params[:name].each_with_index do |name, i|
-    # カテゴリーが追加されてない場合の挙動
     if i < name_length
-      @gallery_categories[i].update(name: name)
-      if @gallery_categories[i].save
-        image_length = @gallery_categories[i].category_images.length 
-        category_image_params(i)[:images].each_with_index do |image, j|
-          if j < image_length
-            if image == ""
-              @gallery_categories[i].category_images[j].destroy
-            elsif image == "exist"
-              next
+      if name == ""
+        @gallery_categories[i].destroy
+      else
+        @gallery_categories[i].update(name: name)
+        image_length = @gallery_categories[i].category_images.length
+  
+        if @gallery_categories[i].save
+          category_image_params(i)[:images].each_with_index do |image, j|
+            # 元々追加されていた画像群のアップデート
+            if j < image_length
+              if image == ""
+                @gallery_categories[i].category_images[j].destroy
+              elsif image == "exist"
+                next
+              else
+                @gallery_categories[i].category_images[j].update(image: image)
+              end
+              # 編集時に追加されていた画像群のアップデート
             else
-              @gallery_categories[i].category_images[j].update(image: image)
-            end
-          else
-            if image !=""
-              @gallery_categories[i].category_images.create(image: image)
-            else
-              next
+              # 既存カテゴリーに削除がある場合は、カテゴリーその物を削除
+              if image != ""
+                @gallery_categories[i].category_images.create(image: image)
+              else
+                next
+              end
             end
           end
         end
@@ -70,18 +81,20 @@ def update
     # カテゴリーが追加された場合の挙動
     else
       @gallery_category = GalleryCategory.new(name: name, user_id: params[:user_id])
-
-      if @gallery_category.save
-        category_image_params(i)[:images].each do |image|
-          if image !=""
-            @gallery_category.category_images.create(image: image)
-          else
-            next
+      if name == ""
+        next
+      else
+        if @gallery_category.save
+          category_image_params(i)[:images].each do |image|
+            if image !=""
+              @gallery_category.category_images.create(image: image)
+            else
+              next
+            end
           end
         end
       end
     end
-
   end
   
   respond_to do |format|

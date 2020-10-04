@@ -95,7 +95,6 @@
   border-bottom: none;
 }
 
-
 .popup {
   position: fixed;
   left: 0;
@@ -111,7 +110,7 @@
 .popup.is-show{
   opacity: 1;
   visibility: visible;
-  .popup-inner {
+  .popup-inner, .confirm-delete-popup-inner {
     position: absolute;
     left: 50%;
     top: 50%;
