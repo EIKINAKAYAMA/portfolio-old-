@@ -6,15 +6,10 @@ before_action :authenticate_user!
 
   def update
     if current_user.update(user_params)
-      redirect_to root_path
+      redirect_to new_admin_user_design_path(current_user)
     else
       render :edit
     end
-  end
-
-  def index
-    gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
-    gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
 
   private

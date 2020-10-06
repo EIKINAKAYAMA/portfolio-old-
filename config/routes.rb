@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # index page doesn't require "index" just "customers"
   # so make it easier
 
-  resources :users, only: [:edit, :update, :show]
+  resources :users, only: [:edit, :update, :index]
 
   namespace :admin do
     resources :users do

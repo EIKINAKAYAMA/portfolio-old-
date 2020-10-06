@@ -20,7 +20,7 @@ $(function () {
                           <label data-index="${index}" class="movie-upload">
                             <input type="file" class="js-file" style="visibility: hidden" accept="video/*">
                             <p class="icon"><i class="fas fa-camera fa-3x"></i></p>
-                            <p>Drag and Drop<br>or click</p>
+                            <p>click</p>
                           </label>
                         </div>
                       </div>
@@ -35,7 +35,7 @@ $(function () {
     const html = `<label data-index="${index}" class="movie-upload">
                     <input type="file" class="js-file" style="visibility: hidden" accept="video/*">
                     <p class="icon"><i class="fas fa-camera fa-3x"></i></p>
-                    <p>Drag and Drop<br>or click</p>
+                    <p>click</p>
                   </label>`;
     return html;
   }
