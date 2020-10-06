@@ -1,5 +1,11 @@
 class Admin::GalleryCategoriesController < Admin::ApplicationController
 before_action :authenticate_user!
+before_action :set_instagram
+
+def set_instagram
+  gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
+  gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
+end
 
 def new
   @user = User.find(params[:user_id])

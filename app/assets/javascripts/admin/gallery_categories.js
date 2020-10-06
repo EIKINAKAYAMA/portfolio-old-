@@ -119,18 +119,19 @@ $(function () {
     e.preventDefault();
   });
 
-  $("#image-box").on("drop", function (e) {
-    var targetIndex = files_array.length
+  $(document).on("drop", ".image-upload", function (e) {
+    const categoryIndex = $(this).parents(".category").data('index')
+    let targetIndex = $(this).data('index');
     e.preventDefault();
     const files = e.originalEvent.dataTransfer.files;
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
       const blobUrl = window.URL.createObjectURL(file);
-      categories_array[categoryIndex][targetIndex] = files[i]
-      if (img = $(`.category[data-index="${categoryIndex}"]`).find(`img[data-index="${targetIndex}"]`)[0]) {
-        img.setAttribute('src', blobUrl);
-      } else {
+      if (file.type.match("image.*")) {
+        categories_array[categoryIndex][targetIndex] = files[i]
         targetIndex = new_upload(categoryIndex, targetIndex, blobUrl)
+      } else {
+        alert("画像ファイル以外のデータを検知しました。対象のファイルは処理をスキップいたします。なお、許容している拡張子は、画像として認識される'jpg', 'jpeg', 'gif', 'png', 'svg', 'bmp'のみとなります。")
       }
     }
   });
@@ -142,9 +143,8 @@ $(function () {
     const files = e.target.files;
     for (var i = 0; i < files.length; i++) {
     var file = files[i];
-      const blobUrl = window.URL.createObjectURL(file);
+    const blobUrl = window.URL.createObjectURL(file);
       categories_array[categoryIndex][targetIndex] = files[i]
-
       if (img = $(`.category[data-index="${categoryIndex}"]`).find(`img[data-index="${targetIndex}"]`)[0]) {
         img.setAttribute('src', blobUrl);
       } else {

@@ -4,10 +4,7 @@
     <div class="title">MENU</div>
     <ul class="nav">
       <li>
-        <%= link_to "admin_setting", root_path%>
-      </li>
-      <li>
-        <%= link_to "design_setting", new_admin_user_design_path%>
+        <%= link_to "design_setting", new_admin_user_design_path(current_user)%>
       </li>
       <li>
         <%= link_to "gallery_setting",new_admin_user_gallery_category_path(current_user)%>
@@ -22,7 +19,13 @@
         <%= link_to "profile setting", edit_admin_user_profile_path(current_user, current_user)%>
       </li>
       <li>
+        <%= link_to "Accont setting", edit_user_path(current_user)%>
+      </li>
+      <li>
         <%= link_to "public", user_designs_path%>
+      </li>
+      <li>
+        <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
       </li>
     </ul>
   </div>

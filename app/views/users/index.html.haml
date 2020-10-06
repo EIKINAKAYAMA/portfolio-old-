@@ -1,24 +1,7 @@
-index
-
+初めて本サイトを利用する方へ
 .side-bar
   .header
     %h3.header__name
       = current_user.name
-    %ul.header__lists
       %li.list
-        = link_to do
-          = icon('fas', 'pen-square', class: 'icon')
-      %li.list
-        = link_to edit_user_path(current_user) do
-          = icon('fas', 'cog', class: 'icon')
-      %li.list
-        = link_to new_admin_user_design_path(current_user) do
-          = icon('fas', 'cog', class: 'icon')
-  %div#instagram
-    InstagramをJavaScriptのみで取得する!
-    %h2 instagram投稿
-    = link_to "instagram", "https://api.instagram.com/oauth/authorize?client_id=1055133514921533&redirect_uri=https://mylifefolio.com/&scope=user_profile,user_media&response_type=code"
-    
-    %ul#instagram-list
-= include_gon
-= javascript_include_tag "admin/main.js"
+        = link_to "早速使ってみる", new_admin_user_design_path(current_user)
