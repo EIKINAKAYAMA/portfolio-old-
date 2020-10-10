@@ -1,12 +1,13 @@
 class Public::CustomersController < Public::ApplicationController
+  before_action :set_user
+
   def new
-    @user = User.find(params[:user_id])
-    @contact_back_image = ContactBackImage.where(design: params[:user_id])
+    @contact_back_image = ContactBackImage.where(design: @user.id)
     @customer = Customer.new
   end
 
   def create
-    @user = User.where(id: params[:user_id]).first
+    # @user = User.where(id: params[:user_id]).first
     @customer = @user.customers.build(customer_params)
 
     if @customer.save
@@ -20,5 +21,9 @@ class Public::CustomersController < Public::ApplicationController
   private
   def customer_params
     params.require(:customer).permit(:name, :email, :body, :user_id)
+  end
+
+  def set_user
+    @user = User.key(params[:user_id])
   end
 end

@@ -1,25 +1,21 @@
 class Admin::GalleryCategoriesController < Admin::ApplicationController
 before_action :authenticate_user!
+before_action :set_user, only: [:new, :create, :edit, :update, :destroy]
 before_action :set_instagram
 
-def set_instagram
-  gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
-  gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
-end
 
 def new
-  @user = User.find(params[:user_id])
-  @gallery_category_check = GalleryCategory.find_by(user_id: params[:user_id])
-    if @gallery_category_check.present?
-      redirect_to action: "edit", id: params[:user_id]
-    else
-      @gallery_category = GalleryCategory.new
-    end
+  @gallery_category_check = GalleryCategory.find_by(user_id: current_user.id)
+  if @gallery_category_check.present?
+    redirect_to action: "edit", id: current_user.id
+  else
+    @gallery_category = GalleryCategory.new
+  end
 end
- 
+
 def create
   create_gallery_params[:name].each_with_index do |name, i|
-    @gallery_category = GalleryCategory.new(name: name, user_id: params[:user_id])
+    @gallery_category = GalleryCategory.new(name: name, user_id: current_user.id)
     if name == ""
       next
     else 
@@ -41,9 +37,8 @@ def create
 end
 
 def edit
-  @user = User.find(params[:user_id])
-  @gallery_categories = GalleryCategory.where(user_id: params[:user_id])
-
+  @gallery_categories = GalleryCategory.where(user_id: current_user.id)
+  
   respond_to do |format|
     format.html
     format.json
@@ -51,7 +46,7 @@ def edit
 end
 
 def update
-  @gallery_categories = GalleryCategory.where(user_id: params[:user_id])
+  @gallery_categories = GalleryCategory.where(user_id: current_user.id)
   name_length = @gallery_categories.length
   create_gallery_params[:name].each_with_index do |name, i|
     if i < name_length
@@ -60,7 +55,7 @@ def update
       else
         @gallery_categories[i].update(name: name)
         image_length = @gallery_categories[i].category_images.length
-  
+        
         if @gallery_categories[i].save
           category_image_params(i)[:images].each_with_index do |image, j|
             # 元々追加されていた画像群のアップデート
@@ -84,9 +79,9 @@ def update
           end
         end
       end
-    # カテゴリーが追加された場合の挙動
+      # カテゴリーが追加された場合の挙動
     else
-      @gallery_category = GalleryCategory.new(name: name, user_id: params[:user_id])
+      @gallery_category = GalleryCategory.new(name: name, user_id: current_user.id)
       if name == ""
         next
       else
@@ -109,11 +104,20 @@ def update
 end
 
 private
-  def create_gallery_params
-    params.require(:gallery_categories).permit(name: []).merge(user_id: params[:user_id])
+def create_gallery_params
+    params.require(:gallery_categories).permit(name: []).merge(user_id: current_user.id)
   end
-
+  
   def category_image_params(i)
     params.require(:category_images).require("#{i}").permit({images: []})
+  end
+
+  def set_user
+    @user = User.key(params[:user_id])
+  end
+
+  def set_instagram
+    gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
+    gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
 end

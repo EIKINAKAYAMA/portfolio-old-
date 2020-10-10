@@ -1,16 +1,22 @@
 class Admin::ProfilesController < ApplicationController
+  before_action :set_user
+
   def edit
-    @user = User.find(params[:user_id])
-    @profile = Profile.find(params[:user_id])
+    @profile = Profile.find(current_user.id)
   end
 
   def update
-    profile = Profile.find(params[:user_id])
-    profile.update(profile_params)
+    @profile = Profile.find(current_user.id)
+    @profile.update(profile_params)
   end
 
   private
   def profile_params
-    params.require(:profile).permit(:user_image,:user_comment).merge(user_id: params[:user_id])
+    params.require(:profile).permit(:user_image, :user_comment).merge(user_id: current_user.id)
   end
+
+  def set_user
+    @user = User.key(params[:user_id])
+  end
+  
 end
