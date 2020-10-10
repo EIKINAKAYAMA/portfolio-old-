@@ -1,11 +1,11 @@
 class Admin::DesignsController < Admin::ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: [:new, :create, :edit, :update, :destroy]
 
   def new
-    @user = User.find(params[:user_id])
-    @design_check = Design.find_by(user_id: params[:user_id])
+    @design_check = Design.find_by(user_id: current_user.id)
     if @design_check.present?
-      redirect_to action: "edit", id: params[:user_id]
+      redirect_to action: "edit", id: current_user.id
     else
       @design = Design.new
       @design.top_back_images.build
@@ -36,7 +36,6 @@ class Admin::DesignsController < Admin::ApplicationController
   end
 
   def edit
-    @user = User.find(params[:user_id])
     @design = Design.find(params[:id])
     @top_back_images = TopBackImage.where(design_id: params[:id])
     @gallery_back_image = GalleryBackImage.find_by(design_id: params[:id])
@@ -50,7 +49,6 @@ class Admin::DesignsController < Admin::ApplicationController
   end
 
   def update
-    @user = User.find(params[:user_id])
     @design = Design.find(params[:id])
     @top_back_images = TopBackImage.where(design_id: params[:id])
     array_length = @top_back_images.length 
@@ -93,12 +91,16 @@ class Admin::DesignsController < Admin::ApplicationController
         gallery_back_image_attributes: [:image],
         contact_back_image_attributes: [:image],
         profile_back_image_attributes: [:image]
-      ).merge(user_id: params[:user_id])
+      ).merge(user_id: current_user.id)
       return create_params
     end
 
     # 全体のパラメータからtop_back_imagesテーブルのimage分を配列で抽出
     def image_params
       params.require(:top_back_images).permit({images: []})
+    end
+
+    def set_user
+      @user = User.key(params[:user_id])
     end
 end

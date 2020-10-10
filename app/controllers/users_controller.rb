@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 before_action :authenticate_user!
+before_action :set_user
 
   def edit
   end
@@ -15,7 +16,7 @@ before_action :authenticate_user!
   private
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.key(params[:user_id])
   end
 
   def user_params
