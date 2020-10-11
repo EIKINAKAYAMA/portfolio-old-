@@ -37,11 +37,13 @@ $(window).load(function () {
           .then(blob => new File([blob], "Instagram" + res + ".jpeg", { type: "image/jpeg" }))
           .then(file => {
             formData.append("gallery_categories[name][]", "Instagram")
-            formData.append("category_images[0][images][]", file)
+            formData.append("category_images[1][images][]", file)
           })
+        console.log(formData)
+        console.log(gon.user_id_digest)
         
         $.ajax({
-          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
+          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories/new",
           type: "POST",
           data: formData,
           dataType: 'json',
@@ -50,7 +52,6 @@ $(window).load(function () {
         })
           .done(function () {
             alert('保存に成功しました！');
-            location.reload();
           })
           .fail(function () {
             alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
