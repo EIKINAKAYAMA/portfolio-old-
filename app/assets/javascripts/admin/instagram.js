@@ -27,9 +27,34 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
+        var formData = new FormData();
         console.log(res.data[0])
         const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
         $('#instagram-list').append(html);
+
+        fetch(res.data[0].media_url)
+          .then(response => response.blob())
+          .then(blob => new File([blob], "Instagram" + res + ".jpeg", { type: "image/jpeg" }))
+          .then(file => {
+            formData.append("gallery_categories[name][]", "Instagram")
+            formData.append("category_images[0][images][]", file)
+          })
+        
+        $.ajax({
+          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
+          type: "POST",
+          data: formData,
+          dataType: 'json',
+          contentType: false,
+          processData: false
+        })
+          .done(function () {
+            alert('保存に成功しました！');
+            location.reload();
+          })
+          .fail(function () {
+            alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
+          })
       }) 
       .fail(function () {
         console.log("NG")

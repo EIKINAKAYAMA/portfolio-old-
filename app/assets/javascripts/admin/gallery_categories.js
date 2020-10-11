@@ -276,7 +276,7 @@ $(function () {
     e.preventDefault();
     var formData = new FormData(this);
     var url = $(this).attr('action');
-    var status =""
+    var status = ""
 
     // 写真が存在しないカテゴリーをチェック
     for (var i = 0; i < categories_array.length; i++) {

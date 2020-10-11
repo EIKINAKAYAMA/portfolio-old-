@@ -1,13 +1,11 @@
 全てのユーザーのタイムライン表示ページ
-.side-bar
 <div class="side-bar">
    <div class="header">
     <div class="InstagramAPI">Instagramの投稿画像をGalleryに連携する</div>
     <div id="instagram-list"></div>
   <div>
-<div>
-  
-  <%=link_to "My admin", new_admin_user_design_path(current_user)%>
+<div>  
+<%=link_to "My admin", new_admin_user_design_path(current_user)%>
 
 <%= include_gon %>
 <%= javascript_include_tag 'admin/instagram.js'%>
