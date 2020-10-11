@@ -27,24 +27,34 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
-        var formData = new FormData();
+        // var formData = new FormData();
+        const images_array = []
         console.log(res.data[0])
         const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
         $('#instagram-list').append(html);
 
         fetch(res.data[0].media_url)
           .then(response => response.blob())
-          .then(blob => new File([blob], "Instagram" + res + ".jpeg", { type: "image/jpeg" }))
+          .then(blob => new File([blob], "Instagram" + res.data[0].media_url + ".jpeg", { type: "image/jpeg" }))
           .then(file => {
-            console.log(file)
-            formData.append("gallery_categories[name][]", "Instagram")
-            formData.append("category_images[1][images][]", file)
+            images_array.push(file)
+            // formData.append("gallery_categories[name][]", "Instagram")
+            // formData.append("category_images[0][images][]", file)
           })
         
         $.ajax({
           url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
           type: "POST",
-          data: formData,
+          data: {
+            gallery_categories: {
+              name : "Instagram"
+            },
+            category_images: {
+              0: {
+                images: images_array
+              }
+            }
+          },
           dataType: 'json',
           contentType: false,
           processData: false
