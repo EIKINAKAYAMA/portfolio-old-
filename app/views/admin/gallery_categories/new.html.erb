@@ -9,8 +9,6 @@
   <div class="main">
     <div class="container">
       <%= render partial: "limitation"%>
-      <%= link_to "Instagramの投稿画像を使用する", "https://api.instagram.com/oauth/authorize?client_id=1055133514921533&redirect_uri=https://mylifefolio.com/&scope=user_profile,user_media&response_type=code" %>
-      <div id="instagram-list"></div>
       <%= form_with model:[:admin, @user, @gallery_category], local: true, html: { multipart: true, class: "new_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
         <%= form.submit "COMMIT", class: "submit"%>

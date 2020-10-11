@@ -1,7 +1,6 @@
 class Admin::GalleryCategoriesController < Admin::ApplicationController
 before_action :authenticate_user!
 before_action :set_user, only: [:new, :create, :edit, :update, :destroy]
-before_action :set_instagram
 
 
 def new
@@ -114,10 +113,5 @@ def create_gallery_params
 
   def set_user
     @user = User.key(params[:user_id])
-  end
-
-  def set_instagram
-    gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
-    gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
 end

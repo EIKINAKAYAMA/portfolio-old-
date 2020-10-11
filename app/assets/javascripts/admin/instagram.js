@@ -1,4 +1,8 @@
 $(window).load(function () {
+  $(document).on('click', '.InstagramAPI', function () {
+    window.location.href = "https://api.instagram.com/oauth/authorize?client_id=" + gon.instagram_client_id + "&redirect_uri=" + "https://mylifefolio.com/" + "&scope=user_profile,user_media&response_type=code"
+  })
+  
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"

@@ -9,8 +9,6 @@
   <div class="main">
     <div class="container">
       <%= render partial: "limitation"%>
-      <%= link_to "Instagramの投稿画像を使用する", "https://api.instagram.com/oauth/authorize?client_id=1055133514921533&redirect_uri=https://mylifefolio.com/&scope=user_profile,user_media&response_type=code" %>
-      <div id="instagram-list"></div>
       <%= form_with url: admin_user_gallery_category_path, local: true, html: { multipart: true, class: "edit_item"} do |form| %>
         <%= render partial: "form", locals: {form: form} %>
         <%= form.submit "COMMIT", class: "submit"%>
@@ -22,8 +20,6 @@
 
 <%=render partial: "admin/popup"%>
 
-<%= include_gon %>
-<%= javascript_include_tag 'admin/instagram.js'%>
 <%= javascript_include_tag 'admin/popup.js'%>
 <%= javascript_include_tag 'admin/gallery_categories.js'%>
 <%= javascript_include_tag 'admin/croppie.js'%>

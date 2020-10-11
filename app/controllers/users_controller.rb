@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
 before_action :authenticate_user!
 before_action :set_user
+before_action :set_instagram
+
+  def index
+  end
 
   def edit
   end
@@ -21,5 +25,10 @@ before_action :set_user
 
   def user_params
     params.require(:user).permit(:name, :email)
+  end
+
+  def set_instagram
+    gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
+    gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
 end
