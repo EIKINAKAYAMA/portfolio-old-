@@ -4,6 +4,7 @@ before_action :set_user
 before_action :set_instagram
 
   def index
+    gon.user_id_digest = current_user.id_digest
   end
 
   def edit
@@ -28,7 +29,6 @@ before_action :set_instagram
   end
 
   def set_instagram
-    gon.user_id_digest = @user.id_digest
     gon.instagram_client_id = ENV['INSTAGRAM_CLIENT_ID']
     gon.instagram_client_secret = ENV['INSTAGRAM_CLIENT_SECRET']
   end
