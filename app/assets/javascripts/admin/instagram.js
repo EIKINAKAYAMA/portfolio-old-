@@ -36,14 +36,13 @@ $(window).load(function () {
           .then(response => response.blob())
           .then(blob => new File([blob], "Instagram" + res + ".jpeg", { type: "image/jpeg" }))
           .then(file => {
+            console.log(file)
             formData.append("gallery_categories[name][]", "Instagram")
             formData.append("category_images[1][images][]", file)
           })
-        console.log(formData)
-        console.log(gon.user_id_digest)
         
         $.ajax({
-          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories/new",
+          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
           type: "POST",
           data: formData,
           dataType: 'json',
