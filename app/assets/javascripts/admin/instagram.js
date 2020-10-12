@@ -37,9 +37,8 @@ $(window).load(function () {
           .then(file => {
             formData.append("gallery_categories[name][]", "Instagram")
             formData.append("category_images[0][images][]", file)
+            console.log(file)
           })
-        
-        console.log(file)
         
         $.ajax({
           url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
