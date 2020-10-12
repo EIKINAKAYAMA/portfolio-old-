@@ -27,9 +27,7 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
-        // var formData = new FormData();
-        const images_array = []
-        console.log(res.data[0])
+        var formData = new FormData();
         const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
         $('#instagram-list').append(html);
 
@@ -37,24 +35,16 @@ $(window).load(function () {
           .then(response => response.blob())
           .then(blob => new File([blob], "Instagram" + res.data[0].media_url + ".jpeg", { type: "image/jpeg" }))
           .then(file => {
-            images_array.push(file)
-            // formData.append("gallery_categories[name][]", "Instagram")
-            // formData.append("category_images[0][images][]", file)
+            formData.append("gallery_categories[name][]", "Instagram")
+            formData.append("category_images[0][images][]", file)
           })
+        
+        console.log(file)
         
         $.ajax({
           url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
           type: "POST",
-          data: {
-            gallery_categories: {
-              name : "Instagram"
-            },
-            category_images: {
-              0: {
-                images: images_array
-              }
-            }
-          },
+          data: formData,
           dataType: 'json',
           contentType: false,
           processData: false
@@ -71,6 +61,43 @@ $(window).load(function () {
       })
   })
   .fail(function (jqXHR, status) {
-    console.log("NG")
-  })
+      console.log("NG")
+    })
+  
+  // $(document).on('change', '#file', function (e) {
+  //   e.preventDefault();
+  //   const files = e.target.files;
+  //   for (var i = 0; i < files.length; i++) {
+  //     var file = files[i];
+  //     images_array[0] = file
+  //   }
+  //   console.log(images_array)
+  // });
+  
+  // $(document).on('click', '.InstagramAPI', function () {
+  //   const html = `<li><img src="https://photosku.com/img/006.jpg" width="100px" height="100px"></li>`
+  //   $('#instagram-list').append(html);
+  //   var formData = new FormData();
+  //   formData.append("gallery_categories[name][]", "Instagram")
+  //   formData.append("category_images[0][images][]", images_array[0])
+
+  //   console.log(images_array[0])
+  //   $.ajax({
+  //     url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
+  //     type: "POST",
+  //     data: formData,
+  //     dataType: 'json',
+  //     // beforeSend: function (xhr) {
+  //     //   xhr.setRequestHeader("X-CSRF-Token", $('meta[name="csrf-token"]').attr('content'))
+  //     // },
+  //     contentType: false,
+  //     processData: false
+  //   })
+  //     .done(function () {
+  //       alert('保存に成功しました！');
+  //     })
+  //     .fail(function () {
+  //       alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
+  //     })
+  // })
 });
