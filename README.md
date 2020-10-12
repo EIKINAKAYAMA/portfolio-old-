@@ -138,6 +138,17 @@ URL:　https://trello.com/b/rUgYtSkB/portfilio　
 - has_one :profiles, dependent: :destroy
 - has_one :designs, dependent: :destroy
 
+### sns_credentials_table(SNSログイン用のDB)
+
+|Column|Type|Options|
+|------|----|-------|
+|provider|string|null: false|
+|uid|string|null: false, unique: true|
+|name|string|null: false|
+|e-mail|string|null: false, unique: true|
+|token|string|null: false, unique: true|
+|user|references|null: false, foreign_key: true|
+
 ### profiles_table(UserのprofileDB)
 |Column|Type|Options|
 |------|----|-------|
