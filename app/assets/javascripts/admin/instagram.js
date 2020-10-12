@@ -1,4 +1,5 @@
 $(window).load(function () {
+
   $(document).on('click', '.InstagramAPI', function () {
     window.location.href = "https://api.instagram.com/oauth/authorize?client_id=" + gon.instagram_client_id + "&redirect_uri=" + "https://mylifefolio.com/" + "&scope=user_profile,user_media&response_type=code"
   })
@@ -6,6 +7,7 @@ $(window).load(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
+  const images_array = []
 
   $.ajax({
     url: url,
@@ -27,41 +29,46 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
-        var formData = new FormData();
         const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
         $('#instagram-list').append(html);
-
-        fetch(res.data[0].media_url)
-          .then(response => response.blob())
-          .then(blob => new File([blob], "Instagram" + res.data[0].media_url + ".jpeg", { type: "image/jpeg" }))
-          .then(file => {
-            formData.append("gallery_categories[name][]", "Instagram")
-            formData.append("category_images[0][images][]", file)
-            console.log(file)
-          })
         
-        $.ajax({
-          url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
-          type: "POST",
-          data: formData,
-          dataType: 'json',
-          contentType: false,
-          processData: false
+        fetch(res.data[0].media_url)
+        .then(response => response.blob())
+        .then(blob => new File([blob], "Instagram" + res.data[0].media_url + ".jpeg", { type: "image/jpeg" }))
+        .then(file => {
+          images_array[0] = file
         })
-          .done(function () {
-            alert('保存に成功しました！');
-          })
-          .fail(function () {
-            alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
-          })
-      }) 
+      })
       .fail(function () {
         console.log("NG")
       })
-  })
   .fail(function (jqXHR, status) {
       console.log("NG")
+  })
+  
+    $('#Save').on('click', function () { 
+      var formData = new FormData();
+      formData.append("gallery_categories[name][]", "Instagram")
+      formData.append("category_images[0][images][]", images_array[0])
+      console.log(images_array[0])
+
+      $.ajax({
+        url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
+        type: "POST",
+        data: formData,
+        dataType: 'json',
+        contentType: false,
+        processData: false
+      })
+        .done(function () {
+          alert('保存に成功しました！');
+        })
+        .fail(function () {
+          alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
+        })
     })
+
+  })
   
   // $(document).on('change', '#file', function (e) {
   //   e.preventDefault();
