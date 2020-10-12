@@ -4,17 +4,19 @@
 Mylifefolio
 
 ## App URL & DEMO acount(App URL & DEMO アカウント)
+
+App　URL
 https://mylifefolio.com/
 
-SIN IN
-E-mail:sample
-Password:sample
+DEMO　account  
+E-mail:sample@icloud.com  
+Password:samplesample  
 
 *テストアカウントを使用せずにご自身でsign upすることも可能です。（facebookからのSign upも可能）
  その場合、写真や動画等は事前に設定されておりませんのでご了承ください。
  （SNS認証の流れについてはDEMOをご参照ください。）
  
-＊本アプリケーションではInstagramからの画像連携が可能ですが、
+*本アプリケーションではInstagramからの画像連携が可能ですが、
  Instagram側での公式なアプリ承認をまだ取得していない為、一般ユーザーによる任意のInstagram連携ができません。
  Instagram連携を利用したい方は、管理者に追加したいアカウント名をお知らせください。
  該当アカウントにMylifefolioからの連携申請が送信されますので、承認することで連携が可能となります。
