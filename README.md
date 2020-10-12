@@ -26,6 +26,8 @@ Password:samplesample
  該当アカウントにMylifefolioからの連携申請が送信されますので、承認することで連携が可能となります。  
  （SNS連携の流れについてはDEMOをご参照ください。）  
  
+## DEMO
+ 
 ## Overview(概要)
 本アプリケーションは、無料で一般公開向けのフォト・ムービーサイトを作成できるアプリです。  
 本アプリケーションは、主に公開画面と管理画面に分かれています。  
@@ -67,32 +69,86 @@ Password:samplesample
 デザイン性についは、本格的なフォトサイトと比べると、個人的なニーズの対応幅が狭い等のデメリットもありますが、可能な限り対応して行くと共に、  
 フォトグラファーとして活動したい若者の転機の一因、個人の感性やストーリーを保存しシェアしていきたい感性あふれるユーザーの為の、ビジュアルに特化した新たなSNSを目指しています。
 
+
+## Technology used(使用技術)
+【言語】
+・Ruby
+.Javascript
+・HTML5
+・SCSS
+
+【OS】
+Unix
+
+【DB】
+MySQL
+
+【フレームワーク】
+・Ruby on Rails
+
+【本番サーバー】
+AWS
+
+## Roadmap（＊個人的に取得したい技術に応じて、前後予定）  
+ロードマップ運営管理Torello  
+URL:　https://trello.com/b/rUgYtSkB/portfilio　
+
+### 【2020年】
+7月　制作開始
+　　 管理画面・フロント画面の基盤の構築
+
+８月　管理画面・フロント画面のギャラリーページ、動画ページの構築
+
+9月　facebook認証
+　　 Instagram連携（画像取得）
+　　 画像複数アップロード対応、及び画像編集機の追加
+　　 URL改変（SEO対応）
+
+10月 Instagram連携（取得画像の自動保存）
+　　　多言語対応
+     お知らせ機能・お問い合わせ機能の追加
+
+11月　プロフィール画面,コンタクト画面の構築の決定
+　　　タイムライン機能の実装
+
+12月　フォント・デザイン・エフェクトの編集機能構築
+
+### 【2021年】
+1月　管理画面・フロント画面のデザイン修正
+　　 機能テスト
+   
+2月　Instagram連携認証取得
+　　 結合テスト
+
+3月　正式リリース
+
 ## DB Design(DB設計)
-### users_table
+### users_table(UserアカウントDB)
 
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
 |email|string|null: false, unique: true|
 |password|string|null: false|
+|id_digest|string||
 
-#### Association
-- has_many :genres, dependent: :destroy_all
-- has_many :customers, dependent: :destroy_all
+##### Association
+- has_many :categories, dependent: :destroy
+- has_many :customers, dependent: :destroy
 - has_one :profiles, dependent: :destroy
 - has_one :designs, dependent: :destroy
 
-### profiles_table(user_profile)
+### profiles_table(UserのprofileDB)
 |Column|Type|Options|
 |------|----|-------|
 |user_image|string|null: false|
 |user_comment|text||
 |user|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :user
 
-### customers_table(contact_page)
+### customers_table(コンタクトページのDB)
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
@@ -100,66 +156,103 @@ Password:samplesample
 |body|text|null: false|
 |user|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :user
 
-### design_table(public_all_page_design for_changing effect color etc)
+### design_table(フロント公開ページ（TOP,Gallery,Movie,Contact,Profile）の統合デザイン設定用のDB)
 |Column|Type|Options|
 |------|----|-------|
 |user|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :user
 - has_many: top_back_images
 - has_many: gallery_back_images
+- has_many: movie_back_images
 - has_many: contact_back_images
 - has_many: profile_back_images
 
-### top_back_images_table(top_page_design)
+#### top_back_images_table(フロント公開ページ（TOP）のページデザイン設定用のDB)
 |Column|Type|Options|
 |------|----|-------|
 |image|string||
 |designs|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :design
 
-### gallery_back_images_table(top_page_design)
+#### gallery_back_images_table(ギャラリー公開ページ（Gallery）のページデザイン設定用のDB)
 |Column|Type|Options|
 |------|----|-------|
 |image|string||
 |designs|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :design
 
+#### movie_back_images_table(ムービー公開ページ（Movie）のページデザイン設定用のDB)
+|Column|Type|Options|
+|------|----|-------|
+|image|string||
+|designs|references|null: false, foreign_key: true|
 
-### gallery_table
+##### Association
+- belongs_to :design
+
+#### contact_back_images_table(コンタクト公開ページ（Contact）のページデザイン設定用のDB)
+|Column|Type|Options|
+|------|----|-------|
+|image|string||
+|designs|references|null: false, foreign_key: true|
+
+##### Association
+- belongs_to :design
+
+#### profile_back_images_table(プロフィール公開ページ（Profile）のページデザイン設定用のDB)
+|Column|Type|Options|
+|------|----|-------|
+|image|string||
+|designs|references|null: false, foreign_key: true|
+
+##### Association
+- belongs_to :design
+
+### gallery_categories_table(画像ギャラリーページの各ギャラリー用のDB)
 |Column|Type|Options|
 |------|----|-------|
 |name|string|null: false|
 |user|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :user
-- has_many :categories, dependent: :destroy
-
-### category_table
-|Column|Type|Options|
-|------|----|-------|
-|name|string|null: false|
-|gallery|references|null: false, foreign_key: true|
-
-#### Association
-- belongs_to :gallery
 - has_many :category_images, dependent: :destroy
 
-### category_images_table(for_gallery)
+#### category_images_table(画像ギャラリーページの各ギャラリーに紐づく画像群のDB)
 |Column|Type|Options|
 |------|----|-------|
 |image|string||
 |body|text||
 |category|references|null: false, foreign_key: true|
 
-#### Association
+##### Association
 - belongs_to :category
+
+### movie_categories_table(ムービーページの各ギャラリー用のDB)
+|Column|Type|Options|
+|------|----|-------|
+|name|string|null: false|
+|user|references|null: false, foreign_key: true|
+
+##### Association
+- belongs_to :user
+- has_many :category_movies, dependent: :destroy
+
+#### category_movies_table(ムービーページの各ギャラリーに紐づく動画群のDB)
+|Column|Type|Options|
+|------|----|-------|
+|video|string||
+|body|text||
+|movie_category|references|null: false, foreign_key: true|
+
+##### Association
+- belongs_to :movie_category
