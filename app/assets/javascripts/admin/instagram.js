@@ -110,8 +110,12 @@ $(function () {
       })  
   })
 
-  // //Instagram連携
+  // //Instagram連携(LOCAL用)
   // $(document).on('click', '.InstagramAPI', function () {
+  //   // ポップアップの発生
+  //     var popup = document.getElementById('instagram-popup');
+  //     if (!popup) return;
+  //     popup.classList.add('is-show');
 
   //   const html = `<li>
   //                   <div class="image_box">
@@ -121,7 +125,7 @@ $(function () {
   //                 </li>`
 
   //   $('.image_list').append(html); 
-
+    
   //   // 画像がクリックされた時の処理です。
   //   $('img.thumbnail').on('click', function () {
   //     if (!$(this).is('.checked')) {
