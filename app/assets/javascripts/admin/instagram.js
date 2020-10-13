@@ -48,17 +48,6 @@ $(function () {
           images_array[0] = file
         })
 
-      })
-      .fail(function () {
-        console.log("NG")
-      })
-  .fail(function (jqXHR, status) {
-      console.log("NG")
-  })
-    
-    // もしURLにコードがある場合は、連携後のリダイレクト、ポップアップを表示する
-    window.onload = function () {
-      if (code != '') {
         // ポップアップの発生
         var popup = document.getElementById('instagram-popup');
         if (!popup) return;
@@ -71,19 +60,19 @@ $(function () {
             $(this).removeClass('checked')
           }
         })
-  
+
         // 対象ユーザーのギャラリーページに保存する
         $('#instagram-save').on('click', function () {
           var formData = new FormData();
-    
+
           $(".popup-content").remove();
           popup.classList.remove('is-show');
           $('.instagram-popup-inner').append(buildpopupInstagram)
-    
+
           formData.append("gallery_categories[name][]", "Instagram")
           formData.append("category_images[0][images][]", images_array[0])
           console.log(images_array[0])
-    
+
           $.ajax({
             url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
             type: "POST",
@@ -99,10 +88,14 @@ $(function () {
               alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
             })
         })
-      }
-    };
 
-  
+      })
+      .fail(function () {
+        console.log("NG")
+      })
+      .fail(function (jqXHR, status) {
+          console.log("NG")
+      })  
   })
 
   // //Instagram連携
