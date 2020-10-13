@@ -12,7 +12,7 @@ $(function () {
     const html = `<li>
                     <div class="image_box">
                       <img class="thumbnail" src="${image}" width="200px" height="200px" data-index="${index}">
-                      <input class="disabled_checkbox" type="checkbox"/>
+                      <input class="disabled_checkbox" type="checkbox" checked />
                     <div>
                   </li>`
     return html

@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 ul.image_list{
+  max-width: 100%;
   overflow: scroll;
   li{
     /* liが横並びになるようにします。 */
