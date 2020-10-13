@@ -3,9 +3,20 @@ $(function () {
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
   const images_array = []
-
+  
   //popup.jsで定義した関数の読み込み
   var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
+  
+  // 連携したInstagram画像の表示
+  const buildImg = (image, index) => {
+    const html = `<li>
+                <div class="image_box">
+                  <img class="thumbnail" src="${image}" width="200px" height="200px" data-index="${index}>
+                  <input class="disabled_checkbox" type="checkbox"/>
+                  <div>
+                  </li>`
+    return html
+  }
 
   $(document).on('click', '.InstagramAPI', function () {
     window.location.href = "https://api.instagram.com/oauth/authorize?client_id=" + gon.instagram_client_id + "&redirect_uri=" + "https://mylifefolio.com/" + "&scope=user_profile,user_media&response_type=code"
@@ -31,22 +42,19 @@ $(function () {
       url: userUrl
     })
       .done(function (res) {
-
-        const html = `<li>
-                    <div class="image_box">
-                      <img class="thumbnail" src="${res.data[0].media_url}" width="200px" height="200px">
-                      <input class="disabled_checkbox" type="checkbox" checked />
-                    <div>
-                  </li>`
-
-        $('.image_list').append(html); 
-        
-        fetch(res.data[0].media_url)
-        .then(response => response.blob())
-        .then(blob => new File([blob], "Instagram" + res.data[0].media_url + ".jpeg", { type: "image/jpeg" }))
-        .then(file => {
-          images_array[0] = file
+        console.log(res)
+        res.data.forEach(function (image, index) { 
+          $('.image_list').append(buildImg(image.media_url, index)); 
+          fetch(image.media_url)
+          .then(response => response.blob())
+          .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
+          .then(file => {
+            
+            images_array[index] = file
+          })
         })
+        
+        console.log(images_array)
 
         // ポップアップの発生
         var popup = document.getElementById('instagram-popup');
