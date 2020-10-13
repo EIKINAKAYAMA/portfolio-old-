@@ -51,7 +51,42 @@ $(function () {
   
   function buildConfirmDaleteCategory() {
     const html = `<div class="submit" id="confirm-delete-Yes">Yes</div>
-                    <div class="submit" id="confirm-delete-No">No</div>`
+                  <div class="submit" id="confirm-delete-No">No</div>`
+    return html
+  }
+
+  
+  // Instagram連携画面のポップアップ
+  function popupInstagram() {
+    var popup = document.getElementById('instagram-popup');
+    if (!popup) return;
+    var blackBg = document.getElementById('js-instagram-black-bg');
+    var closeBtn = document.getElementById('js-instagram-close-btn');
+    closeInstagramPopUp(blackBg);
+    closeInstagramPopUp(closeBtn);
+    function closeInstagramPopUp(elem) {
+      if (!elem) return;
+      elem.addEventListener('click', function () {
+        $(".popup-content").remove();
+        popup.classList.remove('is-show');
+        $('.instagram-popup-inner').append(buildpopupInstagram())
+      });
+    }
+  }
+  popupInstagram()
+
+  function buildpopupInstagram() {
+    const html = `<div class='popup-content'>
+                    <h1>Instagramに投稿されている写真の一覧</h1>
+                    <p>*保存する画像を選択してください。</p>
+                    <p>*保存された画像がcategory名"instagram"として、保存されます</p>
+                    <div class="instagram">
+                      <ul class="image_list">
+                      </ul>
+                    </div>
+                    <div id="instagram-save">Instagramの投稿画像を保存する</div>
+                    </div>
+                  </div>`
     return html
   }
 
@@ -59,5 +94,5 @@ $(function () {
   window.hogeLib = window.hogeLib || {};
   window.hogeLib.buildPopupImg = buildPopupImg;
   window.hogeLib.buildConfirmDaleteCategory = buildConfirmDaleteCategory;
-  
+  window.hogeLib.buildpopupInstagram = buildpopupInstagram;
 })

@@ -1,6 +1,14 @@
-$(window).load(function () {
+$(function (){
+
+  //popup.jsで定義した関数の読み込み
+  var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
 
   $(document).on('click', '.InstagramAPI', function () {
+    // ポップアップの発生
+    var popup = document.getElementById('instagram-popup');
+    if (!popup) return;
+    popup.classList.add('is-show');
+
     window.location.href = "https://api.instagram.com/oauth/authorize?client_id=" + gon.instagram_client_id + "&redirect_uri=" + "https://mylifefolio.com/" + "&scope=user_profile,user_media&response_type=code"
   })
   
@@ -29,8 +37,15 @@ $(window).load(function () {
       url: userUrl
     })
       .done(function (res) {
-        const html = `<li><img src="${res.data[0].media_url}" width="100px" height="100px"></li>`
-        $('#instagram-list').append(html);
+
+        const html = `<li>
+                    <div class="image_box">
+                      <img class="thumbnail" src="${res.data[0].media_url}" width="200px" height="200px">
+                      <input class="disabled_checkbox" type="checkbox" checked />
+                    <div>
+                  </li>`
+
+        $('.image_list').append(html); 
         
         fetch(res.data[0].media_url)
         .then(response => response.blob())
@@ -38,6 +53,18 @@ $(window).load(function () {
         .then(file => {
           images_array[0] = file
         })
+
+        // 画像がクリックされた時の処理です。
+        $('img.thumbnail').on('click', function () {
+          if (!$(this).is('.checked')) {
+            $(this).addClass('checked');
+          } else {
+            $(this).removeClass('checked')
+          }
+        })
+
+
+
       })
       .fail(function () {
         console.log("NG")
@@ -46,8 +73,14 @@ $(window).load(function () {
       console.log("NG")
   })
   
-    $('#Save').on('click', function () { 
+    // 対象ユーザーのギャラリーページに保存する
+    $('#instagram-save').on('click', function () {
       var formData = new FormData();
+
+      $(".popup-content").remove();
+      popup.classList.remove('is-show');
+      $('.instagram-popup-inner').append(buildpopupInstagram)
+
       formData.append("gallery_categories[name][]", "Instagram")
       formData.append("category_images[0][images][]", images_array[0])
       console.log(images_array[0])
@@ -67,43 +100,35 @@ $(window).load(function () {
           alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
         })
     })
-
   })
-  
-  // $(document).on('change', '#file', function (e) {
-  //   e.preventDefault();
-  //   const files = e.target.files;
-  //   for (var i = 0; i < files.length; i++) {
-  //     var file = files[i];
-  //     images_array[0] = file
-  //   }
-  //   console.log(images_array)
+
+  // //Instagram連携
+  // $(document).on('click', '.InstagramAPI', function () {
+
+  //   const html = `<li>
+  //                   <div class="image_box">
+  //                     <img class="thumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRAPapDXFzPv3sYGmw-6NjNsFmO3HjB_pmLGA&usqp=CAU" width="200px" height="200px">
+  //                     <input class="disabled_checkbox" type="checkbox" checked />
+  //                   <div>
+  //                 </li>`
+
+  //   $('.image_list').append(html); 
+
+  //   // 画像がクリックされた時の処理です。
+  //   $('img.thumbnail').on('click', function () {
+  //     if (!$(this).is('.checked')) {
+  //       $(this).addClass('checked');
+  //     } else {
+  //       $(this).removeClass('checked')
+  //     }
+  //   })
+    
+  //   //クリックされている画像を保存する
+  //   $("#instagram-save").click(function () {
+  //     $(".popup-content").remove();
+  //     popup.classList.remove('is-show');
+  //     $('.instagram-popup-inner').append(buildpopupInstagram)
+  //   })
   // });
   
-  // $(document).on('click', '.InstagramAPI', function () {
-  //   const html = `<li><img src="https://photosku.com/img/006.jpg" width="100px" height="100px"></li>`
-  //   $('#instagram-list').append(html);
-  //   var formData = new FormData();
-  //   formData.append("gallery_categories[name][]", "Instagram")
-  //   formData.append("category_images[0][images][]", images_array[0])
-
-  //   console.log(images_array[0])
-  //   $.ajax({
-  //     url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
-  //     type: "POST",
-  //     data: formData,
-  //     dataType: 'json',
-  //     // beforeSend: function (xhr) {
-  //     //   xhr.setRequestHeader("X-CSRF-Token", $('meta[name="csrf-token"]').attr('content'))
-  //     // },
-  //     contentType: false,
-  //     processData: false
-  //   })
-  //     .done(function () {
-  //       alert('保存に成功しました！');
-  //     })
-  //     .fail(function () {
-  //       alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
-  //     })
-  // })
 });
