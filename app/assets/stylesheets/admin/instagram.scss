@@ -5,6 +5,7 @@
   box-sizing: border-box;
 }
 ul.image_list{
+  overflow: scroll;
   li{
     /* liが横並びになるようにします。 */
     display: inline-block;
@@ -19,7 +20,7 @@ ul.image_list{
         cursor: pointer;
       }
       img.thumbnail.checked{
-        border: 6px solid blue;
+        border: 10px solid blue;
         box-sizing: border-box;
       }
       .disabled_checkbox {

@@ -10,10 +10,10 @@ $(function () {
   // 連携したInstagram画像の表示
   const buildImg = (image, index) => {
     const html = `<li>
-                <div class="image_box">
-                  <img class="thumbnail" src="${image}" width="200px" height="200px" data-index="${index}>
-                  <input class="disabled_checkbox" type="checkbox"/>
-                  <div>
+                    <div class="image_box">
+                      <img class="thumbnail" src="${image}" width="200px" height="200px" data-index="${index}">
+                      <input class="disabled_checkbox" type="checkbox"/>
+                    <div>
                   </li>`
     return html
   }
@@ -42,24 +42,21 @@ $(function () {
       url: userUrl
     })
       .done(function (res) {
-        console.log(res)
         res.data.forEach(function (image, index) { 
           $('.image_list').append(buildImg(image.media_url, index)); 
           fetch(image.media_url)
           .then(response => response.blob())
           .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
           .then(file => {
-            
             images_array[index] = file
           })
         })
-        
-        console.log(images_array)
 
         // ポップアップの発生
         var popup = document.getElementById('instagram-popup');
         if (!popup) return;
         popup.classList.add('is-show');
+
         // 画像がクリックされた時の処理です。
         $('img.thumbnail').on('click', function () {
           if (!$(this).is('.checked')) {
@@ -72,15 +69,19 @@ $(function () {
         // 対象ユーザーのギャラリーページに保存する
         $('#instagram-save').on('click', function () {
           var formData = new FormData();
+          var count = 0;
 
-          $(".popup-content").remove();
-          popup.classList.remove('is-show');
-          $('.instagram-popup-inner').append(buildpopupInstagram)
+          for (var i = 0; i < images_array.length; i++) {
+            if ($(`img[data-index="${i}"]`).hasClass("checked")) {
+              formData.append("gallery_categories[name][]", "Instagram")
+              formData.append("category_images[0][images][]", images_array[i])
+            }
+          }
 
-          formData.append("gallery_categories[name][]", "Instagram")
-          formData.append("category_images[0][images][]", images_array[0])
-          console.log(images_array[0])
-
+          if (count == 0) {
+            alert("保存ずる画像を選択して下さい")
+          }
+                 
           $.ajax({
             url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
             type: "POST",
@@ -91,6 +92,9 @@ $(function () {
           })
             .done(function () {
               alert('保存に成功しました！');
+              $(".popup-content").remove();
+              popup.classList.remove('is-show');
+              $('.instagram-popup-inner').append(buildpopupInstagram)
             })
             .fail(function () {
               alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
