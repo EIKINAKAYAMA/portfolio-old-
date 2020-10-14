@@ -18,6 +18,17 @@ $(function () {
     return html
   }
 
+  // 連携したInstagram動画の表示
+  const buildVideo = (video, index) => {
+    const html = `<li>
+                    <div class="image_box">
+                      <video class="thumbnail" src="${video}" width="200px" height="200px" data-index="${index}">
+                      <input class="disabled_checkbox" type="checkbox" checked />
+                    <div>
+                  </li>`
+    return html
+  }
+
   $(document).on('click', '.InstagramAPI', function () {
     window.location.href = "https://api.instagram.com/oauth/authorize?client_id=" + gon.instagram_client_id + "&redirect_uri=" + "https://mylifefolio.com/" + "&scope=user_profile,user_media&response_type=code"
   })
@@ -35,19 +46,21 @@ $(function () {
     }
   })
   .done(function(data) {
-    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username,children"
-    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
+    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username"
+    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"/children?access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
     })
       .done(function (res) {
         console.log(res)
-        res.data.forEach(function (image, index) { 
+        res.data.forEach(function (image, index) {
+          var url = new URLSearchParams(image.media_url).get('oe');
+          
           if (image.media_url.match(/video/)) { 
 
+
           } else {
-            var url = new URLSearchParams(image.media_url).get('oe');
             $('.image_list').append(buildImg(image.media_url, index)); 
             fetch(image.media_url)
             .then(response => response.blob())
