@@ -35,7 +35,7 @@ $(function () {
     }
   })
   .done(function(data) {
-    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username"
+    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username,children"
     var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
