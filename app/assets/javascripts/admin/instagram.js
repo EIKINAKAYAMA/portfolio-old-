@@ -46,7 +46,8 @@ $(function () {
           if (image.media_url.match(/video/)) { 
 
           } else {
-            $('.image_list').append(buildImg(image.media_url, index)); 
+            var url = image.media_url.get('oe');
+            $('.image_list').append(buildImg(url, index)); 
             fetch(image.media_url)
             .then(response => response.blob())
             .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
@@ -75,6 +76,8 @@ $(function () {
           var formData = new FormData();
           var count = 0;
 
+          formData.append("gallery_categories[name][]", "Instagram")
+
           console.log(images_array)
 
           for (var i = 0; i < images_array.length; i++) {
@@ -88,8 +91,6 @@ $(function () {
             alert("保存ずる画像を選択して下さい");
             return false;
           } else {
-            formData.append("gallery_categories[name][]", "Instagram")
-
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
