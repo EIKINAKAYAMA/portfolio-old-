@@ -77,7 +77,7 @@ $(function () {
 
           console.log(images_array)
 
-          for (var i = 0; i <= images_array.length; i++) {
+          for (var i = 0; i < images_array.length; i++) {
             if ($(`img[data-index="${i}"]`).hasClass("checked")) {
               formData.append("category_images[0][images][]", images_array[i])
               count++;
