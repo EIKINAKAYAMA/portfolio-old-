@@ -46,11 +46,11 @@ $(function () {
           if (image.media_url.match(/video/)) { 
 
           } else {
-            var url = image.media_url.get('oe');
-            $('.image_list').append(buildImg(url, index)); 
+            var url = new URLSearchParams(image.media_url).get('oe');
+            $('.image_list').append(buildImg(image.media_url, index)); 
             fetch(image.media_url)
             .then(response => response.blob())
-            .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
+              .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
             .then(file => {
               images_array[index] = file
             })
