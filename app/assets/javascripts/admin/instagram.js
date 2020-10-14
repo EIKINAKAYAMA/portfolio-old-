@@ -43,13 +43,17 @@ $(function () {
     })
       .done(function (res) {
         res.data.forEach(function (image, index) { 
-          $('.image_list').append(buildImg(image.media_url, index)); 
-          fetch(image.media_url)
-          .then(response => response.blob())
-          .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
-          .then(file => {
-            images_array[index] = file
-          })
+          if (image.media_url.match(/video/)) { 
+
+          } else {
+            $('.image_list').append(buildImg(image.media_url, index)); 
+            fetch(image.media_url)
+            .then(response => response.blob())
+            .then(blob => new File([blob], "Instagram" + image.media_url + ".jpeg", { type: "image/jpeg" }))
+            .then(file => {
+              images_array[index] = file
+            })
+          }
         })
 
         // ポップアップの発生
@@ -73,7 +77,7 @@ $(function () {
 
           console.log(images_array)
 
-          for (var i = 0; i < images_array.length; i++) {
+          for (var i = 0; i <= images_array.length; i++) {
             if ($(`img[data-index="${i}"]`).hasClass("checked")) {
               formData.append("category_images[0][images][]", images_array[i])
               count++;
@@ -85,7 +89,7 @@ $(function () {
             return false;
           } else {
             formData.append("gallery_categories[name][]", "Instagram")
-            
+
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
