@@ -5,6 +5,7 @@ before_action :set_instagram
 
   def index
     gon.user_id_digest = current_user.id_digest
+    gon.new_admin_user_gallery_category_path = new_admin_user_gallery_category_path(current_user)
   end
 
   def edit
