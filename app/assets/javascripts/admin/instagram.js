@@ -47,7 +47,7 @@ $(function () {
   })
   .done(function(data) {
     var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username"
-    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"/children?access_token=" + data.access_token
+    var userUrl = "https://graph.instagram.com/me/media?children?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
