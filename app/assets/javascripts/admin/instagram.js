@@ -46,8 +46,8 @@ $(function () {
     }
   })
   .done(function(data) {
-    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username"
-    var userUrl = "https://graph.instagram.com/me/media?children?fields="+ field+"&access_token=" + data.access_token
+    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username,children{media_url,thumbnail_url}"
+    var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
