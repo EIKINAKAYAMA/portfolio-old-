@@ -35,13 +35,14 @@ $(function () {
     }
   })
   .done(function(data) {
-    var field = "caption,media_url,permalink,timestamp,username"
+    var field = "caption,media_type,media_url,permalink,thumnail_url,timestamp,username"
     var userUrl = "https://graph.instagram.com/me/media?fields="+ field+"&access_token=" + data.access_token
     $.ajax({
       type: 'GET',
       url: userUrl
     })
       .done(function (res) {
+        console.log(res)
         res.data.forEach(function (image, index) { 
           if (image.media_url.match(/video/)) { 
 
