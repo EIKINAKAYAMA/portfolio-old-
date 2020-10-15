@@ -140,9 +140,8 @@ $(function () {
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
-              console.log($(`img[data-index="${i}-${j}"]`).length)
-              console.log($(`video[data-index="${i}-${j}"]`).length)
-              if ($(`img[data-index="${i}-${j}"]`).length) {
+              console.log(i)
+              if ($(`.image_box[data-index="${i}-${j}"]`).has("img")) {
                 console.log("imgfind")
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
@@ -151,12 +150,12 @@ $(function () {
                   ImgCount++;
                 }
               // 動画が検索された場合
-              } else if ($(`video[data-index="${i}-${j}"]`).length) {
+              } else if ($(`image_box[data-index="${i}-${j}"]`).has("video")) {
                 console.log("videofind")
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   console.log("videochecked")
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
-                  VideoCount = VideoCount + 1;
+                  VideoCount++
                 }
               } else {
                 console.log("対象なし")
