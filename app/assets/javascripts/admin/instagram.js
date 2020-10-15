@@ -2,7 +2,7 @@ $(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
-  const instagram_array = [[]]
+  const instagram_array = []
   
   //popup.jsで定義した関数の読み込み
   var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
@@ -60,16 +60,16 @@ $(function () {
           if (instagram.media_type == "IMAGE") {
 
             var url = new URLSearchParams(instagram.media_url).get('oe');
-            $('.image_list').append(buildImg(instagram.media_url, index, 0)); 
+            $('.image_list').append(buildImg(instagram.media_url, index, 0));
             fetch(instagram.media_url)
-            .then(response => response.blob())
+              .then(response => response.blob())
               .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
-            .then(file => {
-              instagram_array[index][0] = file
-              console.log(instagram_array)
-            })
+              .then(file => {
+                instagram_array.push([])
+                instagram_array[index][0] = file
+              })
 
-          //media_typeがVIDEOの場合
+            //media_typeがVIDEOの場合
           } else if (instagram.media_type == "VIDEO") {
 
             var url = new URLSearchParams(instagram.media_url).get('oe');
@@ -78,22 +78,22 @@ $(function () {
               .then(response => response.blob())
               .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
               .then(file => {
+                instagram_array.push([])
                 instagram_array[index][0] = file
-                console.log(instagram_array)
               })
-          //media_typeがCAROUSEL_ALUBUMの場合
+            //media_typeがCAROUSEL_ALUBUMの場合
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
-
-            instagram.children.data.forEach(function (children, index2) { 
+            instagram_array.push([])
+            instagram.children.data.forEach(function (children, index2) {
               var url = new URLSearchParams(children.media_url).get('oe');
               if (children.media_type == "IMAGE") {
-                $('.image_list').append(buildImg(children.media_url, index, index2)); 
+                $('.image_list').append(buildImg(children.media_url, index, index2));
                 fetch(children.media_url)
                   .then(response => response.blob())
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
+                    instagram_array[index].push([])
                     instagram_array[index][index2] = file
-                    console.log(instagram_array)
                   })
               } else if (children.media_type == "VIDEO") {
                 $('.image_list').append(buildVideo(children.media_url, index, index2));
@@ -101,21 +101,22 @@ $(function () {
                   .then(response => response.blob())
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
+                    instagram_array[index].push([])
                     instagram_array[index][index2] = file
-                    console.log(instagram_array)
                   })
-                
+                  
               } else {
                 alert("想定外のデータが検出されました。管理者にお問い合わせください。")
-              }            
+              }
             })
-          //想定外のmedia_typeの場合(InstagramのAPIの仕様が変わった場合等)
+            //想定外のmedia_typeの場合(InstagramのAPIの仕様が変わった場合等)
           } else {
             alert("想定外のデータが検出されました。管理者にお問い合わせください。")
           }
-          
+            
         })
-
+        
+        console.log(instagram_array)
         // ポップアップの発生
         var popup = document.getElementById('instagram-popup');
         if (!popup) return;
