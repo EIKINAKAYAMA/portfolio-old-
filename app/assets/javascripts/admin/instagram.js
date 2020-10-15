@@ -130,8 +130,8 @@ $(function () {
         $('#instagram-save').on('click', function () {
           var GalleryFormData = new FormData();
           var MovieFormData = new FormData();
-          var imgcount = 0;
-          var videocount = 0;
+          var ImgCount = 0;
+          var VideoCount = 0;
 
           GalleryFormData.append("gallery_categories[name][]", "Instagram")
           MovieFormData.append("movie_categories[name][]", "Instagram")
@@ -144,13 +144,13 @@ $(function () {
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
                   GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
-                  imgcount++;
+                  ImgCount++;
                 }
               // 動画が検索された場合
               } else if ($(`.image_box[data-index="${i}-${j}"]`).find('video')) {
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
-                  videocount++;
+                  VideoCount++;
                 }
               } else {
                 console.log("対象なし")
@@ -158,12 +158,15 @@ $(function () {
                 
             }
           }
+
+          console.log(ImgCount)
+          console.log(VideoCount)
           
-          if (imgcount == 0 && videocount == 0) {
+          if (ImgCount == 0 && VideoCount == 0) {
             alert("保存ずる画像,または動画を選択して下さい");
             return false;
           // 画像のみの場合
-          } else if(videocount ==0){
+          } else if(VideoCount ==0){
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
@@ -184,7 +187,7 @@ $(function () {
                 alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
               })
           //動画のみの場合
-          } else if (imgcount == 0) {
+          } else if (ImgCount == 0) {
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/movie_categories",
               type: "POST",
