@@ -140,7 +140,7 @@ $(function () {
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
-              if ($(`.image_box[data-index="${i}-${j}"]`).find('img')) {
+              if ($(`.image_box[data-index="${i}-${j}"]`).includes('img')) {
                 console.log("imgfind")
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
@@ -149,7 +149,7 @@ $(function () {
                   ImgCount++;
                 }
               // 動画が検索された場合
-              } else if ($(`.image_box[data-index="${i}-${j}"]`).find('video')) {
+              } else if ($(`.image_box[data-index="${i}-${j}"]`).includes('video')) {
                 console.log("videofind")
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   console.log("videochecked")
