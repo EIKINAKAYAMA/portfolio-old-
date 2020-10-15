@@ -143,12 +143,14 @@ $(function () {
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
                   GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
+                  console.log(instagram_array[i][j])
                   ImgCount++;
                 }
               // 動画が検索された場合
-              } else if ($(`image_box[data-index="${i}-${j}"]`).has("video")) {
+              } else if ($(`.image_box[data-index="${i}-${j}"]`).has("video")) {
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
+                  console.log(instagram_array[i][j])
                   VideoCount++;
                 }
               } else {
@@ -191,7 +193,7 @@ $(function () {
               contentType: false,
               processData: false
             })
-              .done(function (data) {
+              .done(function () {
                 alert('選択された動画の保存に成功しました！');
                 window.location = gon.new_admin_user_movie_category_path
               })
