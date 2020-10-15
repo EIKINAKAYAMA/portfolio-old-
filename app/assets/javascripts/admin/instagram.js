@@ -141,14 +141,18 @@ $(function () {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
               if ($(`.image_box[data-index="${i}-${j}"]`).find('img')) {
+                console.log("imgfind")
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
+                  console.log("imgchecked")
                   GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
                   ImgCount++;
                 }
               // 動画が検索された場合
               } else if ($(`.image_box[data-index="${i}-${j}"]`).find('video')) {
+                console.log("videofind")
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
+                  console.log("videochecked")
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
                   VideoCount++;
                 }
@@ -166,7 +170,7 @@ $(function () {
             alert("保存ずる画像,または動画を選択して下さい");
             return false;
           // 画像のみの場合
-          } else if(VideoCount ==0){
+          } else if(VideoCount == 0){
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
