@@ -62,9 +62,9 @@ $(function () {
             var url = new URLSearchParams(instagram.media_url).get('oe');
             $('.image_list').append(buildImg(instagram.media_url, index, 0));
             fetch(instagram.media_url)
-            .then(response => response.blob())
-            .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
-            .then(file => {
+              .then(response => response.blob())
+              .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
+              .then(file => {
                 instagram_array[index][0] = file
               })
 
@@ -75,7 +75,7 @@ $(function () {
             $('.image_list').append(buildVideo(instagram.media_url, index, 0));
             fetch(instagram.media_url)
               .then(response => response.blob())
-              .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
+              .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
               .then(file => {
                 instagram_array[index][0] = file
               })
@@ -95,7 +95,7 @@ $(function () {
                 $('.image_list').append(buildVideo(children.media_url, index, index2));
                 fetch(children.media_url)
                   .then(response => response.blob())
-                  .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
+                  .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
                   .then(file => {
                     instagram_array[index][index2] = file
                   })
