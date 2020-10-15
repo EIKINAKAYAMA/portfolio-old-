@@ -140,8 +140,8 @@ $(function () {
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
-              console($(`img[data-index="${i}-${j}"]`).length)
-              console($(`video[data-index="${i}-${j}"]`).length)
+              console.log($(`img[data-index="${i}-${j}"]`).length)
+              console.log($(`video[data-index="${i}-${j}"]`).length)
               if ($(`img[data-index="${i}-${j}"]`).length) {
                 console.log("imgfind")
                 //もしチェックされていればformDataに追加
