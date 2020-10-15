@@ -2,7 +2,7 @@ $(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
-  const instagram_array = []
+  const instagram_array = [[]]
   
   //popup.jsで定義した関数の読み込み
   var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
@@ -22,7 +22,7 @@ $(function () {
   const buildVideo = (video, index, index2) => {
     const html = `<li>
                     <div class="image_box" data-index="${index}-${index2}">
-                      <video class="thumbnail" src="${video}" width="200px" height="200px" data-index="${index}-${index2}">
+                      <video class="thumbnail" src="${video}" width="200px" height="200px" data-index="${index}-${index2}" controls muted autoplay playinline loop></video>
                       <input class="disabled_checkbox" type="checkbox" checked />
                     <div>
                   </li>`
