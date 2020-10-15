@@ -85,6 +85,7 @@ $(function () {
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
             instagram_array.push([])
             instagram.children.data.forEach(function (children, index2) {
+              instagram_array[index].push([])
               var url = new URLSearchParams(children.media_url).get('oe');
               if (children.media_type == "IMAGE") {
                 $('.image_list').append(buildImg(children.media_url, index, index2));
@@ -92,7 +93,6 @@ $(function () {
                   .then(response => response.blob())
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
-                    instagram_array[index].push([])
                     instagram_array[index][index2] = file
                   })
               } else if (children.media_type == "VIDEO") {
@@ -101,7 +101,6 @@ $(function () {
                   .then(response => response.blob())
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
-                    instagram_array[index].push([])
                     instagram_array[index][index2] = file
                   })
                   
@@ -115,7 +114,7 @@ $(function () {
           }
             
         })
-        
+
         console.log(instagram_array)
         // ポップアップの発生
         var popup = document.getElementById('instagram-popup');
