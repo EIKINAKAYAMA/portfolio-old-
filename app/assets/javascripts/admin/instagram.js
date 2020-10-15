@@ -66,6 +66,7 @@ $(function () {
               .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
             .then(file => {
               instagram_array[index][0] = file
+              console.log(instagram_array)
             })
 
           //media_typeがVIDEOの場合
@@ -78,6 +79,7 @@ $(function () {
               .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
               .then(file => {
                 instagram_array[index][0] = file
+                console.log(instagram_array)
               })
           //media_typeがCAROUSEL_ALUBUMの場合
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
@@ -91,6 +93,7 @@ $(function () {
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
                     instagram_array[index][index2] = file
+                    console.log(instagram_array)
                   })
               } else if (children.media_type == "VIDEO") {
                 $('.image_list').append(buildVideo(children.media_url, index, index2));
@@ -99,6 +102,7 @@ $(function () {
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
                   .then(file => {
                     instagram_array[index][index2] = file
+                    console.log(instagram_array)
                   })
                 
               } else {
