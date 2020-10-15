@@ -178,7 +178,7 @@ $(function () {
                 $(".popup-content").remove();
                 popup.classList.remove('is-show');
                 $('.instagram-popup-inner').append(buildpopupInstagram)
-                window.location = gon.new_admin_user_gallery_category_path
+                // window.location = gon.new_admin_user_gallery_category_path
               })
               .fail(function () {
                 alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
@@ -195,7 +195,10 @@ $(function () {
             })
               .done(function () {
                 alert('選択された動画の保存に成功しました！');
-                window.location = gon.new_admin_user_movie_category_path
+                $(".popup-content").remove();
+                popup.classList.remove('is-show');
+                $('.instagram-popup-inner').append(buildpopupInstagram)
+                // window.location = gon.new_admin_user_movie_category_path
               })
               .fail(function () {
                 alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
@@ -221,7 +224,10 @@ $(function () {
                 })
                   .done(function () {
                     alert('選択された画像、動画の保存に成功しました！');
-                    window.location = gon.new_admin_user_gallery_category_path
+                    $(".popup-content").remove();
+                    popup.classList.remove('is-show');
+                    $('.instagram-popup-inner').append(buildpopupInstagram)
+                    // window.location = gon.new_admin_user_gallery_category_path
                   })
                   .fail(function () {
                     alert('予期ない操作により保存が失敗しました。お手数ですが管理者に問い合わせて頂けますと幸いです。');
