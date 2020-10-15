@@ -55,7 +55,7 @@ $(function () {
       .done(function (res) {
         console.log(res)
         res.data.forEach(function (instagram, index) {
-          instagram_array[index] = {}
+          instagram_array[index] = []
           
           //madia_typeがIMAGEの場合
           if (instagram.media_type == "IMAGE") {
