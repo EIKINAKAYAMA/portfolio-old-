@@ -82,7 +82,7 @@ $(function () {
           //media_typeがCAROUSEL_ALUBUMの場合
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
 
-            instagram.children.forEach(function (children, index2) { 
+            instagram.children.data.forEach(function (children, index2) { 
               var url = new URLSearchParams(children.media_url).get('oe');
               if (children.media_type == "IMAGE") {
                 $('.image_list').append(buildImg(children.media_url, index, index2)); 
