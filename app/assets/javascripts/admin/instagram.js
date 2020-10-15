@@ -148,6 +148,7 @@ $(function () {
                 }
               // 動画が検索された場合
               } else if ($(`.image_box[data-index="${i}-${j}"]`).has("video")) {
+                console.log(instagram_array[i][j])
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
                   console.log(instagram_array[i][j])
