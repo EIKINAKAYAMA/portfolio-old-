@@ -22,7 +22,7 @@ $(function () {
   const buildVideo = (video, index, index2) => {
     const html = `<li>
                     <div class="image_box" data-index="${index}-${index2}">
-                      <video class="thumbnail" src="${video}" width="200px" height="200px" data-index="${index}-${index2}" controls muted autoplay playinline loop></video>
+                      <video class="thumbnail" src="${video}" width="200px" height="200px" data-index="${index}-${index2}" muted autoplay playinline loop></video>
                       <input class="disabled_checkbox" type="checkbox" checked />
                     <div>
                   </li>`
@@ -93,8 +93,7 @@ $(function () {
                     instagram_array[index][index2] = file
                   })
               } else if (children.media_type == "VIDEO") {
-                var url = new URLSearchParams(instagram.media_url).get('oe');
-                $('.image_list').append(buildVideo(instagram.media_url, index, index2));
+                $('.image_list').append(buildVideo(children.media_url, index, index2));
                 fetch(children.media_url)
                   .then(response => response.blob())
                   .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
@@ -119,7 +118,7 @@ $(function () {
         popup.classList.add('is-show');
 
         // 画像がクリックされた時の処理です。
-        $('img.thumbnail').on('click', function () {
+        $('.thumbnail').on('click', function () {
           if (!$(this).is('.checked')) {
             $(this).addClass('checked');
           } else {

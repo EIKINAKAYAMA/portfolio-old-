@@ -16,12 +16,12 @@ ul.image_list{
       height: 200px;
       /* チェックボックスの親要素にrelativeを指定しておきます。 */
       position: relative;
-      img.thumbnail {
+      .thumbnail {
         width: 100%;
         height: 100%;
         cursor: pointer;
       }
-      img.thumbnail.checked{
+      .thumbnail.checked{
         border: 10px solid blue;
         box-sizing: border-box;
       }
