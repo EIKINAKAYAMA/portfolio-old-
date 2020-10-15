@@ -3,7 +3,6 @@ $(function () {
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
   const instagram_array = []
-  const video_array =[]
   
   //popup.jsで定義した関数の読み込み
   var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
@@ -83,7 +82,7 @@ $(function () {
           //media_typeがCAROUSEL_ALUBUMの場合
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
 
-            instagram.children.forEachforEach(function (children, index2) { 
+            instagram.children.forEach(function (children, index2) { 
               var url = new URLSearchParams(children.media_url).get('oe');
               if (children.media_type == "IMAGE") {
                 $('.image_list').append(buildImg(children.media_url, index, index2)); 
@@ -177,9 +176,9 @@ $(function () {
               .done(function (data) {
                 console.log(data)
                 alert('選択された画像の保存に成功しました！');
-                // $(".popup-content").remove();
-                // popup.classList.remove('is-show');
-                // $('.instagram-popup-inner').append(buildpopupInstagram)
+                $(".popup-content").remove();
+                popup.classList.remove('is-show');
+                $('.instagram-popup-inner').append(buildpopupInstagram)
                 window.location = gon.new_admin_user_gallery_category_path
               })
               .fail(function () {
