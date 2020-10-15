@@ -40,7 +40,7 @@ ul.image_list{
   }
 }
 
-.image_box img.thumbnail.checked + .disabled_checkbox {
+.image_box .thumbnail.checked + .disabled_checkbox {
   /* 画像にcheckedクラスが指定されたときは、
   チェックボックスの非表示を解除します。 */
   display: block;

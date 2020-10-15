@@ -139,16 +139,16 @@ $(function () {
 
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
-              //画像を検索
+              //画像が検索された場合
               if ($(`.image_box[data-index="${i}-${j}"]`).find('img')) {
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
                   GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
                   imgcount++;
                 }
-              // 動画を検索
+              // 動画が検索された場合
               } else if ($(`.image_box[data-index="${i}-${j}"]`).find('video')) {
-                if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
+                if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
                   videocount++;
                 }
