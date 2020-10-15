@@ -136,6 +136,8 @@ $(function () {
           GalleryFormData.append("gallery_categories[name][]", "Instagram")
           MovieFormData.append("movie_categories[name][]", "Instagram")
           console.log(instagram_array)
+          console.log(instagram_array.length)
+          console.log(instagram_array[0].length)
 
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
