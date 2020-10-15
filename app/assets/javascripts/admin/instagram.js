@@ -135,29 +135,21 @@ $(function () {
 
           GalleryFormData.append("gallery_categories[name][]", "Instagram")
           MovieFormData.append("movie_categories[name][]", "Instagram")
-          console.log(instagram_array)
-          console.log(instagram_array.length)
-          console.log(instagram_array[0].length)
 
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
-              console.log(i)
               if ($(`.image_box[data-index="${i}-${j}"]`).has("img")) {
-                console.log("imgfind")
                 //もしチェックされていればformDataに追加
                 if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
-                  console.log("imgchecked")
                   GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
                   ImgCount++;
                 }
               // 動画が検索された場合
               } else if ($(`image_box[data-index="${i}-${j}"]`).has("video")) {
-                console.log("videofind")
                 if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
-                  console.log("videochecked")
                   MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
-                  VideoCount++
+                  VideoCount++;
                 }
               } else {
                 console.log("対象なし")
@@ -165,9 +157,6 @@ $(function () {
                 
             }
           }
-
-          console.log(ImgCount)
-          console.log(VideoCount)
           
           if (ImgCount == 0 && VideoCount == 0) {
             alert("保存する画像,または動画を選択して下さい");
@@ -177,13 +166,12 @@ $(function () {
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
-              data: formData,
+              data: GalleryFormData,
               dataType: 'json',
               contentType: false,
               processData: false
             })
-              .done(function (data) {
-                console.log(data)
+              .done(function () {
                 alert('選択された画像の保存に成功しました！');
                 $(".popup-content").remove();
                 popup.classList.remove('is-show');
@@ -198,13 +186,12 @@ $(function () {
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/movie_categories",
               type: "POST",
-              data: formData,
+              data: MovieFormData,
               dataType: 'json',
               contentType: false,
               processData: false
             })
               .done(function (data) {
-                console.log(data)
                 alert('選択された動画の保存に成功しました！');
                 window.location = gon.new_admin_user_movie_category_path
               })
@@ -216,7 +203,7 @@ $(function () {
             $.ajax({
               url: "/admin/users/" + gon.user_id_digest + "/gallery_categories",
               type: "POST",
-              data: formData,
+              data: GalleryFormData,
               dataType: 'json',
               contentType: false,
               processData: false
@@ -225,7 +212,7 @@ $(function () {
                 $.ajax({
                   url: "/admin/users/" + gon.user_id_digest + "/movie_categories",
                   type: "POST",
-                  data: formData,
+                  data: MovieFormData,
                   dataType: 'json',
                   contentType: false,
                   processData: false
@@ -252,41 +239,7 @@ $(function () {
         console.log("NG")
       })
       .fail(function (jqXHR, status) {
-          console.log("NG")
+        console.log("NG")
       })  
   })
-
-  // //Instagram連携(LOCAL用)
-  // $(document).on('click', '.InstagramAPI', function () {
-  //   // ポップアップの発生
-  //     var popup = document.getElementById('instagram-popup');
-  //     if (!popup) return;
-  //     popup.classList.add('is-show');
-
-  //   const html = `<li>
-  //                   <div class="image_box">
-  //                     <img class="thumbnail" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRAPapDXFzPv3sYGmw-6NjNsFmO3HjB_pmLGA&usqp=CAU" width="200px" height="200px">
-  //                     <input class="disabled_checkbox" type="checkbox" checked />
-  //                   <div>
-  //                 </li>`
-
-  //   $('.image_list').append(html); 
-    
-  //   // 画像がクリックされた時の処理です。
-  //   $('img.thumbnail').on('click', function () {
-  //     if (!$(this).is('.checked')) {
-  //       $(this).addClass('checked');
-  //     } else {
-  //       $(this).removeClass('checked')
-  //     }
-  //   })
-    
-  //   //クリックされている画像を保存する
-  //   $("#instagram-save").click(function () {
-  //     $(".popup-content").remove();
-  //     popup.classList.remove('is-show');
-  //     $('.instagram-popup-inner').append(buildpopupInstagram)
-  //   })
-  // });
-  
 });
