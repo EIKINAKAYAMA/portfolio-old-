@@ -2,7 +2,7 @@ $(function () {
   const urlParams = new URLSearchParams(window.location.search);
   const code = urlParams.get('code');
   const url = "https://api.instagram.com/oauth/access_token"
-  const instagram_array = [[]]
+  const instagram_array = []
   
   //popup.jsで定義した関数の読み込み
   var buildpopupInstagram = window.hogeLib.buildpopupInstagram();
@@ -55,6 +55,7 @@ $(function () {
       .done(function (res) {
         console.log(res)
         res.data.forEach(function (instagram, index) {
+          instagram_array[index] = {}
           
           //madia_typeがIMAGEの場合
           if (instagram.media_type == "IMAGE") {
@@ -64,7 +65,6 @@ $(function () {
             .then(response => response.blob())
             .then(blob => new File([blob], "Instagram" + url + ".mov", { type: "video/mov" }))
             .then(file => {
-                instagram_array.push([])
                 instagram_array[index][0] = file
               })
 
@@ -77,12 +77,10 @@ $(function () {
               .then(response => response.blob())
               .then(blob => new File([blob], "Instagram" + url + ".jpeg", { type: "image/jpeg" }))
               .then(file => {
-                instagram_array.push([])
                 instagram_array[index][0] = file
               })
             //media_typeがCAROUSEL_ALUBUMの場合
           } else if (instagram.media_type == "CAROUSEL_ALBUM") {
-            instagram_array.push([])
             instagram.children.data.forEach(function (children, index2) {
               var url = new URLSearchParams(children.media_url).get('oe');
               if (children.media_type == "IMAGE") {
