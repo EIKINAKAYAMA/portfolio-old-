@@ -139,21 +139,16 @@ $(function () {
           for (var i = 0; i < instagram_array.length; i++) {
             for (var j = 0; j < instagram_array[i].length; j++){
               //画像が検索された場合
-              if ($(`.image_box[data-index="${i}-${j}"]`).has("img")) {
+              if ($(`.image_box[data-index="${i}-${j}"]`).has("img") && $(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
                 //もしチェックされていればformDataに追加
-                if ($(`img[data-index="${i}-${j}"]`).hasClass("checked")) {
-                  GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
-                  console.log(instagram_array[i][j])
-                  ImgCount++;
-                }
-              // 動画が検索された場合
-              } else if ($(`.image_box[data-index="${i}-${j}"]`).has("video")) {
+                GalleryFormData.append("category_images[0][images][]", instagram_array[i][j])
                 console.log(instagram_array[i][j])
-                if ($(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
-                  MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
-                  console.log(instagram_array[i][j])
-                  VideoCount++;
-                }
+                ImgCount++;
+              // 動画が検索された場合
+              } else if ($(`.image_box[data-index="${i}-${j}"]`).has("video") && $(`video[data-index="${i}-${j}"]`).hasClass("checked")) {
+                MovieFormData.append("category_movies[0][videos][]", instagram_array[i][j])
+                console.log(instagram_array[i][j])
+                VideoCount++;
               } else {
                 console.log("対象なし")
               }
