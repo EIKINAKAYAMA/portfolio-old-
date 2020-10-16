@@ -13,7 +13,7 @@ $(function () {
                     <div class="image_box" data-index="${index}-${index2}">
                       <img class="thumbnail" src="${image}" width="200px" height="200px" data-index="${index}-${index2}">
                       <input class="disabled_checkbox" type="checkbox" checked />
-                    <div>
+                    </div>
                   </li>`
     return html
   }
