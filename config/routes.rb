@@ -1,15 +1,18 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-
+  devise_for :admin_users, skip: 'registrations', controllers: {
+    sessions: 'admin_users/sessions'
+  }
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
   }
-  root "users#index"
-  # index page doesn't require "index" just "customers"
-  # so make it easier
-  
+  root to: "users#index"
+
+  namespace :admin_users do
+    root to: "top#index", as: :root
+    resources :top
+  end
 
   resources :users, only: [:edit, :update, :index]
 
