@@ -1,1 +1,167 @@
-<%= link_to "ログアウト", destroy_admin_user_session_path, method: :delete %>
+
+<% content_for :css do %>
+  <!--     Fonts and icons     -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- Material Kit CSS -->
+  <%= stylesheet_link_tag 'admin_users/material-dashboard.min', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<div class="wrapper ">
+  <div class="sidebar" data-color="green" data-background-color="white">
+    <!--
+    Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+    Tip 2: you can also add an image using data-image tag
+-->
+    <div class="logo">
+      <a href="https://mylifefolio.com" class="simple-text logo-normal">
+        Mylifefolio
+      </a>
+    </div>
+    <div class="sidebar-wrapper">
+      <ul class="nav">
+        <li class="nav-item active  ">
+          <a class="nav-link" href="#">
+            <i class="material-icons">dashboard</i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <!-- your sidebar here -->
+        <li class="nav-item active  ">
+          <a class="nav-link" href="#">
+            <i class="material-icons">Contact</i>
+            <p>Contact</p>
+          </a>
+        </li>
+        <li class="nav-item active  ">
+          <%= link_to destroy_admin_user_session_path, class: 'nav-link', method: :delete do %>
+            <i class="material-icons">Logout</i>
+            <p>Logout</p>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="main-panel">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+      <div class="container-fluid">
+        <div class="navbar-wrapper">
+          <a class="navbar-brand" href="javascript:;">Dashboard</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+          <span class="navbar-toggler-icon icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="javascript:;">
+                <i class="material-icons">notifications</i> Notifications
+              </a>
+            </li>
+            <!-- your navbar here -->
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <div class="content">
+      <div class="container-fluid">
+
+        <!-- your content here -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header card-chart card-header-warning">
+                <div class="ct-chart ct-golden-section" id="chart1"></div>
+              </div>
+              <div class="card-body">
+                <h4 class="card-title">Daily Sales</h4>
+                <p class="card-category"><span class="text-success"><i class="fa fa-long-arrow-up"></i> 55%  </span> increase in today sales.</p>
+              </div>
+              <div class="card-footer">
+                <div class="stats">
+                  <i class="material-icons">access_time</i> updated 4 minutes ago
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+          <div class="card">
+            <div class="card-header card-chart card-header-success">
+              <div class="ct-chart ct-golden-section" id="chart2"></div>
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">Completed Tasks</h4>
+              <p class="card-category">Last Campaign Performance</p>
+            </div>
+            <div class="card-footer">
+              <div class="stats">
+                <i class="material-icons">access_time</i> updated 2 minutes ago
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container-fluid">
+        <nav class="float-left">
+          <ul>
+            <li>
+              <a href="https://www.creative-tim.com">
+                Creative Tim
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="copyright float-right">
+          &copy;
+          <script>
+            document.write(new Date().getFullYear())
+          </script>, made with <i class="material-icons">favorite</i> by
+          <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+        </div>
+        <!-- your footer here -->
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+
+<!--   Core JS Files   -->
+<%= javascript_include_tag 'admin_users/core/jquery.min.js', 'data-turbolinks-track': 'reload'%>
+<%= javascript_include_tag 'admin_users/core/popper.min.js', 'data-turbolinks-track': 'reload'%>
+<%= javascript_include_tag 'admin_users/core/bootstrap-material-design.min.js', 'data-turbolinks-track': 'reload'%>
+<%= javascript_include_tag 'admin_users/plugins/perfect-scrollbar.jquery.min.js', 'data-turbolinks-track': 'reload'%>
+
+<!-- Chartist JS -->
+<%= javascript_include_tag 'admin_users/plugins/chartist.min.js', 'data-turbolinks-track': 'reload'%>
+
+<!--  Notifications Plugin    -->
+<%= javascript_include_tag 'admin_users/plugins/bootstrap-notify.js', 'data-turbolinks-track': 'reload'%>
+
+<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+<%= javascript_include_tag 'admin_users/material-dashboard.min.js', 'data-turbolinks-track': 'reload'%>
+
+<script>
+var data = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+  series: [
+    [5, 2, 4, 2, 0],
+  ]
+};
+var options = {
+  fullWidth: true,
+  height: 200
+};
+new Chartist.Line('#chart1', data, options);
+new Chartist.Line('#chart2', data, options);
+</script>
