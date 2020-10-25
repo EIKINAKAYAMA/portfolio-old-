@@ -1,12 +1,25 @@
 Rails.application.routes.draw do
 
+  # アプリ管理者(super admin)のパス
   devise_for :admin_users, skip: 'registrations', controllers: {
     sessions: 'admin_users/sessions'
   }
+  # ユーザー管理者(admin)のパス
   devise_for :users, controllers: {
     omniauth_callbacks: 'users/omniauth_callbacks',
     registrations: 'users/registrations',
   }
+
+  # resources "users/resgistrations", only: [:index, :create], path: "/users/registtations" do
+  #   collection do
+  #     get 'user_info' # １ページ目
+  #     post 'user_tel' # ２ページ目
+  #     post 'user_tel_verification' # ３ページ目
+  #     post 'user_profile' # ４ページ目
+  #     get 'user_complete' # 登録完了後のページ
+  #   end
+  # end
+
   root to: "users#index"
 
   namespace :admin_users do

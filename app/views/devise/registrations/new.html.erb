@@ -1,0 +1,100 @@
+<%# #account-page.account-page
+  .account-page__inner.clearfix
+    .account-page__inner--left.account-page__header
+      %h2 Create Account
+      %h5 新規アカウントの作成
+      = render "devise/shared/links"
+    .account-page__inner--right.user-form
+      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+        = devise_error_messages!
+        .field
+          .field-label
+            = f.label :name
+          .field-input
+            = f.text_field :name, autofocus: true
+        .field
+          .field-label
+            = f.label :email
+          .field-input
+            = f.email_field :email
+        -if @sns_id.present?
+          = hidden_field_tag :sns_auth, true
+        -else
+          .field
+            .field-label
+              = f.label :password
+              %i (英数字8文字以上)
+            .field-input
+              = f.password_field :password, autocomplete: "off"
+          .field
+            .field-label
+              = f.label :password_confirmation
+            .field-input
+              = f.password_field :password_confirmation, autocomplete: "off"
+
+
+        = f.fields_for :profile do |f|
+          = f.text_field :user_comment, class: "customer-body__input", placeholder: "one prase"
+          
+          = f.label :user_image, class: 'input-box__image' do
+            %i.fa.fa-image
+            = f.file_field :user_image, class: 'input-box__image__file'
+
+        .actions
+          = f.submit "Create Account", class: 'btn' %>
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
+<% end %>
+
+<img src="https://images.unsplash.com/photo-1489703197108-878f05f4b31b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=943be4a53094e573abf05d8b1f20aced&auto=format&fit=crop&w=1504&q=80" alt="Background image" class="bg">
+
+<div class="form-container">
+  <span class="arrow"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
+  <div class="overlay"></div>
+
+  <div class="logo">
+    <i class="fa fa-snowflake-o" aria-hidden="true"></i>
+    <h1><span class="bold">mylifefolio</span></h1>
+  </div>
+
+  <div class="register-form form">
+    <div class="form-wrapper">
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages!%>
+        <label for="signup-username">Username</label>
+        <%= f.text_field :name, id: "signup-username", type: "text", placeholder: "Username", required: true %>
+        <%# <input id="signup-username" type="text" placeholder="Username" name="username" required> %>
+        <label for="signup-email">Email</label>
+        <%= f.email_field :email, id: "signup-email", type: "email", placeholder: "example@mylifefolio.com", autocomplete: "off", required: true %>
+        <%# <input id="signup-email" type="email" placeholder="example@mylifefolio.com" name="email" required> %>
+        <label for="signup-password">Password</label>
+        <%# <input id="signup-password" type="password" placeholder="Password" name="password" pattern=".{3,}" title="Password must contain at least 3 characters" required> %>
+
+        <% if @sns_id.present? %>
+          <%=hidden_field_tag :sns_auth, true %>
+        <% else %>
+          <%= f.password_field :password, id: "signup-password", type: "password", placeholder: "Password", pattern:".{8,}", title: "Password must contain at least 8 characters(英数字)", required: true %>
+          <label for="signup-password">Password Confirmation</label>
+          <%= f.password_field :password_confirmation, id: "signup-password_confirmation", type: "password", placeholder: "Password Confirmation", pattern: '', title: "Password confirm your password", autocomplete: "off", required: true%>
+
+          <%= f.fields_for :profile do |f| %>
+            <%= f.text_field :user_comment %>
+            <%= f.file_field :user_image %>
+          <% end %>
+
+        <% end %>
+
+
+        <%= f.submit "Sign up", class:"button button-submit"%>
+
+      <% end %>
+
+      <div class="social-media">
+        <h6>Or signup by</h6>
+          <%= link_to 'facebook', user_facebook_omniauth_authorize_path,class: "button button-facebook", method: :post %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'login.js', 'data-turbolinks-track': 'reload'%>
