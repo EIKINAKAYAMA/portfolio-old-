@@ -109,7 +109,8 @@ img {
       input {
         width: 250px;
         height: 30px;
-        margin: 5px 0 10px 0;
+        // フェザー形式のレイアウトにしたら10にしたい
+        margin: 5px 0 5px 0;
         outline: none;
         border: none;
         background: none;
@@ -119,6 +120,18 @@ img {
         &::placeholder {
           color: rgba(19, 28, 36, 0.5);
           opacity: 1;
+        }
+      }
+      .field {
+        label{
+          line-height: 22px;
+          margin-right: 5px;
+        }
+        display: flex;
+        justify-content: left;
+        .remember_me{
+          width: 12px;
+          height: 12px;
         }
       }
 

@@ -1,26 +1,39 @@
-<h2>Log in</h2>
+<%= render "admin_users/shared/links" %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+<% content_for :css do %>
+  <%= stylesheet_link_tag 'login', media: 'all', 'data-turbolinks-track': 'reload' %>
 <% end %>
 
-<%= render "admin_users/shared/links" %>
+<img src="https://images.unsplash.com/photo-1489703197108-878f05f4b31b?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=943be4a53094e573abf05d8b1f20aced&auto=format&fit=crop&w=1504&q=80" alt="Background image" class="bg">
+
+<div class="form-container">
+  <span class="arrow"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></span>
+  <div class="overlay"></div>
+
+  <div class="logo">
+    <i class="fa fa-snowflake-o" aria-hidden="true"></i>
+    <h1><span class="bold">mylifefolio</span></h1>
+  </div>
+
+  <div class="login-form form">
+    <div class="form-wrapper">
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <label for="login-email">E-mail</label>
+        <%= f.email_field :email, id: "login-email", type: "email", placeholder: "E-mail Address", required: true %>
+        <label for="login-password">Password</label>
+        <%= f.password_field :password, id: "login-password", type: "password", placeholder: "Password", pattern:".{3,}", title: "Password must contain at least 8 characters(英数字)", required: true %>
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <%= f.label :remember_me %>
+            <%= f.check_box :remember_me, class: "remember_me"%>
+          </div>
+        <% end %>
+        <%= f.submit "login as admin", class:"button button-submit"%>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag 'login.js', 'data-turbolinks-track': 'reload'%>
+
+

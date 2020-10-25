@@ -45,6 +45,12 @@
         <label for="login-password">Password</label>
         <%= f.password_field :password, id: "login-password", type: "password", placeholder: "Password", pattern:".{3,}", title: "Password must contain at least 8 characters(英数字)", required: true %>
         <%# <input id="login-password" type="password" placeholder="Password" name="password" pattern=".{3,}" title="Password must contain at least 8 characters(英数字)" required> %>
+        <% if devise_mapping.rememberable? %>
+          <div class="field">
+            <%= f.label :remember_me %>
+            <%= f.check_box :remember_me, class: "remember_me" %>
+          </div>
+        <% end %>
         <%= f.submit "login", class:"button button-submit"%>
       <% end %>
 
